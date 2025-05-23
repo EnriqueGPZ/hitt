@@ -232,13 +232,17 @@
         .app-footer .footer-btn:hover { background-color: var(--button-header-hover-bg); color: var(--color-text-primary); border-color: var(--color-text-primary); }
         .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; }
         .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-text-primary); }
-        /* NUEVO ESTILO PARA EL ICONO DEL FOOTER */
+        
+        /* ESTILO MODIFICADO PARA EL ICONO DEL FOOTER */
         .app-footer .creator-info .footer-app-icon {
-            width: 18px;
-            height: 18px;
+            width: 36px;  /* <<< --- PUEDES CAMBIAR ESTE VALOR */
+            height: 36px; /* <<< --- PUEDES CAMBIAR ESTE VALOR */
             vertical-align: middle;
-            margin-right: 6px;
+            margin-right: 8px; /* Ajustado para el nuevo tamaño */
+            object-fit: cover; /* Para que la imagen llene el espacio sin deformarse */
+            border-radius: 4px; /* Opcional: para redondear esquinas */
         }
+
         @media (max-width: 768px) { .app-footer .footer-controls { justify-content: center; } .app-footer { flex-direction: column; align-items: center; } .app-footer .creator-info { text-align: center; margin-top:10px} }
         @media (max-width: 480px) { .page-main-title { font-size: 2.2em; margin-bottom: 20px; } .controls-section:not(.full-screen-mode .controls-section) button { padding: 10px 12px; font-size: 0.85em; } body.full-screen-mode #estadoActual { font-size: clamp(2em, 6vh, 4em); } body.full-screen-mode #cronometroActual { font-size: clamp(5em, 25vmax, 12em); } body.full-screen-mode #cronometroTotalLabel { font-size: clamp(1em, 3vh, 1.8em); } body.full-screen-mode #cronometroTotal { font-size: clamp(1.5em, 4vh, 2.5em); } body.full-screen-mode .controls-section button { font-size: clamp(0.9em, 2.5vh, 1.2em); padding: 1.5vh 2vw;} body.full-screen-mode .controls-section button i.feather { width: clamp(1em, 3vh, 1.5em); height: clamp(1em, 3vh, 1.5em); } body.full-screen-mode .progress-label { font-size: clamp(0.9em, 2vh, 1.5em); } body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); } .app-footer { flex-direction: column; align-items: stretch; gap: 10px; } .app-footer .footer-controls { justify-content: center; } .app-footer .creator-info { text-align: center; } }
         @media (max-width: 420px) { .page-main-title { font-size: 2em; } .container:not(.full-screen-mode .container) { padding: 25px 20px; } .controls-section:not(.full-screen-mode .controls-section) button { padding: 12px 18px; font-size: 0.95em; min-width: 120px; gap: 6px;} .controls-section:not(.full-screen-mode .controls-section) button i.feather { width: 1em; height: 1em;} #cronometroActual:not(.full-screen-mode #cronometroActual) { font-size: clamp(3.5em, 16vw, 6em); } #estadoActual:not(.full-screen-mode #estadoActual) { font-size: 1.3em; } .current-exercise-name:not(body.full-screen-mode .current-exercise-name) { font-size: 1em; } }
@@ -298,12 +302,14 @@
             <button id="resetExerciseNamesBtn" class="footer-btn" title="Resetear Nombres de Ejercicios Guardados"><i data-feather="delete"></i><span class="btn-text">Reset Nombres</span></button>
         </div>
         <p class="creator-info">
-            <img src="icons/favicon-32x32.png" alt="Chrono HIIT Icono" class="footer-app-icon">
+            <!-- ICONO MODIFICADO AQUÍ -->
+            <img src="image.webp" alt="Icono del Creador" class="footer-app-icon">
             Creado por <span class="seo-name">Enrique Gil</span>
         </p>
     </footer>
 
     <script>
+        // Tu JavaScript existente va aquí (sin cambios)
         document.addEventListener('DOMContentLoaded', () => {
             const numEjerciciosSelect = document.getElementById('numEjercicios'), numSeriesSelect = document.getElementById('numSeries'), tiempoEjercicioSelect = document.getElementById('tiempoEjercicio'), descansoEjercicioSelect = document.getElementById('descansoEjercicio'), descansoSerieSelect = document.getElementById('descansoSerie');
             const allSelects = [numEjerciciosSelect, numSeriesSelect, tiempoEjercicioSelect, descansoEjercicioSelect, descansoSerieSelect];
