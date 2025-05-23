@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrono HIIT - Cronómetro de Intervalos Avanzado</title>
+    <meta name="description" content="Chrono HIIT: Tu cronómetro personalizable para entrenamientos HIIT y Tabata. Guarda nombres de ejercicios, exporta e importa tus configuraciones.">
+    <meta name="keywords" content="chrono hiit, cronometro entrenamiento, temporizador intervalos, tabata, hiit, ejercicio, fitness, rutina, workout, online, gratis, temporizador tabata, cronometro hiit, guardar ejercicios, exportar configuracion, resetear nombres">
+    <link rel="canonical" href="https://www.hiit.es">
+
+    <!-- Favicon and App Icon Configuration START -->
+    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="manifest" href="icons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Favicon and App Icon Configuration END -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Chrono HIIT - Cronómetro de Intervalos Avanzado",
+      "description": "Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones.",
+      "url": "https://www.hiit.es",
+      "keywords": "chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres",
+      "mainEntity": {
+        "@type": "SoftwareApplication",
+        "name": "Chrono HIIT",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "browserRequirements": "Requires HTML5, CSS3, JavaScript, IndexedDB support.",
+        "featureList": [
+          "Temporizador de preparación", "Configuración de tiempo de ejercicio", "Configuración de tiempo de descanso entre ejercicios",
+          "Configuración de tiempo de descanso entre series", "Configuración de número de ejercicios por serie", "Configuración de número de series",
+          "Nombres de ejercicios personalizables con autocompletado", "Almacenamiento de lista global de ejercicios", "Resetear lista de nombres de ejercicios guardados",
+          "Cálculo de tiempo total estimado", "Alertas sonoras de cambio de fase", "Soporte para rutinas tipo Tabata y HIIT",
+          "Reinicio de ejercicio actual con preparación", "Modo pantalla completa para visualización en grande", "Indicadores visuales de progreso",
+          "Tema Claro/Oscuro con persistencia", "Exportar configuración a JSON", "Importar configuración desde JSON", "Gestión de logo personalizado"
+        ],
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem", "position": 1, "name": "Herramientas de Fitness", "item": "https://www.hiit.es"
+        },{
+          "@type": "ListItem", "position": 2, "name": "Chrono HIIT"
+        }]
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --font-display: 'Oswald', sans-serif; 
+            --font-body: 'Roboto Condensed', sans-serif;
+            --color-background: #A0A0A0; 
+            --color-surface: #A8A8A8;   
+            --color-primary-accent: #ffffff;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #ffffff;
+            --color-highlight: #ffffff;
+            --box-shadow-subtle: 0 4px 12px rgba(0,0,0,0.1);
+            --text-on-phase-bg: #ffffff;
+            --text-on-phase-finalizado-bg: #ffffff;
+            --phase-paused-overlay: rgba(28, 28, 43, 0.85);
+            --button-header-border: #ffffff;
+            --button-header-color: #ffffff;
+            --button-header-hover-bg: rgba(255,255,255,0.1);
+            --select-bg: transparent;
+            --select-border: #ffffff;
+            --select-disabled-bg: transparent;
+            --select-disabled-color: rgba(255,255,255,0.5);
+            --estimated-time-bg: transparent;
+            --progress-circle-border: #ffffff;
+            --progress-circle-completed-bg: #ffffff;
+            --progress-circle-active-border: #ffffff;
+            --phase-preparacion: #00a8ff;
+            --phase-ejercicio: #2ed573;
+            --phase-descanso: #ffa502;
+            --phase-finalizado: #575fcf;
+            --border-radius-main: 10px;
+            --border-radius-small: 6px;
+            --box-shadow-none: none;
+        }
+        body.dark-theme {
+            --color-background: #BDBDBD; 
+            --color-surface: #C5C5C5;    
+            --color-primary-accent: #000000;
+            --color-text-primary: #000000;
+            --color-text-secondary: #000000;
+            --color-highlight: #000000;
+            --box-shadow-subtle: 0 4px 15px rgba(0,0,0,0.3);
+            --text-on-phase-bg: #000000;
+            --text-on-phase-finalizado-bg: #000000;
+            --phase-paused-overlay: rgba(0, 0, 0, 0.85);
+            --button-header-border: #000000;
+            --button-header-color: #000000;
+            --button-header-hover-bg: rgba(0,0,0,0.1);
+            --select-bg: transparent;
+            --select-border: #000000;
+            --select-disabled-bg: transparent;
+            --select-disabled-color: rgba(0,0,0,0.5);
+            --estimated-time-bg: transparent;
+            --progress-circle-border: #000000;
+            --progress-circle-completed-bg: #000000;
+            --progress-circle-active-border: #000000;
+        }
+        html, body { height: 100%; margin: 0; }
+        body { font-family: var(--font-body); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100%; background-color: var(--color-background); color: var(--color-text-primary); padding: 20px; box-sizing: border-box; text-align: center; transition: background-color 0.4s ease-in-out, padding 0.3s ease-in-out, color 0.3s ease; }
+        .app-header { position: fixed; top: 20px; right: 20px; z-index: 1002; display: flex; justify-content: flex-end; align-items: center; width: auto; padding: 0; transition: all 0.3s ease-in-out; }
+        #toggleFullScreenBtn, #toggleThemeBtn { background: transparent; border: 1px solid var(--button-header-border); color: var(--button-header-color); padding: 8px; border-radius: var(--border-radius-small); cursor: pointer; line-height: 0; min-width: auto; transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+        #toggleFullScreenBtn i.feather, #toggleThemeBtn i.feather { width: 1.2em; height: 1.2em; stroke: currentColor !important; }
+        #toggleFullScreenBtn:hover, #toggleThemeBtn:hover { background-color: var(--button-header-hover-bg); }
+        body.full-screen-mode .app-header { top: 15px; right: 15px; }
+        .page-main-title { font-family: var(--font-display); font-weight: 700; color: var(--color-text-primary); font-size: 2.8em; letter-spacing: 1px; line-height: 1.1; margin-top: 10px; margin-bottom: 25px; text-align: center; width: 100%; transition: color 0.4s ease-in-out, font-size 0.3s ease; }
+        #userLogo { max-width: 150px; max-height: 80px; object-fit: contain; margin-bottom: 20px; transition: all 0.3s ease-in-out; background-color: transparent; padding: 0; border-radius: var(--border-radius-small); }
+        body.full-screen-mode #userLogo { position: fixed; top: 2vh; left: 2vw; max-width: 200px; max-height: 100px; width: auto; height: auto; margin: 0; z-index: 1001; background-color: transparent; padding: 0; box-shadow: none; border: none; }
+        .container { background-color: transparent; padding: 30px 25px; border-radius: var(--border-radius-main); box-shadow: none; width: 100%; max-width: 480px; margin-bottom: 20px; border: none; transition: all 0.3s ease-in-out; z-index: 1; position: relative; }
+        .configuracion-section, .controls-section, .estimated-time-section { margin-bottom: 25px; }
+        .timer-display-section { margin-bottom: 25px; padding: 20px 15px; border-radius: var(--border-radius-main); margin-top: 25px; transition: background-color 0.4s ease-in-out, width 0.3s ease-in-out, padding 0.3s ease-in-out; position: relative; overflow: hidden; }
+        .config-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--color-primary-accent); transition: border-color 0.3s ease; }
+        .config-item:last-child { border-bottom: none; margin-bottom: 0; }
+        .config-item label { font-weight: 400; margin-right: 15px; flex-basis: 60%; text-align: left; color: var(--color-text-secondary); font-size: 1em; word-break: break-word; transition: color 0.3s ease; }
+        body.full-screen-mode.active-timer-bg .config-item label { color: var(--text-on-phase-bg); }
+        body.full-screen-mode.active-timer-bg.phase-finalizado .config-item label { color: var(--text-on-phase-finalizado-bg); }
+        .config-item select { font-family: var(--font-body); padding: 10px 12px; border-radius: var(--border-radius-small); border: 1px solid var(--select-border); background-color: var(--select-bg); color: var(--color-text-primary); flex-basis: 35%; font-size: 1em; transition: border-color 0.2s ease, background-color 0.3s ease, color 0.3s ease; }
+        .config-item select:focus { border-color: var(--color-highlight); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent); }
+        .config-item select:disabled { background-color: var(--select-disabled-bg); color: var(--select-disabled-color); opacity: 0.7; cursor: not-allowed; border-color: var(--color-primary-accent); }
+        .config-item select option { background-color: color-mix(in srgb, var(--color-background) 80%, #fff); color: var(--color-text-primary); }
+        body.dark-theme .config-item select option { background-color: color-mix(in srgb, var(--color-background) 80%, #000); color: var(--color-text-primary); }
+        .exercise-names-section { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; margin-bottom: 15px; padding-top: 10px; border-top: 1px solid var(--color-primary-accent); }
+        .exercise-name-item { display: flex; align-items: center; gap: 10px; }
+        .exercise-name-item label { font-size: 0.9em; color: var(--color-text-secondary); min-width: 80px; text-align: right; flex-basis: auto; margin-right: 5px; }
+        .exercise-name-item input[type="text"] { flex-grow: 1; padding: 8px 10px; border-radius: var(--border-radius-small); border: 1px solid var(--select-border); background-color: var(--select-bg); color: var(--color-text-primary); font-family: var(--font-body); font-size: 0.9em; }
+        .exercise-name-item input[type="text"]:focus { border-color: var(--color-highlight); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent); }
+        .exercise-name-item input[type="text"]:disabled { background-color: var(--select-disabled-bg); color: var(--select-disabled-color); opacity: 0.7; cursor: not-allowed; }
+        body.full-screen-mode #exerciseNamesContainer { display: none !important; }
+        .estimated-time-section { padding: 12px 18px; background-color: var(--estimated-time-bg); border-radius: var(--border-radius-small); font-size: 0.95em; color: var(--color-text-secondary); margin-top: 10px; transition: background-color 0.3s ease, color 0.3s ease; }
+        body.active-timer-bg .estimated-time-section { background-color: rgba(0,0,0,0.1); }
+        body.active-timer-bg .estimated-time-section p, body.active-timer-bg #estimatedTimeDisplay { color: var(--text-on-phase-bg); }
+        body.active-timer-bg.phase-finalizado .estimated-time-section p, body.active-timer-bg.phase-finalizado #estimatedTimeDisplay { color: var(--text-on-phase-finalizado-bg); }
+        .estimated-time-section p { margin: 0; font-weight: 400; }
+        #estimatedTimeDisplay { font-weight: 700; color: var(--color-text-primary); transition: color 0.3s ease; }
+        .progress-indicators { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; width: 100%; align-items: center; transition: gap 0.3s ease, margin-bottom 0.3s ease; }
+        .progress-section { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .progress-label { font-size: 0.9em; color: var(--color-text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: font-size 0.3s ease, color 0.3s ease; }
+        .progress-circles { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; transition: gap 0.3s ease; }
+        .progress-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--progress-circle-border); background-color: transparent; transition: all 0.3s ease; }
+        body:not(.active-timer-bg) .progress-circle.active { border-color: var(--progress-circle-active-border); }
+        body:not(.active-timer-bg) .progress-circle.completed { background-color: var(--progress-circle-completed-bg); border-color: var(--progress-circle-completed-bg); }
+        .progress-circle.active { border-color: var(--text-on-phase-bg); border-width: 3px; background-color: transparent; transform: scale(1.15); }
+        .progress-circle.completed { background-color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
+        body.active-timer-bg .progress-label { color: var(--text-on-phase-bg); }
+        body.active-timer-bg.phase-finalizado .progress-label { color: var(--text-on-phase-finalizado-bg); }
+        body.full-screen-mode .progress-circle { border-color: color-mix(in srgb, var(--text-on-phase-bg) 40%, transparent); }
+        body.full-screen-mode .progress-circle.active { border-color: var(--text-on-phase-bg); background-color: color-mix(in srgb, var(--text-on-phase-bg) 10%, transparent); box-shadow: 0 0 10px color-mix(in srgb, var(--text-on-phase-bg) 30%, transparent); }
+        body.full-screen-mode .progress-circle.completed { background-color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
+        .controls-section { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; transition: width 0.3s ease-in-out, gap 0.3s ease-in-out; }
+        .controls-section button { font-family: var(--font-display); font-weight: 700; padding: 10px 12px; font-size: 0.9em; background-color: transparent; border: 2px solid var(--color-text-primary); color: var(--color-text-primary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease; min-width: auto; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .controls-section button i.feather { width: 1em; height: 1em; stroke-width: 2.5; stroke: currentColor; transition: width 0.3s ease-in-out, height 0.3s ease-in-out; }
+        .controls-section button .btn-text { display: inline-block; }
+        .controls-section button:hover { transform: translateY(-1px); box-shadow: 0 2px 5px color-mix(in srgb, var(--color-text-primary) 8%, transparent); }
+        .controls-section button:active { transform: translateY(0px); box-shadow: 0 1px 3px color-mix(in srgb, var(--color-text-primary) 5%, transparent); }
+        .controls-section #startPauseResumeBtn.paused { border-color: var(--color-text-primary); color: var(--color-text-primary); background-color: transparent; }
+        body.full-screen-mode .controls-section button { padding: 1.5vh 2vw; font-size: clamp(0.9em, 2.5vh, 1.5em); gap: 0.8vw; flex-grow: 1; border: 2px solid var(--color-text-primary); color: var(--color-text-primary); background-color: transparent; }
+        body.full-screen-mode .controls-section #startPauseResumeBtn.paused { background-color: transparent; border-color: var(--color-text-primary); color: var(--color-text-primary); }
+        body.full-screen-mode.active-timer-bg .controls-section button { border-color: var(--text-on-phase-bg); color: var(--text-on-phase-bg); background-color: transparent; }
+        body.full-screen-mode.active-timer-bg .controls-section button:hover { background-color: color-mix(in srgb, var(--text-on-phase-bg) 15%, transparent); border-color: var(--text-on-phase-bg); color: var(--text-on-phase-bg); }
+        body.full-screen-mode.active-timer-bg .controls-section button:active { background-color: color-mix(in srgb, var(--text-on-phase-bg) 25%, transparent); }
+        body.full-screen-mode.active-timer-bg .controls-section #startPauseResumeBtn.paused { background-color: transparent; color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
+        body.full-screen-mode.active-timer-bg .controls-section #startPauseResumeBtn.paused:hover { background-color: color-mix(in srgb, var(--text-on-phase-bg) 10%, transparent); border-color: var(--text-on-phase-bg); }
+        .timer-display-section.bg-preparacion { background-color: var(--phase-preparacion); } .timer-display-section.bg-ejercicio { background-color: var(--phase-ejercicio); } .timer-display-section.bg-descanso { background-color: var(--phase-descanso); } .timer-display-section.bg-finalizado { background-color: var(--phase-finalizado); }
+        .timer-display-section.paused-overlay::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--phase-paused-overlay); z-index: 1; }
+        #estadoActual, #cronometroActual, #cronometroTotalLabel, #cronometroTotal, .current-exercise-name { position: relative; z-index: 2; transition: font-size 0.3s ease-in-out, margin-bottom 0.3s ease-in-out, color 0.3s ease; }
+        #estadoActual { font-family: var(--font-body); font-size: 1.5em; font-weight: 700; margin-bottom: 8px; min-height: 1.5em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-primary); }
+        #estadoActual.preparacion-text, #estadoActual.ejercicio-text, #estadoActual.descanso-text { color: var(--text-on-phase-bg); }
+        #estadoActual.finalizado-text { color: var(--text-on-phase-finalizado-bg); }
+        .current-exercise-name { font-family: var(--font-body); font-size: 1.1em; font-weight: 400; color: var(--color-text-primary); margin-bottom: 5px; min-height: 1.2em; text-transform: capitalize; transition: color 0.3s ease, font-size 0.3s ease; }
+        .timer-display-section.bg-preparacion .current-exercise-name, .timer-display-section.bg-ejercicio .current-exercise-name, .timer-display-section.bg-descanso .current-exercise-name { color: var(--text-on-phase-bg); }
+        .timer-display-section.bg-finalizado .current-exercise-name { color: var(--text-on-phase-finalizado-bg); }
+        #timerDisplaySection:not([class*="bg-"]) .current-exercise-name { color: var(--color-text-primary); }
+        body.full-screen-mode .current-exercise-name { font-size: clamp(1.2em, 3vh, 2.5em); margin-bottom: 1vh; }
+        #cronometroActual { font-family: var(--font-display); font-weight: 900; font-size: clamp(4em, 18vw, 7em); margin: 0 0 10px 0; line-height: 1; color: var(--color-text-primary); }
+        .timer-display-section.bg-preparacion #cronometroActual, .timer-display-section.bg-ejercicio #cronometroActual, .timer-display-section.bg-descanso #cronometroActual { color: var(--text-on-phase-bg); }
+        .timer-display-section.bg-finalizado #cronometroActual { color: var(--text-on-phase-finalizado-bg); }
+        #cronometroTotalLabel { font-family: var(--font-body); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; font-weight: 400; margin-top: 10px; color: var(--color-text-secondary); }
+        #cronometroTotal { font-family: var(--font-display); font-weight: 700; font-size: 1.4em; color: var(--color-text-secondary); }
+        .timer-display-section.bg-preparacion #cronometroTotalLabel, .timer-display-section.bg-preparacion #cronometroTotal, .timer-display-section.bg-ejercicio #cronometroTotalLabel, .timer-display-section.bg-ejercicio #cronometroTotal, .timer-display-section.bg-descanso #cronometroTotalLabel, .timer-display-section.bg-descanso #cronometroTotal { color: var(--text-on-phase-bg); }
+        .timer-display-section.bg-finalizado #cronometroTotalLabel, .timer-display-section.bg-finalizado #cronometroTotal { color: var(--text-on-phase-finalizado-bg); }
+        #timerDisplaySection:not([class*="bg-"]) #estadoActual { color: var(--color-text-primary); } #timerDisplaySection:not([class*="bg-"]) #cronometroActual { color: var(--color-text-primary); } #timerDisplaySection:not([class*="bg-"]) #cronometroTotalLabel, #timerDisplaySection:not([class*="bg-"]) #cronometroTotal { color: var(--color-text-secondary); }
+        .hidden { display: none !important; }
+        body.full-screen-mode { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+        body.full-screen-mode .page-main-title { display: none; }
+        body.full-screen-mode .container { max-width: 100%; width: 100%; height: 100%; margin: 0; border-radius: 0; border: none; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none; flex-grow: 1; }
+        body.full-screen-mode #configuracionSection, body.full-screen-mode #estimatedTimeSection { display: none !important; }
+        body.full-screen-mode .progress-indicators { gap: 1.5vh; margin-bottom: 2vh; }
+        body.full-screen-mode .progress-label { font-size: clamp(0.8em, 2vh, 1.3em); }
+        body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); }
+        body.full-screen-mode .progress-circle.active { border-width: clamp(2px, 0.5vh, 4px); }
+        body.full-screen-mode .progress-circles { gap: clamp(8px, 1.5vh, 15px); }
+        body.full-screen-mode #timerDisplaySection { width: 95%; max-width: 1200px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 0; margin-bottom: 10px; padding: 2vw; }
+        body.full-screen-mode #estadoActual { font-size: clamp(1.8em, 5vh, 4em); margin-bottom: 1vh; min-height: auto; }
+        body.full-screen-mode #cronometroActual { font-size: clamp(10em, 45vmax, 30em); line-height: 0.85; margin-bottom: 2vh; }
+        body.full-screen-mode #cronometroTotalLabel { font-size: clamp(1em, 2.5vh, 2em); }
+        body.full-screen-mode #cronometroTotal { font-size: clamp(1.5em, 4vh, 3em); }
+        body.full-screen-mode .controls-section { width: 80%; max-width: 600px; margin-bottom: 1vh; gap: 8px; }
+        .app-footer { margin-top: auto; width: 100%; padding: 15px 20px; background-color: transparent; border-top: 1px solid transparent; color: var(--color-text-secondary); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; transition: all 0.3s ease-in-out; }
+        body.full-screen-mode .app-footer { display: none; }
+        .app-footer .footer-controls { display: flex; gap: 10px; flex-grow: 1; justify-content: flex-start; flex-wrap: wrap; }
+        .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 12px; font-size: 0.8em; background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
+        .app-footer .footer-btn i.feather { width: 0.9em; height: 0.9em; stroke-width: 2; stroke: currentColor; }
+        .app-footer .footer-btn:hover { background-color: var(--button-header-hover-bg); color: var(--color-text-primary); border-color: var(--color-text-primary); }
+        .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; }
+        .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-text-primary); }
+        @media (max-width: 768px) { .app-footer .footer-controls { justify-content: center; } .app-footer { flex-direction: column; align-items: center; } .app-footer .creator-info { text-align: center; margin-top:10px} }
+        @media (max-width: 480px) { .page-main-title { font-size: 2.2em; margin-bottom: 20px; } .controls-section:not(.full-screen-mode .controls-section) button { padding: 10px 12px; font-size: 0.85em; } body.full-screen-mode #estadoActual { font-size: clamp(2em, 6vh, 4em); } body.full-screen-mode #cronometroActual { font-size: clamp(5em, 25vmax, 12em); } body.full-screen-mode #cronometroTotalLabel { font-size: clamp(1em, 3vh, 1.8em); } body.full-screen-mode #cronometroTotal { font-size: clamp(1.5em, 4vh, 2.5em); } body.full-screen-mode .controls-section button { font-size: clamp(0.9em, 2.5vh, 1.2em); padding: 1.5vh 2vw;} body.full-screen-mode .controls-section button i.feather { width: clamp(1em, 3vh, 1.5em); height: clamp(1em, 3vh, 1.5em); } body.full-screen-mode .progress-label { font-size: clamp(0.9em, 2vh, 1.5em); } body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); } .app-footer { flex-direction: column; align-items: stretch; gap: 10px; } .app-footer .footer-controls { justify-content: center; } .app-footer .creator-info { text-align: center; } }
+        @media (max-width: 420px) { .page-main-title { font-size: 2em; } .container:not(.full-screen-mode .container) { padding: 25px 20px; } .controls-section:not(.full-screen-mode .controls-section) button { padding: 12px 18px; font-size: 0.95em; min-width: 120px; gap: 6px;} .controls-section:not(.full-screen-mode .controls-section) button i.feather { width: 1em; height: 1em;} #cronometroActual:not(.full-screen-mode #cronometroActual) { font-size: clamp(3.5em, 16vw, 6em); } #estadoActual:not(.full-screen-mode #estadoActual) { font-size: 1.3em; } .current-exercise-name:not(body.full-screen-mode .current-exercise-name) { font-size: 1em; } }
+        @media (max-width: 380px) { .page-main-title { font-size: 1.8em; } .config-item:not(.full-screen-mode .config-item) { flex-direction: column; align-items: flex-start; } .config-item:not(.full-screen-mode .config-item) label { margin-bottom: 8px; flex-basis: auto; width: 100%; margin-right: 0;} .config-item:not(.full-screen-mode .config-item) select { width: 100%; flex-basis: auto;} .exercise-name-item:not(body.full-screen-mode .exercise-name-item) { flex-direction: column; align-items: flex-start; } .exercise-name-item:not(body.full-screen-mode .exercise-name-item) label { text-align: left; margin-bottom: 5px; } .exercise-name-item:not(body.full-screen-mode .exercise-name-item) input[type="text"] { width: 100%; } .controls-section:not(.full-screen-mode .controls-section) { flex-direction: column; align-items: stretch; gap: 8px; } .controls-section:not(.full-screen-mode .controls-section) button { width: 100%; } }
+        @media (max-width: 360px) { .page-main-title { font-size: 1.6em; } .container:not(.full-screen-mode .container) { padding: 20px 15px; } #cronometroActual:not(.full-screen-mode #cronometroActual) { font-size: clamp(3em, 15vw, 5.5em); } #estadoActual:not(.full-screen-mode #estadoActual) { font-size: 1.2em; } .current-exercise-name:not(body.full-screen-mode .current-exercise-name) { font-size: 0.9em; } }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <div class="header-actions">
+            <button id="toggleThemeBtn" title="Cambiar Tema"><i data-feather="moon"></i></button>
+            <button id="toggleFullScreenBtn" title="Modo Pantalla Completa"><i data-feather="maximize"></i></button>
+        </div>
+    </div>
+
+    <h1 class="page-main-title">Chrono HIIT</h1>
+
+    <img id="userLogo" src="#" alt="Logo de usuario" class="hidden">
+
+    <div class="container">
+        <div id="configuracionSection" class="configuracion-section">
+            <div class="config-item"><label for="numEjercicios">Ejercicios / Serie:</label><select id="numEjercicios"></select></div>
+            <div id="exerciseNamesContainer" class="exercise-names-section hidden"></div>
+            <div class="config-item"><label for="numSeries">Series Totales:</label><select id="numSeries"></select></div>
+            <div class="config-item"><label for="tiempoEjercicio">T. Ejercicio (s):</label><select id="tiempoEjercicio"></select></div>
+            <div class="config-item"><label for="descansoEjercicio">T. Desc. Ej. (s):</label><select id="descansoEjercicio"></select></div>
+            <div class="config-item"><label for="descansoSerie">T. Desc. Serie (s):</label><select id="descansoSerie"></select></div>
+        </div>
+        <div id="estimatedTimeSection" class="estimated-time-section"><p>Duración Estimada: <span id="estimatedTimeDisplay">00:00:00</span></p></div>
+
+        <div class="progress-indicators">
+           <div class="progress-section"><span class="progress-label">Ejercicio Actual:</span><div id="exerciseProgress" class="progress-circles"></div></div>
+           <div class="progress-section"><span class="progress-label">Serie Actual:</span><div id="seriesProgress" class="progress-circles"></div></div>
+        </div>
+
+        <div class="controls-section button-group">
+            <button id="startPauseResumeBtn"><i data-feather="play"></i><span class="btn-text">Iniciar</span></button>
+            <button id="restartExerciseBtn" class="hidden"><i data-feather="rewind"></i><span class="btn-text">Reiniciar Ej.</span></button>
+            <button id="finishBtn" class="hidden"><i data-feather="x-circle"></i><span class="btn-text">Finalizar</span></button>
+        </div>
+        <div id="timerDisplaySection" class="timer-display-section hidden">
+            <div id="estadoActual">Preparado</div>
+            <div id="currentExerciseNameDisplay" class="current-exercise-name hidden"></div>
+            <div id="cronometroActual">00:00</div>
+            <div id="cronometroTotalLabel">Tiempo Total Acumulado</div><div id="cronometroTotal">00:00:00</div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-controls">
+            <input type="file" id="logoUploadInput" accept="image/png, image/jpeg" class="hidden">
+            <button id="uploadLogoBtn" class="footer-btn" title="Subir Logo"><i data-feather="upload"></i><span class="btn-text">Subir Logo</span></button>
+            <button id="removeLogoBtn" class="footer-btn hidden" title="Quitar Logo"><i data-feather="trash-2"></i><span class="btn-text">Quitar Logo</span></button>
+            <button id="exportSettingsBtn" class="footer-btn" title="Exportar Configuración"><i data-feather="download"></i><span class="btn-text">Exportar</span></button>
+            <input type="file" id="importSettingsInput" accept=".json" class="hidden">
+            <button id="importSettingsBtn" class="footer-btn" title="Importar Configuración"><i data-feather="upload-cloud"></i><span class="btn-text">Importar</span></button>
+            <button id="resetExerciseNamesBtn" class="footer-btn" title="Resetear Nombres de Ejercicios Guardados"><i data-feather="delete"></i><span class="btn-text">Reset Nombres</span></button>
+        </div>
+        <p class="creator-info">Creado por <span class="seo-name">Enrique Gil</span></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const numEjerciciosSelect = document.getElementById('numEjercicios'), numSeriesSelect = document.getElementById('numSeries'), tiempoEjercicioSelect = document.getElementById('tiempoEjercicio'), descansoEjercicioSelect = document.getElementById('descansoEjercicio'), descansoSerieSelect = document.getElementById('descansoSerie');
+            const allSelects = [numEjerciciosSelect, numSeriesSelect, tiempoEjercicioSelect, descansoEjercicioSelect, descansoSerieSelect];
+            if (allSelects.some(sel => !sel)) { console.error("ERROR CRÍTICO: Selects no encontrados."); alert("Error crítico: Controles no cargados."); return; }
+
+            const startPauseResumeBtn = document.getElementById('startPauseResumeBtn'), finishBtn = document.getElementById('finishBtn'), restartExerciseBtn = document.getElementById('restartExerciseBtn'), toggleFullScreenBtn = document.getElementById('toggleFullScreenBtn'), toggleThemeBtn = document.getElementById('toggleThemeBtn'), configuracionSection = document.getElementById('configuracionSection'), estimatedTimeSectionEl = document.getElementById('estimatedTimeSection'), estimatedTimeDisplayEl = document.getElementById('estimatedTimeDisplay'), timerDisplaySection = document.getElementById('timerDisplaySection'), estadoActualEl = document.getElementById('estadoActual'), cronometroActualEl = document.getElementById('cronometroActual'), cronometroTotalEl = document.getElementById('cronometroTotal'), exerciseProgressContainer = document.getElementById('exerciseProgress'), seriesProgressContainer = document.getElementById('seriesProgress'), bodyEl = document.body, containerEl = document.querySelector('.container'), appFooterEl = document.querySelector('.app-footer'), exerciseNamesContainerEl = document.getElementById('exerciseNamesContainer'), currentExerciseNameDisplayEl = document.getElementById('currentExerciseNameDisplay'), userLogoEl = document.getElementById('userLogo'), logoUploadInput = document.getElementById('logoUploadInput'), uploadLogoBtn = document.getElementById('uploadLogoBtn'), removeLogoBtn = document.getElementById('removeLogoBtn'), exportSettingsBtn = document.getElementById('exportSettingsBtn'), importSettingsInput = document.getElementById('importSettingsInput'), importSettingsBtn = document.getElementById('importSettingsBtn'), resetExerciseNamesBtn = document.getElementById('resetExerciseNamesBtn');
+
+            let rootStyles = getComputedStyle(document.documentElement), phaseColors = {};
+            function updatePhaseColorsFromCSS() { rootStyles = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootStyles.getPropertyValue('--phase-preparacion').trim(), ejercicio: rootStyles.getPropertyValue('--phase-ejercicio').trim(), descanso: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_ejercicio: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_serie: rootStyles.getPropertyValue('--phase-descanso').trim(), finalizado: rootStyles.getPropertyValue('--phase-finalizado').trim() }; }
+            updatePhaseColorsFromCSS();
+
+            let audioCtx, beepStartExerciseBuffer, beepEndPhaseBuffer, beepMidCountdownBuffer;
+            const FREQ_START_EXERCISE = 660, DUR_START_EXERCISE = 0.15, FREQ_END_PHASE = 440, DUR_END_PHASE = 0.20, FREQ_MID_COUNTDOWN = 880, DUR_MID_COUNTDOWN = 0.08, BEEP_VOLUME = 1.0;
+            let currentPhaseTimerInterval = null, totalSessionTimerInterval = null, totalSessionSeconds = 0, currentPhaseRemainingSeconds = 0;
+            let config = { exerciseNames: [] }, currentSerieCount = 1, currentExerciseCount = 1;
+            let currentPhase = '', isRunning = false, isPaused = false, isRePreparing = false;
+            const PREPARATION_TIME = 5, RE_PREPARATION_TIME = 5;
+
+            const DB_NAME = 'ChronoHIIT_DB', DB_VERSION = 1, OBJECT_STORE_NAME = 'userSettings', LOGO_KEY = 'userLogoData', EXERCISE_NAMES_LIST_KEY = 'allExerciseNames';
+            let db, allExerciseNamesSet = new Set();
+
+            function openIndexedDB() { return new Promise((resolve, reject) => { const request = indexedDB.open(DB_NAME, DB_VERSION); request.onupgradeneeded = event => { const db = event.target.result; if (!db.objectStoreNames.contains(OBJECT_STORE_NAME)) db.createObjectStore(OBJECT_STORE_NAME); }; request.onsuccess = event => { db = event.target.result; resolve(db); }; request.onerror = event => { console.error('IndexedDB error:', event.target.errorCode); reject('Error opening IndexedDB.'); }; }); }
+            async function saveToIndexedDB(key, data) { if (!db) await openIndexedDB(); const transaction = db.transaction([OBJECT_STORE_NAME], 'readwrite'); const store = transaction.objectStore(OBJECT_STORE_NAME); return new Promise((resolve, reject) => { const request = store.put(data, key); request.onsuccess = () => resolve(); request.onerror = e => reject(e); }); }
+            async function getFromIndexedDB(key) { if (!db) await openIndexedDB(); const transaction = db.transaction([OBJECT_STORE_NAME], 'readonly'); const store = transaction.objectStore(OBJECT_STORE_NAME); return new Promise((resolve, reject) => { const request = store.get(key); request.onsuccess = event => resolve(event.target.result); request.onerror = e => reject(e); }); }
+            async function deleteFromIndexedDB(key) { if (!db) await openIndexedDB(); const transaction = db.transaction([OBJECT_STORE_NAME], 'readwrite'); const store = transaction.objectStore(OBJECT_STORE_NAME); return new Promise((resolve, reject) => { const request = store.delete(key); request.onsuccess = () => resolve(); request.onerror = e => reject(e); }); }
+            async function loadAllExerciseNames() { try { const storedNames = await getFromIndexedDB(EXERCISE_NAMES_LIST_KEY); if (storedNames && Array.isArray(storedNames)) allExerciseNamesSet = new Set(storedNames); else allExerciseNamesSet = new Set(); } catch (error) { console.error("Error loading all exercise names:", error); allExerciseNamesSet = new Set(); } }
+            async function addExerciseNameToGlobalList(name) { if (name && !allExerciseNamesSet.has(name)) { allExerciseNamesSet.add(name); try { await saveToIndexedDB(EXERCISE_NAMES_LIST_KEY, Array.from(allExerciseNamesSet)); } catch (error) { console.error("Error saving global exercise name list:", error); } } }
+            async function loadUserLogo() { try { const storedLogo = await getFromIndexedDB(LOGO_KEY); if (storedLogo) { userLogoEl.src = storedLogo; userLogoEl.classList.remove('hidden'); userLogoEl.style.display = 'block'; removeLogoBtn.classList.remove('hidden'); uploadLogoBtn.classList.add('hidden'); } else { userLogoEl.src = '#'; userLogoEl.classList.add('hidden'); userLogoEl.style.display = 'none'; removeLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); } if (typeof feather !== 'undefined') feather.replace(); } catch (error) { console.error('Error loading logo:', error); userLogoEl.src = '#'; userLogoEl.classList.add('hidden'); userLogoEl.style.display = 'none'; removeLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); if (typeof feather !== 'undefined') feather.replace(); } }
+            function handleLogoUpload(event) { const file = event.target.files[0]; if (file && file.type.startsWith('image/')) { const reader = new FileReader(); reader.onload = async e => { try { await saveToIndexedDB(LOGO_KEY, e.target.result); loadUserLogo(); } catch (error) { console.error('Error saving logo:', error); alert('Error al guardar el logo.'); } }; reader.readAsDataURL(file); } else if (file) { alert('Por favor, sube un archivo de imagen válido (PNG, JPG).'); } }
+            async function removeUserLogo() { try { await deleteFromIndexedDB(LOGO_KEY); loadUserLogo(); } catch (error) { console.error('Error removing logo:', error); alert('Error al quitar el logo.'); } }
+            function populateExerciseNameInputs() { if (!exerciseNamesContainerEl || !numEjerciciosSelect) return; const numEjercicios = parseInt(numEjerciciosSelect.value) || 0; exerciseNamesContainerEl.innerHTML = ''; const datalistId = 'exercise-names-suggestions'; let datalistEl = document.getElementById(datalistId); if (!datalistEl) { datalistEl = document.createElement('datalist'); datalistEl.id = datalistId; document.body.appendChild(datalistEl); } datalistEl.innerHTML = ''; allExerciseNamesSet.forEach(name => { const option = document.createElement('option'); option.value = name; datalistEl.appendChild(option); }); if (numEjercicios === 0 || numEjerciciosSelect.disabled) { exerciseNamesContainerEl.classList.add('hidden'); return; } exerciseNamesContainerEl.classList.remove('hidden'); for (let i = 0; i < numEjercicios; i++) { const itemDiv = document.createElement('div'); itemDiv.classList.add('exercise-name-item'); const label = document.createElement('label'); label.htmlFor = `exerciseName${i + 1}`; label.textContent = `Ejercicio ${i + 1}:`; const input = document.createElement('input'); input.type = 'text'; input.id = `exerciseName${i + 1}`; input.placeholder = `Nombre Ej. ${i + 1}`; input.dataset.index = i; input.disabled = numEjerciciosSelect.disabled; input.setAttribute('list', datalistId); input.addEventListener('blur', async (event) => { const enteredName = event.target.value.trim(); if (enteredName && !enteredName.startsWith('Ejercicio ')) { await addExerciseNameToGlobalList(enteredName); datalistEl.innerHTML = ''; allExerciseNamesSet.forEach(name => { const option = document.createElement('option'); option.value = name; datalistEl.appendChild(option); }); } }); if (config && config.exerciseNames && config.exerciseNames[i]) input.value = config.exerciseNames[i]; itemDiv.appendChild(label); itemDiv.appendChild(input); exerciseNamesContainerEl.appendChild(itemDiv); } }
+            function generateProgressCircles(container, count) { if (!container) return; container.innerHTML = ''; for (let i = 0; i < count; i++) { const circle = document.createElement('div'); circle.classList.add('progress-circle'); circle.dataset.index = i; container.appendChild(circle); } }
+            function updateProgressCircles(type, currentCount, isPhaseCompleted = false) { const container = type === 'exercise' ? exerciseProgressContainer : seriesProgressContainer; if (!container) return; const circles = container.querySelectorAll('.progress-circle'); circles.forEach((circle, index) => { circle.classList.remove('completed', 'active'); if (index < currentCount - 1) circle.classList.add('completed'); else if (index === currentCount - 1) { if (isPhaseCompleted) circle.classList.add('completed'); else if ((isRunning || isRePreparing) && currentPhase !== 'finalizado' && currentPhase !== 'preparacion') { if (type === 'exercise' && (currentPhase === 'ejercicio' || isRePreparing)) circle.classList.add('active'); else if (type === 'series' && (currentPhase === 'ejercicio' || isRePreparing || currentPhase.startsWith('descanso_'))) circle.classList.add('active'); } } }); if (currentPhase === 'finalizado' && !isRunning) circles.forEach(c => { c.classList.remove('active'); c.classList.add('completed'); }); }
+            function createBeepBuffer(freq, duration, vol = BEEP_VOLUME) { if (!audioCtx) return null; const sampleRate = audioCtx.sampleRate; const numFrames = duration * sampleRate; const buffer = audioCtx.createBuffer(1, numFrames, sampleRate); const channelData = buffer.getChannelData(0); for (let i = 0; i < numFrames; i++) channelData[i] = Math.sin(2 * Math.PI * freq * i / sampleRate) * vol; return buffer; }
+            async function initAudio() { if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') await audioCtx.resume(); } if (audioCtx && !beepStartExerciseBuffer) { beepStartExerciseBuffer = createBeepBuffer(FREQ_START_EXERCISE, DUR_START_EXERCISE); beepEndPhaseBuffer = createBeepBuffer(FREQ_END_PHASE, DUR_END_PHASE); beepMidCountdownBuffer = createBeepBuffer(FREQ_MID_COUNTDOWN, DUR_MID_COUNTDOWN); } }
+            function playBeep(buffer) { if (!audioCtx || !buffer || audioCtx.state === 'suspended') return; try { const source = audioCtx.createBufferSource(); source.buffer = buffer; source.connect(audioCtx.destination); source.start(); } catch (e) { console.error("Error al reproducir beep:", e); } }
+            function populateSelect(selectEl, start, end, step, defaultVal) { if (!selectEl) return; selectEl.innerHTML = ''; for (let i = start; i <= end; i += step) { const option = document.createElement('option'); option.value = i; option.textContent = i; if (i === defaultVal) option.selected = true; selectEl.appendChild(option); } }
+            if (numEjerciciosSelect) populateSelect(numEjerciciosSelect, 1, 20, 1, 4); if (numSeriesSelect) populateSelect(numSeriesSelect, 1, 10, 1, 3); if (tiempoEjercicioSelect) populateSelect(tiempoEjercicioSelect, 30, 90, 15, 45); if (descansoEjercicioSelect) populateSelect(descansoEjercicioSelect, 15, 30, 5, 15); if (descansoSerieSelect) populateSelect(descansoSerieSelect, 30, 120, 15, 60);
+            function formatTime(s) { return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
+            function formatTotalTime(s) { return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
+            function calculateAndDisplayEstimatedTime() { if (allSelects.some(sel => !sel)) return; const cfg = { numSeries: parseInt(numSeriesSelect.value), numEjercicios: parseInt(numEjerciciosSelect.value), tiempoEjercicio: parseInt(tiempoEjercicioSelect.value), descansoEjercicio: parseInt(descansoEjercicioSelect.value), descansoSerie: parseInt(descansoSerieSelect.value) }; let totalEstimatedTime = PREPARATION_TIME; if (cfg.numSeries <= 0 || cfg.numEjercicios <= 0) { if (estimatedTimeDisplayEl) estimatedTimeDisplayEl.textContent = formatTotalTime(PREPARATION_TIME); return; } let timeForOneSet = (cfg.numEjercicios * cfg.tiempoEjercicio) + (cfg.numEjercicios > 1 ? (cfg.numEjercicios - 1) * cfg.descansoEjercicio : 0); totalEstimatedTime += timeForOneSet * cfg.numSeries + (cfg.numSeries > 1 ? (cfg.numSeries - 1) * cfg.descansoSerie : 0); if (estimatedTimeDisplayEl) estimatedTimeDisplayEl.textContent = formatTotalTime(totalEstimatedTime); }
+            function updateUIDisplay() { if (cronometroActualEl) cronometroActualEl.textContent = formatTime(currentPhaseRemainingSeconds); if (cronometroTotalEl) cronometroTotalEl.textContent = formatTotalTime(totalSessionSeconds); if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden'); } if (estadoActualEl) estadoActualEl.className = ''; if (timerDisplaySection) { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); } const phaseClassPrefix = 'phase-'; const bodyClassesToRemove = Array.from(bodyEl.classList).filter(c => c.startsWith(phaseClassPrefix) && c !== 'dark-theme'); bodyEl.classList.remove(...bodyClassesToRemove, 'active-timer-bg'); const containerClassesToRemove = Array.from(containerEl.classList).filter(c => c.startsWith(phaseClassPrefix)); containerEl.classList.remove(...containerClassesToRemove, 'active-timer-bg'); let estadoTexto = '', serieInfo = (config.numSeries > 1) ? ` (Serie ${currentSerieCount}/${config.numSeries})` : ''; let timerDisplayBgClass = '', estadoActualTextClass = '', currentPhaseForStyling = '', bodyPhaseColorToApply = '', currentExerciseName = ''; if (isRePreparing) { estadoTexto = "¡Ajusta Posición!"; timerDisplayBgClass = 'bg-preparacion'; estadoActualTextClass = 'preparacion-text'; currentPhaseForStyling = 'preparacion'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount - 1]) currentExerciseName = config.exerciseNames[currentExerciseCount - 1]; else if (config.numEjercicios > 0) currentExerciseName = `Ejercicio ${currentExerciseCount}`; } else if (isRunning && currentPhase && currentPhase !== 'finalizado') { currentPhaseForStyling = currentPhase; switch (currentPhase) { case 'preparacion': estadoTexto = "Prepárate"; timerDisplayBgClass = 'bg-preparacion'; estadoActualTextClass = 'preparacion-text'; if (config.exerciseNames && config.exerciseNames[0]) currentExerciseName = `Siguiente: ${config.exerciseNames[0]}`; else if (config.numEjercicios > 0) currentExerciseName = `Siguiente: Ejercicio 1`; break; case 'ejercicio': estadoTexto = `Ejercicio ${currentExerciseCount}${serieInfo}`; timerDisplayBgClass = 'bg-ejercicio'; estadoActualTextClass = 'ejercicio-text'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount - 1]) currentExerciseName = config.exerciseNames[currentExerciseCount - 1]; else if (config.numEjercicios > 0) currentExerciseName = `Ejercicio ${currentExerciseCount}`; break; case 'descanso_ejercicio': estadoTexto = `Descanso Ej.${serieInfo}`; timerDisplayBgClass = 'bg-descanso'; estadoActualTextClass = 'descanso-text'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount]) currentExerciseName = `Siguiente: ${config.exerciseNames[currentExerciseCount]}`; else if (config.numEjercicios > 0 && currentExerciseCount < config.numEjercicios) currentExerciseName = `Siguiente: Ejercicio ${currentExerciseCount + 1}`; break; case 'descanso_serie': estadoTexto = "Descanso Serie"; timerDisplayBgClass = 'bg-descanso'; estadoActualTextClass = 'descanso-text'; if (config.exerciseNames && config.exerciseNames[0]) currentExerciseName = `Siguiente: ${config.exerciseNames[0]}`; else if (config.numEjercicios > 0) currentExerciseName = `Siguiente: Ejercicio 1`; break; } } else if (currentPhase === 'finalizado') { estadoTexto = "¡Finalizado!"; timerDisplayBgClass = 'bg-finalizado'; estadoActualTextClass = 'finalizado-text'; currentPhaseForStyling = 'finalizado'; currentExerciseName = "¡Buen trabajo!"; } else { estadoTexto = "Listo"; if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.add('hidden'); } if (currentPhaseForStyling && phaseColors[currentPhaseForStyling]) { bodyPhaseColorToApply = phaseColors[currentPhaseForStyling]; bodyEl.classList.add(`phase-${currentPhaseForStyling}`); containerEl.classList.add(`phase-${currentPhaseForStyling}`); if (isRunning || isRePreparing) { bodyEl.classList.add('active-timer-bg'); containerEl.classList.add('active-timer-bg'); } } if ((bodyEl.classList.contains('full-screen-mode') && (isRunning || isRePreparing || currentPhase === 'finalizado')) || (!bodyEl.classList.contains('full-screen-mode') && (isRunning || isRePreparing || currentPhase === 'finalizado'))) bodyEl.style.backgroundColor = bodyPhaseColorToApply || ''; else bodyEl.style.backgroundColor = ''; if (estadoActualEl) { estadoActualEl.textContent = estadoTexto; if (estadoActualTextClass) estadoActualEl.classList.add(estadoActualTextClass); } if (currentExerciseNameDisplayEl && currentExerciseName) { currentExerciseNameDisplayEl.textContent = currentExerciseName; currentExerciseNameDisplayEl.classList.remove('hidden'); } else if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.classList.add('hidden'); } if (timerDisplaySection && timerDisplayBgClass) timerDisplaySection.classList.add(timerDisplayBgClass); else if (timerDisplaySection) { const bgClasses = Array.from(timerDisplaySection.classList).filter(c => c.startsWith('bg-')); timerDisplaySection.classList.remove(...bgClasses); } if (isPaused && isRunning && timerDisplaySection && !isRePreparing) timerDisplaySection.classList.add('paused-overlay'); }
+            function setUIState(state) { const enableConfig = (state === 'initial' || state === 'finished'); const isFullScreen = bodyEl.classList.contains('full-screen-mode'); allSelects.forEach(s => { if (s) s.disabled = !enableConfig; }); if (configuracionSection) configuracionSection.classList.toggle('hidden', isFullScreen || !enableConfig); if (estimatedTimeSectionEl) estimatedTimeSectionEl.classList.toggle('hidden', isFullScreen || !enableConfig); if (exerciseNamesContainerEl) { const nameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]'); nameInputs.forEach(input => input.disabled = !enableConfig); const numEj = numEjerciciosSelect ? parseInt(numEjerciciosSelect.value) : 0; exerciseNamesContainerEl.classList.toggle('hidden', isFullScreen || !enableConfig || numEj === 0); if (enableConfig) populateExerciseNameInputs(); } if (userLogoEl.classList.contains('hidden')) userLogoEl.style.display = 'none'; else userLogoEl.style.display = 'block'; if (timerDisplaySection) { timerDisplaySection.classList.toggle('hidden', state === 'initial' && !isFullScreen); if (state === 'initial') { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); if(estadoActualEl) { estadoActualEl.className = ''; estadoActualEl.textContent = "Listo"; } if(cronometroActualEl) cronometroActualEl.textContent = "00:00"; if(cronometroTotalEl) cronometroTotalEl.textContent = "00:00:00"; if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden');} currentPhase = ''; isRePreparing = false; if (exerciseProgressContainer) exerciseProgressContainer.innerHTML = ''; if (seriesProgressContainer) seriesProgressContainer.innerHTML = ''; } else { if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.remove('hidden'); } } if (startPauseResumeBtn) { startPauseResumeBtn.classList.remove('paused'); const iconEl = startPauseResumeBtn.querySelector('i.feather'); const textEl = startPauseResumeBtn.querySelector('.btn-text'); if (state === 'initial') { if (textEl) textEl.textContent = "Iniciar"; if (iconEl) iconEl.setAttribute('data-feather', 'play'); } else if (state === 'running') { if (textEl) textEl.textContent = "Pausar"; if (iconEl) iconEl.setAttribute('data-feather', 'pause'); } else if (state === 'paused') { if (textEl) textEl.textContent = "Reanudar"; if (iconEl) iconEl.setAttribute('data-feather', 'play-circle'); startPauseResumeBtn.classList.add('paused'); } else if (state === 'finished') { if (textEl) textEl.textContent = "Nuevo"; if (iconEl) iconEl.setAttribute('data-feather', 'refresh-cw'); } if (iconEl && typeof feather !== 'undefined') feather.replace(); } if (finishBtn) finishBtn.classList.toggle('hidden', !(state === 'running' || state === 'paused') || isRePreparing); if (restartExerciseBtn) { const showRestartButton = state === 'running' && currentPhase === 'ejercicio' && !isRePreparing && !isPaused; restartExerciseBtn.classList.toggle('hidden', !showRestartButton); } if (state === 'finished') { currentPhase = 'finalizado'; isRePreparing = false; } updateUIDisplay(); }
+            function phaseTick() { if (isPaused && !isRePreparing) return; if (isRePreparing) { if (currentPhaseRemainingSeconds <= RE_PREPARATION_TIME && currentPhaseRemainingSeconds >= 1 && currentPhaseRemainingSeconds <= 3) playBeep(beepMidCountdownBuffer); } else if (currentPhase === 'ejercicio' && isRunning) { if (config.tiempoEjercicio >= 20 && currentPhaseRemainingSeconds === Math.ceil(config.tiempoEjercicio / 2) && currentPhaseRemainingSeconds > 5) playBeep(beepMidCountdownBuffer); if (currentPhaseRemainingSeconds <= 5 && currentPhaseRemainingSeconds >= 1) playBeep(beepMidCountdownBuffer); } currentPhaseRemainingSeconds--; updateUIDisplay(); if (currentPhaseRemainingSeconds < 0) { if (isRePreparing) { isRePreparing = false; playBeep(beepStartExerciseBuffer); startPhase('ejercicio', config.tiempoEjercicio); } else { if (isRunning) { if (currentPhase === 'ejercicio') { updateProgressCircles('exercise', currentExerciseCount, true); if (currentExerciseCount === config.numEjercicios) updateProgressCircles('series', currentSerieCount, true); } playBeep(beepEndPhaseBuffer); } advanceToNextPhase(); } } }
+            function totalSessionTick() { if (isPaused || !isRunning) return; totalSessionSeconds++; if (cronometroTotalEl) cronometroTotalEl.textContent = formatTotalTime(totalSessionSeconds); }
+            function advanceToNextPhase() { clearInterval(currentPhaseTimerInterval); currentPhaseTimerInterval = null; let nextPhaseName = '', nextPhaseDuration = 0; if (currentPhase === 'preparacion') { nextPhaseName = 'ejercicio'; nextPhaseDuration = config.tiempoEjercicio; } else if (currentPhase === 'ejercicio') { if (config.numEjercicios > 1 && currentExerciseCount < config.numEjercicios) { nextPhaseName = 'descanso_ejercicio'; nextPhaseDuration = config.descansoEjercicio; } else { if (currentSerieCount < config.numSeries) { nextPhaseName = 'descanso_serie'; nextPhaseDuration = config.descansoSerie; } else { finishWorkout(true); return; } } } else if (currentPhase === 'descanso_ejercicio') { currentExerciseCount++; nextPhaseName = 'ejercicio'; nextPhaseDuration = config.tiempoEjercicio; } else if (currentPhase === 'descanso_serie') { currentSerieCount++; currentExerciseCount = 1; nextPhaseName = 'ejercicio'; nextPhaseDuration = config.tiempoEjercicio; } else { console.error("Estado de fase desconocido:", currentPhase); finishWorkout(false); return; } startPhase(nextPhaseName, nextPhaseDuration); }
+            function startPhase(phaseName, duration) { currentPhase = phaseName; isRePreparing = false; currentPhaseRemainingSeconds = duration; if (phaseName === 'ejercicio') { updateProgressCircles('exercise', currentExerciseCount); updateProgressCircles('series', currentSerieCount); } else if (phaseName === 'preparacion') { if (config && config.numEjercicios) updateProgressCircles('exercise', currentExerciseCount); if (config && config.numSeries) updateProgressCircles('series', currentSerieCount); } setUIState(isRunning ? (isPaused ? 'paused' : 'running') : 'initial'); if (isRunning && !isPaused && phaseName === 'ejercicio' && !isRePreparing) playBeep(beepStartExerciseBuffer); if (currentPhaseTimerInterval) clearInterval(currentPhaseTimerInterval); if (duration <= 0 && isRunning && !isPaused && phaseName !== 'finalizado') { setTimeout(() => advanceToNextPhase(), 50); return; } if (isRunning && !isPaused && phaseName !== 'finalizado') currentPhaseTimerInterval = setInterval(phaseTick, 1000); }
+            async function restartCurrentExercise() { if (!isRunning || currentPhase !== 'ejercicio' || isRePreparing) return; await initAudio(); clearInterval(currentPhaseTimerInterval); currentPhaseTimerInterval = null; isPaused = false; isRePreparing = true; currentPhaseRemainingSeconds = RE_PREPARATION_TIME; playBeep(beepMidCountdownBuffer); setUIState('running'); currentPhaseTimerInterval = setInterval(phaseTick, 1000); }
+            async function startWorkout() { if (isRunning && !isPaused) return; await initAudio(); config = { numSeries: parseInt(numSeriesSelect.value), numEjercicios: parseInt(numEjerciciosSelect.value), tiempoEjercicio: parseInt(tiempoEjercicioSelect.value), descansoEjercicio: parseInt(descansoEjercicioSelect.value), descansoSerie: parseInt(descansoSerieSelect.value), exerciseNames: [] }; if (exerciseNamesContainerEl && config.numEjercicios > 0) { const nameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]'); nameInputs.forEach((input, index) => { config.exerciseNames[index] = input.value.trim() || `Ejercicio ${index + 1}`; }); } for (let i = config.exerciseNames.length; i < config.numEjercicios; i++) config.exerciseNames[i] = `Ejercicio ${i + 1}`; if (config.exerciseNames && config.exerciseNames.length > 0) { for (const name of config.exerciseNames) { if (name.startsWith('Ejercicio ')) continue; await addExerciseNameToGlobalList(name); } } currentSerieCount = 1; currentExerciseCount = 1; totalSessionSeconds = 0; isPaused = false; isRunning = true; isRePreparing = false; if (exerciseProgressContainer) generateProgressCircles(exerciseProgressContainer, config.numEjercicios); if (seriesProgressContainer) generateProgressCircles(seriesProgressContainer, config.numSeries); startPhase('preparacion', PREPARATION_TIME); if (totalSessionTimerInterval) clearInterval(totalSessionTimerInterval); totalSessionTimerInterval = setInterval(totalSessionTick, 1000); }
+            function pauseWorkout() { if (!isRunning || isPaused || isRePreparing) return; isPaused = true; setUIState('paused'); }
+            function resumeWorkout() { if (!isRunning || !isPaused || isRePreparing) return; if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().then(() => { isPaused = false; setUIState('running'); }).catch(e => console.error("Error reanudando AudioContext:", e)); else { isPaused = false; setUIState('running'); } }
+            function finishWorkout(completedNormally = true) { clearInterval(currentPhaseTimerInterval); clearInterval(totalSessionTimerInterval); currentPhaseTimerInterval = null; totalSessionTimerInterval = null; isRunning = false; isPaused = false; isRePreparing = false; if (completedNormally) { if (config.numEjercicios) updateProgressCircles('exercise', config.numEjercicios, true); if (config.numSeries) updateProgressCircles('series', config.numSeries, true); setUIState('finished'); } else { totalSessionSeconds = 0; currentPhaseRemainingSeconds = 0; currentPhase = ''; if (config) config.exerciseNames = []; if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden'); } if (exerciseProgressContainer) exerciseProgressContainer.innerHTML = ''; if (seriesProgressContainer) seriesProgressContainer.innerHTML = ''; setUIState('initial'); calculateAndDisplayEstimatedTime(); populateExerciseNameInputs(); } }
+            allSelects.forEach(sel => { if (sel) sel.addEventListener('change', calculateAndDisplayEstimatedTime); });
+            if (numEjerciciosSelect) numEjerciciosSelect.addEventListener('change', () => { calculateAndDisplayEstimatedTime(); populateExerciseNameInputs(); });
+            if (startPauseResumeBtn) startPauseResumeBtn.addEventListener('click', () => { if (isRePreparing) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!isRunning) startWorkout(); else if (isPaused) resumeWorkout(); else pauseWorkout(); }); else { if (!isRunning) startWorkout(); else if (isPaused) resumeWorkout(); else pauseWorkout(); } });
+            if (finishBtn) finishBtn.addEventListener('click', () => { if (isRePreparing) return; finishWorkout(false); });
+            if (restartExerciseBtn) restartExerciseBtn.addEventListener('click', () => { if (isPaused && currentPhase === 'ejercicio' && !isRePreparing ) { isPaused = false; restartCurrentExercise(); } else if (!isPaused && currentPhase === 'ejercicio' && !isRePreparing) restartCurrentExercise(); });
+            if (toggleFullScreenBtn) { const icon = toggleFullScreenBtn.querySelector('i.feather'); toggleFullScreenBtn.addEventListener('click', () => { bodyEl.classList.toggle('full-screen-mode'); const isFS = bodyEl.classList.contains('full-screen-mode'); if (icon) icon.setAttribute('data-feather', isFS ? 'minimize' : 'maximize'); toggleFullScreenBtn.title = isFS ? "Modo Compacto" : "Modo Pantalla Completa"; if (appFooterEl) appFooterEl.style.display = isFS ? 'none' : 'flex'; if (typeof feather !== 'undefined') feather.replace(); let cs; if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; else if (currentPhase === 'finalizado') cs = 'finished'; else if (isPaused) cs = 'paused'; else cs = 'running'; setUIState(cs); }); }
+            const themeIcon = toggleThemeBtn ? toggleThemeBtn.querySelector('i.feather') : null;
+            if (toggleThemeBtn) toggleThemeBtn.addEventListener('click', () => { const newTheme = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+            function applyTheme(theme) { if (theme === 'dark') { bodyEl.classList.add('dark-theme'); if (themeIcon) themeIcon.setAttribute('data-feather', 'sun'); if (toggleThemeBtn) toggleThemeBtn.title = "Cambiar a Tema Claro"; } else { bodyEl.classList.remove('dark-theme'); if (themeIcon) themeIcon.setAttribute('data-feather', 'moon'); if (toggleThemeBtn) toggleThemeBtn.title = "Cambiar a Tema Oscuro"; } if (typeof feather !== 'undefined') feather.replace(); updatePhaseColorsFromCSS(); updateUIDisplay(); }
+            if (uploadLogoBtn) uploadLogoBtn.addEventListener('click', () => logoUploadInput.click());
+            if (logoUploadInput) logoUploadInput.addEventListener('change', handleLogoUpload);
+            if (removeLogoBtn) removeLogoBtn.addEventListener('click', removeUserLogo);
+            async function getCurrentSettingsAsObject() { const settings = { numEjercicios: parseInt(numEjerciciosSelect.value), numSeries: parseInt(numSeriesSelect.value), tiempoEjercicio: parseInt(tiempoEjercicioSelect.value), descansoEjercicio: parseInt(descansoEjercicioSelect.value), descansoSerie: parseInt(descansoSerieSelect.value), exerciseNames: [], theme: localStorage.getItem('theme') || 'light' }; const nameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]'); nameInputs.forEach((input, index) => { settings.exerciseNames[index] = input.value.trim() || `Ejercicio ${index + 1}`; }); for (let i = settings.exerciseNames.length; i < settings.numEjercicios; i++) settings.exerciseNames[i] = `Ejercicio ${i + 1}`; settings.allExerciseNames = Array.from(allExerciseNamesSet); if (userLogoEl.src && userLogoEl.src !== '#' && !userLogoEl.classList.contains('hidden')) settings.userLogoBase64 = userLogoEl.src; else settings.userLogoBase64 = null; return settings; }
+            if (exportSettingsBtn) { exportSettingsBtn.addEventListener('click', async () => { const settings = await getCurrentSettingsAsObject(); const jsonString = JSON.stringify(settings, null, 2); const blob = new Blob([jsonString], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'chrono_hiit_settings.json'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); if (typeof feather !== 'undefined') feather.replace(); }); }
+            if (importSettingsBtn) { importSettingsBtn.addEventListener('click', () => { importSettingsInput.click(); if (typeof feather !== 'undefined') feather.replace(); }); }
+            if (importSettingsInput) { importSettingsInput.addEventListener('change', async (event) => { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = async (e) => { try { const settings = JSON.parse(e.target.result); await applyImportedSettings(settings); alert('Configuración importada con éxito.'); } catch (error) { console.error('Error importando configuración:', error); alert('Error al importar el archivo.'); } }; reader.readAsText(file); event.target.value = null; } }); }
+            async function applyImportedSettings(settings) { if (!settings) return; if (settings.numEjercicios !== undefined) numEjerciciosSelect.value = settings.numEjercicios; if (settings.numSeries !== undefined) numSeriesSelect.value = settings.numSeries; if (settings.tiempoEjercicio !== undefined) tiempoEjercicioSelect.value = settings.tiempoEjercicio; if (settings.descansoEjercicio !== undefined) descansoEjercicioSelect.value = settings.descansoEjercicio; if (settings.descansoSerie !== undefined) descansoSerieSelect.value = settings.descansoSerie; if (settings.theme) { localStorage.setItem('theme', settings.theme); applyTheme(settings.theme); } if (settings.allExerciseNames && Array.isArray(settings.allExerciseNames)) { allExerciseNamesSet = new Set(settings.allExerciseNames); await saveToIndexedDB(EXERCISE_NAMES_LIST_KEY, Array.from(allExerciseNamesSet)); } config.exerciseNames = settings.exerciseNames || []; if (settings.userLogoBase64) { try { await saveToIndexedDB(LOGO_KEY, settings.userLogoBase64); loadUserLogo(); } catch (error) { console.error('Error saving imported logo:', error); } } else if (settings.userLogoBase64 === null) { try { await deleteFromIndexedDB(LOGO_KEY); loadUserLogo(); } catch (error) { console.error('Error removing logo from import:', error); } } calculateAndDisplayEstimatedTime(); if (isRunning) finishWorkout(false); else setUIState('initial'); populateExerciseNameInputs(); }
+            async function resetAllSavedExerciseNames() { if (confirm("¿Estás seguro de que quieres borrar todos los nombres de ejercicios guardados? Esta acción no se puede deshacer.")) { allExerciseNamesSet = new Set(); try { await deleteFromIndexedDB(EXERCISE_NAMES_LIST_KEY); console.log("Lista global de nombres de ejercicios reseteada."); const datalistEl = document.getElementById('exercise-names-suggestions'); if (datalistEl) datalistEl.innerHTML = ''; if (configuracionSection && !configuracionSection.classList.contains('hidden')) populateExerciseNameInputs(); alert("Todos los nombres de ejercicios guardados han sido borrados."); } catch (error) { console.error("Error reseteando la lista global de nombres:", error); alert("Hubo un error al borrar los nombres."); } } }
+            if (resetExerciseNamesBtn) { resetExerciseNamesBtn.addEventListener('click', async () => { await resetAllSavedExerciseNames(); if (typeof feather !== 'undefined') feather.replace(); }); }
+
+            openIndexedDB().then(async () => { await loadAllExerciseNames(); loadUserLogo(); calculateAndDisplayEstimatedTime(); const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme); setUIState('initial'); populateExerciseNameInputs(); if (typeof feather !== 'undefined') feather.replace(); }).catch(async error => { console.error("No se pudo iniciar IndexedDB:", error); alert("Advertencia: No se pudo cargar el almacenamiento local."); await loadAllExerciseNames(); calculateAndDisplayEstimatedTime(); const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme); setUIState('initial'); populateExerciseNameInputs(); if (typeof feather !== 'undefined') feather.replace(); });
+        });
+    </script>
+</body>
+</html>
