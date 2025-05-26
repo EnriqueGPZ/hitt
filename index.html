@@ -54,7 +54,8 @@
           "Nombres de ejercicios personalizables con autocompletado", "Almacenamiento de lista global de ejercicios", "Resetear lista de nombres de ejercicios guardados",
           "Cálculo de tiempo total estimado", "Alertas sonoras de cambio de fase", "Soporte para rutinas tipo Tabata y HIIT",
           "Reinicio de ejercicio actual con preparación", "Modo pantalla completa para visualización en grande", "Indicadores visuales de progreso",
-          "Tema Claro/Oscuro con persistencia", "Exportar configuración a JSON", "Importar configuración desde JSON", "Gestión de logo personalizado"
+          "Tema Claro/Oscuro con persistencia", "Exportar configuración a JSON", "Importar configuración desde JSON", "Gestión de logo personalizado",
+          "Vista de explicación de ejercicios"
         ],
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       },
@@ -386,6 +387,132 @@
             border-radius: 4px;
         }
 
+        /* ESTILOS PARA LA PANTALLA DE EXPLICACIÓN */
+        .explanation-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7); /* Fondo oscuro semitransparente */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000; /* Encima de todo */
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+        .explanation-screen:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease;
+        }
+
+        .explanation-content {
+            background-color: var(--color-surface);
+            color: var(--color-text-primary);
+            padding: 25px;
+            border-radius: var(--border-radius-main);
+            box-shadow: var(--box-shadow-subtle);
+            width: 100%;
+            max-width: 900px; /* Ajustar según necesidad */
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        body.dark-theme .explanation-content {
+            background-color: var(--color-surface-dark);
+            color: var(--color-text-primary-dark);
+        }
+
+
+        .explanation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--color-primary-accent);
+            padding-bottom: 15px;
+        }
+        .explanation-header h2 {
+            font-family: var(--font-display);
+            margin: 0;
+            font-size: 1.8em;
+        }
+        #closeExplanationBtn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            padding: 5px;
+            line-height: 0;
+        }
+        body.dark-theme #closeExplanationBtn {
+            color: var(--color-text-primary-dark);
+        }
+        #closeExplanationBtn i.feather {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        .explanation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsivas */
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .explanation-item {
+            background-color: var(--color-background); /* Usar un color ligeramente diferente para contraste */
+            color: var(--color-text-primary);
+            padding: 15px;
+            border-radius: var(--border-radius-small);
+            border: 1px solid var(--color-primary-accent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 120px; /* Altura mínima para cada item */
+        }
+        body.dark-theme .explanation-item {
+            background-color: var(--color-background-dark);
+            color: var(--color-text-primary-dark);
+            border-color: var(--color-primary-accent-dark);
+        }
+
+        .explanation-item-number {
+            font-family: var(--font-display);
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--color-highlight); /* Usar color de realce */
+            margin-bottom: 10px;
+        }
+        body.dark-theme .explanation-item-number {
+            color: var(--color-highlight-dark);
+        }
+
+        .explanation-item-name {
+            font-family: var(--font-body);
+            font-size: 1.1em;
+            font-weight: 700;
+            word-break: break-word; /* Para nombres largos */
+        }
+
+        /* Ocultar el botón de explicación si el timer está activo o finalizado */
+        body:not(.full-screen-mode) .footer-controls #showExplanationBtn.hidden-during-run {
+             display: none !important;
+        }
+        /* Ocultar si está en pantalla completa también */
+        body.full-screen-mode .footer-controls #showExplanationBtn {
+            display: none !important;
+        }
+
+
         @media (max-width: 768px) {
             .app-footer .footer-controls { justify-content: center; }
             .app-footer { flex-direction: column; align-items: center; }
@@ -405,6 +532,27 @@
             }
             .page-main-title {
                 font-size: 1.8em;
+            }
+            .explanation-content {
+                padding: 20px;
+                max-height: 85vh;
+            }
+            .explanation-header h2 {
+                font-size: 1.5em;
+            }
+            .explanation-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+             .explanation-item {
+                padding: 12px;
+                min-height: 100px;
+            }
+            .explanation-item-number {
+                font-size: 2em;
+            }
+            .explanation-item-name {
+                font-size: 1em;
             }
         }
 
@@ -435,6 +583,9 @@
             }
              body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection {
                 margin-top: calc(var(--logo-height-full-screen) + 1.5vh);
+            }
+            .explanation-grid {
+                grid-template-columns: 1fr; /* Una columna en móviles muy pequeños */
             }
 
         }
@@ -624,12 +775,27 @@
             <input type="file" id="importSettingsInput" accept=".json" class="hidden">
             <button id="importSettingsBtn" class="footer-btn" title="Importar Configuración"><i data-feather="upload-cloud"></i><span class="btn-text">Importar</span></button>
             <button id="resetExerciseNamesBtn" class="footer-btn" title="Resetear Nombres de Ejercicios Guardados"><i data-feather="delete"></i><span class="btn-text">Reset Nombres</span></button>
+            <!-- NUEVO BOTÓN -->
+            <button id="showExplanationBtn" class="footer-btn" title="Mostrar Explicación de Ejercicios"><i data-feather="layout"></i><span class="btn-text">Ver Ejercicios</span></button>
         </div>
         <p class="creator-info">
             <img src="icons/image.webp" alt="Icono del Creador" class="footer-app-icon">
             Creado por <span class="seo-name">Enrique Gil</span>
         </p>
     </footer>
+
+    <!-- NUEVO MODAL PARA EXPLICACIÓN DE EJERCICIOS -->
+    <div id="explanationScreen" class="explanation-screen hidden">
+        <div class="explanation-content">
+            <div class="explanation-header">
+                <h2>Vista de Ejercicios</h2>
+                <button id="closeExplanationBtn" title="Cerrar"><i data-feather="x"></i></button>
+            </div>
+            <div id="explanationGrid" class="explanation-grid">
+                <!-- Los ejercicios se generarán aquí -->
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -639,6 +805,11 @@
 
             const startPauseResumeBtn = document.getElementById('startPauseResumeBtn'), finishBtn = document.getElementById('finishBtn'), restartExerciseBtn = document.getElementById('restartExerciseBtn'), toggleFullScreenBtn = document.getElementById('toggleFullScreenBtn'), toggleThemeBtn = document.getElementById('toggleThemeBtn'), configuracionSection = document.getElementById('configuracionSection'), estimatedTimeSectionEl = document.getElementById('estimatedTimeSection'), estimatedTimeDisplayEl = document.getElementById('estimatedTimeDisplay'), timerDisplaySection = document.getElementById('timerDisplaySection'), estadoActualEl = document.getElementById('estadoActual'), cronometroActualEl = document.getElementById('cronometroActual'), cronometroTotalEl = document.getElementById('cronometroTotal'), exerciseProgressContainer = document.getElementById('exerciseProgress'), seriesProgressContainer = document.getElementById('seriesProgress'), bodyEl = document.body, containerEl = document.querySelector('.container'), appFooterEl = document.querySelector('.app-footer'), exerciseNamesContainerEl = document.getElementById('exerciseNamesContainer'), currentExerciseNameDisplayEl = document.getElementById('currentExerciseNameDisplay'), userLogoEl = document.getElementById('userLogo'), logoUploadInput = document.getElementById('logoUploadInput'), uploadLogoBtn = document.getElementById('uploadLogoBtn'), removeLogoBtn = document.getElementById('removeLogoBtn'), exportSettingsBtn = document.getElementById('exportSettingsBtn'), importSettingsInput = document.getElementById('importSettingsInput'), importSettingsBtn = document.getElementById('importSettingsBtn'), resetExerciseNamesBtn = document.getElementById('resetExerciseNamesBtn');
             const progressIndicatorsEl = document.querySelector('.progress-indicators'); // Necesario para lógica de visibilidad
+            const showExplanationBtn = document.getElementById('showExplanationBtn');
+            const explanationScreen = document.getElementById('explanationScreen');
+            const closeExplanationBtn = document.getElementById('closeExplanationBtn');
+            const explanationGrid = document.getElementById('explanationGrid');
+
 
             let rootStyles = getComputedStyle(document.documentElement), phaseColors = {};
             function updatePhaseColorsFromCSS() { rootStyles = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootStyles.getPropertyValue('--phase-preparacion').trim(), ejercicio: rootStyles.getPropertyValue('--phase-ejercicio').trim(), descanso: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_ejercicio: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_serie: rootStyles.getPropertyValue('--phase-descanso').trim(), finalizado: rootStyles.getPropertyValue('--phase-finalizado').trim() }; }
@@ -713,6 +884,14 @@
                     progressIndicatorsEl.classList.toggle('hidden', !showIndicators || isFullScreen && (state === 'initial' || state === 'finished'));
                     if (isFullScreen && (state === 'initial' || state === 'finished')) { // Ocultar también si está en full-screen y no ha empezado o ha terminado
                         progressIndicatorsEl.classList.add('hidden');
+                    }
+                }
+                // Controlar visibilidad del botón de explicación
+                if (showExplanationBtn) {
+                    if (state === 'running' || state === 'paused' || isFullScreen) {
+                        showExplanationBtn.classList.add('hidden-during-run'); // Ocultar si está corriendo, pausado o en fullscreen
+                    } else {
+                        showExplanationBtn.classList.remove('hidden-during-run'); // Mostrar en estado inicial o finalizado (y no fullscreen)
                     }
                 }
                 updateUIDisplay();
@@ -838,6 +1017,67 @@
             async function applyImportedSettings(settings) { if (!settings) return; if (settings.numEjercicios !== undefined) numEjerciciosSelect.value = settings.numEjercicios; if (settings.numSeries !== undefined) numSeriesSelect.value = settings.numSeries; if (settings.tiempoEjercicio !== undefined) tiempoEjercicioSelect.value = settings.tiempoEjercicio; if (settings.descansoEjercicio !== undefined) descansoEjercicioSelect.value = settings.descansoEjercicio; if (settings.descansoSerie !== undefined) descansoSerieSelect.value = settings.descansoSerie; if (settings.theme) { localStorage.setItem('theme', settings.theme); applyTheme(settings.theme); } if (settings.allExerciseNames && Array.isArray(settings.allExerciseNames)) { allExerciseNamesSet = new Set(settings.allExerciseNames); await saveToIndexedDB(EXERCISE_NAMES_LIST_KEY, Array.from(allExerciseNamesSet)); } config.exerciseNames = settings.exerciseNames || []; if (settings.userLogoBase64) { try { await saveToIndexedDB(LOGO_KEY, settings.userLogoBase64); loadUserLogo(); } catch (error) { console.error('Error saving imported logo:', error); } } else if (settings.userLogoBase64 === null) { try { await deleteFromIndexedDB(LOGO_KEY); loadUserLogo(); } catch (error) { console.error('Error removing logo from import:', error); } } calculateAndDisplayEstimatedTime(); if (isRunning) finishWorkout(false); else setUIState('initial'); populateExerciseNameInputs(); }
             async function resetAllSavedExerciseNames() { if (confirm("¿Estás seguro de que quieres borrar todos los nombres de ejercicios guardados? Esta acción no se puede deshacer.")) { allExerciseNamesSet = new Set(); try { await deleteFromIndexedDB(EXERCISE_NAMES_LIST_KEY); console.log("Lista global de nombres de ejercicios reseteada."); const datalistEl = document.getElementById('exercise-names-suggestions'); if (datalistEl) datalistEl.innerHTML = ''; if (configuracionSection && !configuracionSection.classList.contains('hidden')) populateExerciseNameInputs(); alert("Todos los nombres de ejercicios guardados han sido borrados."); } catch (error) { console.error("Error reseteando la lista global de nombres:", error); alert("Hubo un error al borrar los nombres."); } } }
             if (resetExerciseNamesBtn) { resetExerciseNamesBtn.addEventListener('click', async () => { await resetAllSavedExerciseNames(); if (typeof feather !== 'undefined') feather.replace(); }); }
+
+            function populateExplanationGrid() {
+                if (!explanationGrid || !numEjerciciosSelect) return;
+                explanationGrid.innerHTML = ''; // Limpiar grid anterior
+
+                const numEjercicios = parseInt(numEjerciciosSelect.value) || 0;
+                const exerciseNameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]');
+
+                for (let i = 0; i < numEjercicios; i++) {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('explanation-item');
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.classList.add('explanation-item-number');
+                    numberSpan.textContent = i + 1;
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.classList.add('explanation-item-name');
+                    let exerciseName = `Ejercicio ${i + 1}`;
+                    if (exerciseNameInputs[i] && exerciseNameInputs[i].value.trim()) {
+                        exerciseName = exerciseNameInputs[i].value.trim();
+                    } else if (config && config.exerciseNames && config.exerciseNames[i]) {
+                         exerciseName = config.exerciseNames[i];
+                    }
+                    nameSpan.textContent = exerciseName;
+
+                    itemDiv.appendChild(numberSpan);
+                    itemDiv.appendChild(nameSpan);
+                    explanationGrid.appendChild(itemDiv);
+                }
+            }
+
+            if (showExplanationBtn && explanationScreen && closeExplanationBtn) {
+                showExplanationBtn.addEventListener('click', () => {
+                    populateExplanationGrid();
+                    explanationScreen.classList.remove('hidden');
+                    bodyEl.style.overflow = 'hidden'; // Evitar scroll del fondo
+                    if (typeof feather !== 'undefined') feather.replace(); // Para el icono de cerrar
+                });
+
+                closeExplanationBtn.addEventListener('click', () => {
+                    explanationScreen.classList.add('hidden');
+                    bodyEl.style.overflow = ''; // Restaurar scroll
+                });
+
+                // Opcional: Cerrar al pulsar Escape
+                window.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && !explanationScreen.classList.contains('hidden')) {
+                        explanationScreen.classList.add('hidden');
+                        bodyEl.style.overflow = '';
+                    }
+                });
+                // Opcional: Cerrar al hacer clic fuera del contenido del modal
+                explanationScreen.addEventListener('click', (event) => {
+                    if (event.target === explanationScreen) { // Si el clic fue en el fondo del modal
+                        explanationScreen.classList.add('hidden');
+                        bodyEl.style.overflow = '';
+                    }
+                });
+            }
+
 
             openIndexedDB().then(async () => {
                 await loadAllExerciseNames();
