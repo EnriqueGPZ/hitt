@@ -54,7 +54,8 @@
           "Nombres de ejercicios personalizables con autocompletado", "Almacenamiento de lista global de ejercicios", "Resetear lista de nombres de ejercicios guardados",
           "Cálculo de tiempo total estimado", "Alertas sonoras de cambio de fase", "Soporte para rutinas tipo Tabata y HIIT",
           "Reinicio de ejercicio actual con preparación", "Modo pantalla completa para visualización en grande", "Indicadores visuales de progreso",
-          "Tema Claro/Oscuro con persistencia", "Exportar configuración a JSON", "Importar configuración desde JSON", "Gestión de logo personalizado"
+          "Tema Claro/Oscuro con persistencia", "Exportar configuración a JSON", "Importar configuración desde JSON", "Gestión de logo personalizado",
+          "Ajuste de tamaño de fuente del cronómetro en pantalla completa"
         ],
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       },
@@ -74,14 +75,13 @@
             --font-display: 'Oswald', sans-serif; 
             --font-body: 'Roboto Condensed', sans-serif;
             
-            /* Colores base tema CLARO */
             --color-background-light: #A0A0A0; 
             --color-surface-light: #A8A8A8;   
             --color-primary-accent-light: #ffffff;
             --color-text-primary-light: #ffffff;
             --color-text-secondary-light: #ffffff;
             --color-highlight-light: #ffffff;
-            --text-on-phase-bg-light: #FFFFFF; /* Texto blanco para fases en tema claro */
+            --text-on-phase-bg-light: #FFFFFF; 
             --text-on-phase-finalizado-bg-light: #FFFFFF; 
             --button-header-border-light: #ffffff;
             --button-header-color-light: #ffffff;
@@ -90,15 +90,13 @@
             --progress-circle-completed-bg-light: #ffffff;
             --progress-circle-active-border-light: #ffffff;
 
-
-            /* Colores base tema OSCURO */
             --color-background-dark: #BDBDBD; 
             --color-surface-dark: #C5C5C5;    
             --color-primary-accent-dark: #000000;
             --color-text-primary-dark: #000000;
             --color-text-secondary-dark: #000000;
             --color-highlight-dark: #000000;
-            --text-on-phase-bg-dark: #000000; /* Texto negro para fases en tema oscuro */
+            --text-on-phase-bg-dark: #000000; 
             --text-on-phase-finalizado-bg-dark: #000000;
             --button-header-border-dark: #000000;
             --button-header-color-dark: #000000;
@@ -107,7 +105,6 @@
             --progress-circle-completed-bg-dark: #000000;
             --progress-circle-active-border-dark: #000000;
 
-            /* Variables generales (se adaptarán según el tema) */
             --color-background: var(--color-background-light); 
             --color-surface: var(--color-surface-light);   
             --color-primary-accent: var(--color-primary-accent-light);
@@ -123,13 +120,12 @@
             --progress-circle-completed-bg: var(--progress-circle-completed-bg-light);
             --progress-circle-active-border: var(--progress-circle-active-border-light);
 
-
             --box-shadow-subtle: 0 4px 12px rgba(0,0,0,0.1);
-            --phase-paused-overlay: rgba(28, 28, 43, 0.85); /* Overlay siempre oscuro para contraste */
-            --button-header-hover-bg: rgba(255,255,255,0.1); /* Se adaptará por el color del texto/borde */
+            --phase-paused-overlay: rgba(28, 28, 43, 0.85); 
+            --button-header-hover-bg: rgba(255,255,255,0.1); 
             --select-bg: transparent;
             --select-disabled-bg: transparent;
-            --select-disabled-color: rgba(255,255,255,0.5); /* Se adaptará */
+            --select-disabled-color: rgba(255,255,255,0.5); 
             --estimated-time-bg: transparent;
             
             --phase-preparacion: #00a8ff;
@@ -158,7 +154,7 @@
             --progress-circle-active-border: var(--progress-circle-active-border-dark);
 
             --box-shadow-subtle: 0 4px 15px rgba(0,0,0,0.3);
-            --phase-paused-overlay: rgba(0, 0, 0, 0.85); /* Overlay negro para tema oscuro */
+            --phase-paused-overlay: rgba(0, 0, 0, 0.85); 
             --button-header-hover-bg: rgba(0,0,0,0.1);
             --select-disabled-color: rgba(0,0,0,0.5);
         }
@@ -249,7 +245,6 @@
         .config-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--color-primary-accent); transition: border-color 0.3s ease; }
         .config-item:last-child { border-bottom: none; margin-bottom: 0; }
         .config-item label { font-weight: 400; margin-right: 15px; flex-basis: 60%; text-align: left; color: var(--color-text-secondary); font-size: 1em; word-break: break-word; transition: color 0.3s ease; }
-        /* Texto en Fases: Ya se usa --text-on-phase-bg y --text-on-phase-finalizado-bg, que se adaptan con el tema. */
         .config-item select { font-family: var(--font-body); padding: 10px 12px; border-radius: var(--border-radius-small); border: 1px solid var(--select-border); background-color: var(--select-bg); color: var(--color-text-primary); flex-basis: 35%; font-size: 1em; transition: border-color 0.2s ease, background-color 0.3s ease, color 0.3s ease; }
         .config-item select:focus { border-color: var(--color-highlight); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent); }
         .config-item select:disabled { background-color: var(--select-disabled-bg); color: var(--select-disabled-color); opacity: 0.7; cursor: not-allowed; border-color: var(--color-primary-accent); }
@@ -263,7 +258,6 @@
         .exercise-name-item input[type="text"]:disabled { background-color: var(--select-disabled-bg); color: var(--select-disabled-color); opacity: 0.7; cursor: not-allowed; }
         body.full-screen-mode #exerciseNamesContainer { display: none !important; }
         .estimated-time-section { padding: 12px 18px; background-color: var(--estimated-time-bg); border-radius: var(--border-radius-small); font-size: 0.95em; color: var(--color-text-secondary); margin-top: 10px; transition: background-color 0.3s ease, color 0.3s ease; }
-        /* Texto en Fases para .estimated-time-section ya usa las variables --text-on-phase-bg */
         .estimated-time-section p { margin: 0; font-weight: 400; }
         #estimatedTimeDisplay { font-weight: 700; color: var(--color-text-primary); transition: color 0.3s ease; }
         .progress-indicators { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; width: 100%; align-items: center; transition: gap 0.3s ease, margin-bottom 0.3s ease, margin-top 0.3s ease; }
@@ -273,10 +267,6 @@
         .progress-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--progress-circle-border); background-color: transparent; transition: all 0.3s ease; }
         body:not(.active-timer-bg) .progress-circle.active { border-color: var(--progress-circle-active-border); }
         body:not(.active-timer-bg) .progress-circle.completed { background-color: var(--progress-circle-completed-bg); border-color: var(--progress-circle-completed-bg); }
-        /* Progreso y etiquetas en Fases ya usan --text-on-phase-bg */
-        body.full-screen-mode .progress-circle { border-color: color-mix(in srgb, var(--text-on-phase-bg) 40%, transparent); }
-        body.full-screen-mode .progress-circle.active { border-color: var(--text-on-phase-bg); background-color: color-mix(in srgb, var(--text-on-phase-bg) 10%, transparent); box-shadow: 0 0 10px color-mix(in srgb, var(--text-on-phase-bg) 30%, transparent); }
-        body.full-screen-mode .progress-circle.completed { background-color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
         .controls-section { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; transition: width 0.3s ease-in-out, gap 0.3s ease-in-out; }
         .controls-section button { font-family: var(--font-display); font-weight: 700; padding: 10px 12px; font-size: 0.9em; background-color: transparent; border: 2px solid var(--color-text-primary); color: var(--color-text-primary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease; min-width: auto; letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
         .controls-section button i.feather { width: 1em; height: 1em; stroke-width: 2.5; stroke: currentColor; transition: width 0.3s ease-in-out, height 0.3s ease-in-out; }
@@ -284,8 +274,6 @@
         .controls-section button:hover { transform: translateY(-1px); box-shadow: 0 2px 5px color-mix(in srgb, var(--color-text-primary) 8%, transparent); }
         .controls-section button:active { transform: translateY(0px) scale(0.98); box-shadow: 0 1px 3px color-mix(in srgb, var(--color-text-primary) 5%, transparent); }
         .controls-section #startPauseResumeBtn.paused { border-color: var(--color-text-primary); color: var(--color-text-primary); background-color: transparent; }
-        body.full-screen-mode .controls-section button { padding: 1.5vh 2vw; font-size: clamp(0.9em, 2.5vh, 1.5em); gap: 0.8vw; flex-grow: 1; border: 2px solid var(--color-text-primary); color: var(--color-text-primary); background-color: transparent; }
-        /* Controles en Fases ya usan --text-on-phase-bg */
         .timer-display-section.bg-preparacion { background-color: var(--phase-preparacion); } .timer-display-section.bg-ejercicio { background-color: var(--phase-ejercicio); } .timer-display-section.bg-descanso { background-color: var(--phase-descanso); } .timer-display-section.bg-finalizado { background-color: var(--phase-finalizado); }
         .timer-display-section.paused-overlay::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--phase-paused-overlay); z-index: 1; }
         #estadoActual, #cronometroActual, #cronometroTotalLabel, #cronometroTotal, .current-exercise-name { position: relative; z-index: 2; transition: font-size 0.3s ease-in-out, margin-bottom 0.3s ease-in-out, color 0.3s ease; }
@@ -299,39 +287,80 @@
             min-height: 1.2em; 
             text-transform: capitalize; 
             transition: color 0.3s ease, font-size 0.3s ease; 
-            /* Manejo de nombres largos */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            display: block; /* Para que text-overflow funcione bien */
-            width: 100%; /* Para que text-overflow funcione bien */
+            display: block; 
+            width: 100%; 
         }
-        /* Texto en Fases para display (estado, nombre ejercicio, cronos) ya usa variables --text-on-phase-bg */
-        body.full-screen-mode .current-exercise-name { font-size: clamp(1.2em, 3vh, 2.5em); margin-bottom: 1vh; }
-        
         #cronometroActual { 
             font-family: var(--font-display); 
             font-weight: 900; 
             font-size: clamp(5em, 28vw, 12em); 
-            margin: 0 0 10px 0; 
+            margin: 0 0 25px 0; /* AUMENTADO MARGEN INFERIOR */
             line-height: 1; 
             color: var(--color-text-primary); 
         }
         #cronometroTotalLabel { font-family: var(--font-body); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; font-weight: 400; margin-top: 10px; color: var(--color-text-secondary); }
         #cronometroTotal { font-family: var(--font-display); font-weight: 700; font-size: 1.4em; color: var(--color-text-secondary); }
-        #timerDisplaySection:not([class*="bg-"]) #estadoActual { color: var(--color-text-primary); } #timerDisplaySection:not([class*="bg-"]) #cronometroActual { color: var(--color-text-primary); } #timerDisplaySection:not([class*="bg-"]) #cronometroTotalLabel, #timerDisplaySection:not([class*="bg-"]) #cronometroTotal { color: var(--color-text-secondary); }
+        
+        .timer-display-section[class*="bg-"] #estadoActual,
+        .timer-display-section[class*="bg-"] .current-exercise-name,
+        .timer-display-section[class*="bg-"] #cronometroActual,
+        .timer-display-section[class*="bg-"] #cronometroTotalLabel,
+        .timer-display-section[class*="bg-"] #cronometroTotal,
+        body.active-timer-bg .progress-label,
+        body.active-timer-bg .estimated-time-section p,
+        body.active-timer-bg #estimatedTimeDisplay,
+        body.full-screen-mode.active-timer-bg .config-item label {
+            color: var(--text-on-phase-bg);
+        }
+        .timer-display-section.bg-finalizado #estadoActual,
+        .timer-display-section.bg-finalizado .current-exercise-name,
+        .timer-display-section.bg-finalizado #cronometroActual,
+        .timer-display-section.bg-finalizado #cronometroTotalLabel,
+        .timer-display-section.bg-finalizado #cronometroTotal,
+        body.active-timer-bg.phase-finalizado .progress-label,
+        body.active-timer-bg.phase-finalizado .estimated-time-section p,
+        body.active-timer-bg.phase-finalizado #estimatedTimeDisplay,
+        body.full-screen-mode.active-timer-bg.phase-finalizado .config-item label {
+            color: var(--text-on-phase-finalizado-bg);
+        }
+        .progress-circle.active { border-color: var(--text-on-phase-bg); border-width: 3px; background-color: transparent; transform: scale(1.15); }
+        .progress-circle.completed { background-color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
+
+
+        #timerDisplaySection:not([class*="bg-"]) #estadoActual { color: var(--color-text-primary); } 
+        #timerDisplaySection:not([class*="bg-"]) #cronometroActual { color: var(--color-text-primary); } 
+        #timerDisplaySection:not([class*="bg-"]) #cronometroTotalLabel, 
+        #timerDisplaySection:not([class*="bg-"]) #cronometroTotal { color: var(--color-text-secondary); }
         .hidden { display: none !important; }
+
         body.full-screen-mode { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-        body.full-screen-mode .container { max-width: 100%; width: 100%; height: 100%; margin: 0; border-radius: 0; border: none; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none; flex-grow: 1; }
+        body.full-screen-mode .container { 
+            max-width: 100%; 
+            width: 100%; 
+            height: 100%; 
+            margin: 0; 
+            border-radius: 0; 
+            border: none; 
+            padding: 2vh 10px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-around; 
+            align-items: center; 
+            box-shadow: none; 
+            flex-grow: 1; 
+        }
         body.full-screen-mode #configuracionSection, body.full-screen-mode #estimatedTimeSection { display: none !important; }
         
         body.full-screen-mode .progress-indicators { 
             gap: 1.5vh; 
-            margin-bottom: 2vh; 
+            margin-bottom: 1vh; 
             margin-top: 0; 
         }
-        body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) { /* Solo si hay indicadores Y logo */
-            margin-top: calc(var(--logo-height-full-screen) + 2vh); 
+        body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) {
+            margin-top: calc(var(--logo-height-full-screen) + 1vh); 
         }
 
         body.full-screen-mode .progress-label { font-size: clamp(0.8em, 2vh, 1.3em); }
@@ -342,38 +371,66 @@
         body.full-screen-mode #timerDisplaySection { 
             width: 95%; 
             max-width: 1200px; 
-            flex-grow: 1; 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
             margin-top: 0;
-            margin-bottom: 10px; 
-            padding: 2vw; 
+            margin-bottom: 1vh; 
+            padding: 1vw; 
         }
-        body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { /* Si NO hay indicadores Y hay logo */
-            margin-top: calc(var(--logo-height-full-screen) + 2vh);
+        body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { 
+            margin-top: calc(var(--logo-height-full-screen) + 1vh);
+        }
+        .font-adjust-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .font-adjust-controls button {
+            background: transparent;
+            border: 1px solid var(--text-on-phase-bg); 
+            color: var(--text-on-phase-bg);
+            padding: 5px;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            line-height: 0;
+        }
+        .font-adjust-controls button i.feather {
+            width: 1.2em;
+            height: 1.2em;
+            stroke: currentColor;
+        }
+        body:not(.full-screen-mode) .font-adjust-controls {
+            display: none !important; 
+        }
+        #timerDisplaySection:not([class*="bg-"]) .font-adjust-controls button {
+            border-color: var(--color-text-primary);
+            color: var(--color-text-primary);
         }
 
 
         body.full-screen-mode #estadoActual { font-size: clamp(1.8em, 5vh, 4em); margin-bottom: 1vh; min-height: auto; }
+        body.full-screen-mode .current-exercise-name { font-size: clamp(1.2em, 3vh, 2.5em); margin-bottom: 1vh; }
         
         body.full-screen-mode #cronometroActual { 
             font-size: clamp(6em, 22vw, 15em); 
             line-height: 0.85; 
-            margin-bottom: 2vh; 
+            margin-bottom: 1vh; 
         }
 
         body.full-screen-mode #cronometroTotalLabel { font-size: clamp(1em, 2.5vh, 2em); }
         body.full-screen-mode #cronometroTotal { font-size: clamp(1.5em, 4vh, 3em); }
-        body.full-screen-mode .controls-section { width: 80%; max-width: 600px; margin-bottom: 1vh; gap: 8px; }
+        body.full-screen-mode .controls-section { width: 80%; max-width: 600px; margin-bottom: 0; gap: 8px; }
+        
         .app-footer { margin-top: auto; width: 100%; padding: 15px 20px; background-color: transparent; border-top: 1px solid transparent; color: var(--color-text-secondary); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; transition: all 0.3s ease-in-out; }
         body.full-screen-mode .app-footer { display: none; }
         .app-footer .footer-controls { display: flex; gap: 10px; flex-grow: 1; justify-content: flex-start; flex-wrap: wrap; }
         .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 12px; font-size: 0.8em; background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
         .app-footer .footer-btn i.feather { width: 0.9em; height: 0.9em; stroke-width: 2; stroke: currentColor; }
         .app-footer .footer-btn:hover { background-color: var(--button-header-hover-bg); color: var(--color-text-primary); border-color: var(--color-text-primary); }
-        .app-footer .footer-btn:active { transform: scale(0.97); } /* Feedback para botones de footer */
+        .app-footer .footer-btn:active { transform: scale(0.97); }
         .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; } 
         .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-text-primary); }
         
@@ -392,7 +449,7 @@
             .app-footer .creator-info { 
                 text-align: left; 
                 width: 100%; 
-                margin-top:15px; /* Un poco más de espacio */
+                margin-top:15px; 
                 display: flex; 
                 align-items: center; 
                 justify-content: flex-start; 
@@ -424,7 +481,7 @@
             body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); } 
             .app-footer { align-items: stretch; } 
             .app-footer .creator-info { 
-                justify-content: flex-start; /* Mantener a la izquierda en móviles pequeños */
+                justify-content: flex-start; 
             } 
              body.full-screen-mode #userLogo {
                 max-width: 100px;
@@ -436,18 +493,13 @@
              body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection {
                 margin-top: calc(var(--logo-height-full-screen) + 1.5vh);
             }
-
         }
         
         @media (max-width: 420px) { 
             .container:not(.full-screen-mode .container) { padding: 25px 20px; } 
             .controls-section:not(.full-screen-mode .controls-section) button { padding: 12px 18px; font-size: 0.95em; min-width: 120px; gap: 6px;} 
             .controls-section:not(.full-screen-mode .controls-section) button i.feather { width: 1em; height: 1em;} 
-            
-            #cronometroActual:not(.full-screen-mode #cronometroActual) { 
-                font-size: clamp(4.5em, 30vw, 11em); 
-            } 
-            
+            #cronometroActual:not(.full-screen-mode #cronometroActual) { font-size: clamp(4.5em, 30vw, 11em); } 
             #estadoActual:not(.full-screen-mode #estadoActual) { font-size: 1.3em; } 
             .current-exercise-name:not(body.full-screen-mode .current-exercise-name) { font-size: 1em; } 
         }
@@ -459,26 +511,17 @@
         
         @media (max-width: 360px) { 
             .container:not(.full-screen-mode .container) { padding: 20px 15px; } 
-            
-            #cronometroActual:not(.full-screen-mode #cronometroActual) { 
-                font-size: clamp(4em, 32vw, 10em); 
-            } 
-            
+            #cronometroActual:not(.full-screen-mode #cronometroActual) { font-size: clamp(4em, 32vw, 10em); } 
             #estadoActual:not(.full-screen-mode #estadoActual) { font-size: 1.2em; } 
             .current-exercise-name:not(body.full-screen-mode .current-exercise-name) { font-size: 0.9em; } 
             .page-main-title { font-size: 1.5em; } 
-            .app-footer .creator-info { /* En el más pequeño, centrar puede ser mejor */
-                justify-content: center;
-            }
+            .app-footer .creator-info { justify-content: center;}
         }
 
         @media (orientation: landscape) and (max-height: 500px) and (min-width: 568px) { 
-            body.full-screen-mode {
-                justify-content: center; 
-            }
             body.full-screen-mode .container {
-                padding: 5px; 
-                gap: 1vh; 
+                padding: 1vh 5px; 
+                justify-content: space-around; 
             }
             body.full-screen-mode #userLogo { 
                 max-width: 80px !important; 
@@ -487,10 +530,10 @@
                 left: 1vw !important;
             }
             body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) { 
-                 margin-top: calc(var(--logo-height-full-screen) + 1vh) !important;
+                 margin-top: calc(var(--logo-height-full-screen) + 0.5vh) !important; 
             }
              body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { 
-                margin-top: calc(var(--logo-height-full-screen) + 1vh) !important;
+                margin-top: calc(var(--logo-height-full-screen) + 0.5vh) !important;
             }
 
             body.full-screen-mode .progress-indicators {
@@ -498,77 +541,30 @@
                 justify-content: center;
                 align-items: center;
                 gap: 10px; 
-                margin-bottom: 1vh !important; 
+                margin-bottom: 0.5vh !important; 
             }
-            body.full-screen-mode .progress-section {
-                gap: 4px; 
-            }
-            body.full-screen-mode .progress-label {
-                font-size: clamp(0.6em, 1.2vh, 0.9em) !important; 
-            }
-            body.full-screen-mode .progress-circle {
-                width: clamp(12px, 1.5vh, 18px) !important; 
-                height: clamp(12px, 1.5vh, 18px) !important;
-            }
-            body.full-screen-mode .progress-circles {
-                gap: clamp(4px, 0.8vh, 8px) !important; 
-            }
-            body.full-screen-mode #timerDisplaySection {
-                padding: 1vh 1vw !important; 
-                margin-bottom: 1vh !important; 
-            }
-            body.full-screen-mode #estadoActual {
-                font-size: clamp(1.4em, 3vh, 2.2em) !important; 
-                margin-bottom: 0.5vh !important;
-            }
-            body.full-screen-mode .current-exercise-name {
-                font-size: clamp(0.9em, 2vh, 1.5em) !important; 
-                margin-bottom: 0.5vh !important;
-            }
+            body.full-screen-mode .progress-section { gap: 4px; }
+            body.full-screen-mode .progress-label { font-size: clamp(0.6em, 1.2vh, 0.9em) !important; }
+            body.full-screen-mode .progress-circle { width: clamp(12px, 1.5vh, 18px) !important; height: clamp(12px, 1.5vh, 18px) !important;}
+            body.full-screen-mode .progress-circles { gap: clamp(4px, 0.8vh, 8px) !important; }
+            body.full-screen-mode #timerDisplaySection { padding: 0.5vh 1vw !important; margin-bottom: 0.5vh !important; }
+            body.full-screen-mode #estadoActual { font-size: clamp(1.4em, 3vh, 2.2em) !important; margin-bottom: 0.5vh !important;}
+            body.full-screen-mode .current-exercise-name { font-size: clamp(0.9em, 2vh, 1.5em) !important; margin-bottom: 0.5vh !important;}
             body.full-screen-mode #cronometroActual { 
                 font-size: clamp(5em, 22vh, 12em) !important; 
                 line-height: 0.8 !important; 
-                margin-bottom: 1vh !important; 
+                margin-bottom: 0.5vh !important; 
             }
-            body.full-screen-mode #cronometroTotalLabel {
-                font-size: clamp(0.7em, 1.8vh, 1.2em) !important; 
-                margin-top: 0 !important;
-            }
-            body.full-screen-mode #cronometroTotal {
-                font-size: clamp(1em, 2.5vh, 1.8em) !important; 
-            }
-            body.full-screen-mode .controls-section {
-                width: 95%; 
-                max-width: 600px; 
-                margin-bottom: 1vh !important; 
-                gap: 8px; 
-            }
-            body.full-screen-mode .controls-section button {
-                font-size: clamp(0.8em, 2vh, 1.1em) !important; 
-                padding: 1vh 1.5vw !important; 
-            }
-            body.full-screen-mode .controls-section button i.feather {
-                width: clamp(0.9em, 2vh, 1.2em) !important; 
-                height: clamp(0.9em, 2vh, 1.2em) !important;
-            }
-            body:not(.full-screen-mode) .top-bar-container {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-             body:not(.full-screen-mode).logo-visible .top-bar-container { 
-                margin-bottom: 20px; 
-            }
-            body:not(.full-screen-mode) .page-main-title {
-                 font-size: 1.8em; 
-                 margin-bottom: 0; 
-            }
-            body:not(.full-screen-mode) .container {
-                max-width: 90vw; 
-                padding-left: 15px;
-                padding-right: 15px;
-                margin-top: 0;
-            }
+            body.full-screen-mode #cronometroTotalLabel { font-size: clamp(0.7em, 1.8vh, 1.2em) !important; margin-top: 0 !important;}
+            body.full-screen-mode #cronometroTotal { font-size: clamp(1em, 2.5vh, 1.8em) !important; }
+            body.full-screen-mode .controls-section { width: 95%; max-width: 600px; margin-bottom: 0 !important; gap: 8px; }
+            body.full-screen-mode .controls-section button { font-size: clamp(0.8em, 2vh, 1.1em) !important; padding: 1vh 1.5vw !important; }
+            body.full-screen-mode .controls-section button i.feather { width: clamp(0.9em, 2vh, 1.2em) !important; height: clamp(0.9em, 2vh, 1.2em) !important;}
+            
+            body:not(.full-screen-mode) .top-bar-container { display: flex; justify-content: space-between; align-items: center; }
+            body:not(.full-screen-mode).logo-visible .top-bar-container { margin-bottom: 20px; }
+            body:not(.full-screen-mode) .page-main-title { font-size: 1.8em; margin-bottom: 0; }
+            body:not(.full-screen-mode) .container { max-width: 90vw; padding-left: 15px; padding-right: 15px; margin-top: 0;}
         }
     </style>
 </head>
@@ -610,7 +606,12 @@
             <div id="estadoActual">Preparado</div>
             <div id="currentExerciseNameDisplay" class="current-exercise-name hidden"></div>
             <div id="cronometroActual">00:00</div>
-            <div id="cronometroTotalLabel">Tiempo Total Acumulado</div><div id="cronometroTotal">00:00:00</div>
+            <div id="cronometroTotalLabel">Tiempo Total Acumulado</div>
+            <div id="cronometroTotal">00:00:00</div>
+            <div class="font-adjust-controls hidden">
+                <button id="decreaseFontSizeBtn" title="Reducir tamaño cronómetro"><i data-feather="minus-circle"></i></button>
+                <button id="increaseFontSizeBtn" title="Aumentar tamaño cronómetro"><i data-feather="plus-circle"></i></button>
+            </div>
         </div>
     </div>
 
@@ -637,7 +638,20 @@
             if (allSelects.some(sel => !sel)) { console.error("ERROR CRÍTICO: Selects no encontrados."); alert("Error crítico: Controles no cargados."); return; }
 
             const startPauseResumeBtn = document.getElementById('startPauseResumeBtn'), finishBtn = document.getElementById('finishBtn'), restartExerciseBtn = document.getElementById('restartExerciseBtn'), toggleFullScreenBtn = document.getElementById('toggleFullScreenBtn'), toggleThemeBtn = document.getElementById('toggleThemeBtn'), configuracionSection = document.getElementById('configuracionSection'), estimatedTimeSectionEl = document.getElementById('estimatedTimeSection'), estimatedTimeDisplayEl = document.getElementById('estimatedTimeDisplay'), timerDisplaySection = document.getElementById('timerDisplaySection'), estadoActualEl = document.getElementById('estadoActual'), cronometroActualEl = document.getElementById('cronometroActual'), cronometroTotalEl = document.getElementById('cronometroTotal'), exerciseProgressContainer = document.getElementById('exerciseProgress'), seriesProgressContainer = document.getElementById('seriesProgress'), bodyEl = document.body, containerEl = document.querySelector('.container'), appFooterEl = document.querySelector('.app-footer'), exerciseNamesContainerEl = document.getElementById('exerciseNamesContainer'), currentExerciseNameDisplayEl = document.getElementById('currentExerciseNameDisplay'), userLogoEl = document.getElementById('userLogo'), logoUploadInput = document.getElementById('logoUploadInput'), uploadLogoBtn = document.getElementById('uploadLogoBtn'), removeLogoBtn = document.getElementById('removeLogoBtn'), exportSettingsBtn = document.getElementById('exportSettingsBtn'), importSettingsInput = document.getElementById('importSettingsInput'), importSettingsBtn = document.getElementById('importSettingsBtn'), resetExerciseNamesBtn = document.getElementById('resetExerciseNamesBtn');
-            const progressIndicatorsEl = document.querySelector('.progress-indicators'); // Necesario para lógica de visibilidad
+            const progressIndicatorsEl = document.querySelector('.progress-indicators');
+            
+            const decreaseFontSizeBtn = document.getElementById('decreaseFontSizeBtn');
+            const increaseFontSizeBtn = document.getElementById('increaseFontSizeBtn');
+            const fontAdjustControls = document.querySelector('.font-adjust-controls');
+
+            const FONT_SIZE_KEY_FS = 'chronoHiiTFontSizeFS_v2'; 
+            const DEFAULT_FONT_SIZE_FS_VW_LANDSCAPE = 22; 
+            const DEFAULT_FONT_SIZE_FS_VW_PORTRAIT = 20; 
+            const MIN_FONT_SIZE_VW = 10; 
+            const MAX_FONT_SIZE_VW_LANDSCAPE = 45;
+            const MAX_FONT_SIZE_VW_PORTRAIT = 30;
+            const FONT_STEP_VW = 1; 
+            let currentCronometroFSFontSizeVW;
 
             let rootStyles = getComputedStyle(document.documentElement), phaseColors = {};
             function updatePhaseColorsFromCSS() { rootStyles = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootStyles.getPropertyValue('--phase-preparacion').trim(), ejercicio: rootStyles.getPropertyValue('--phase-ejercicio').trim(), descanso: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_ejercicio: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_serie: rootStyles.getPropertyValue('--phase-descanso').trim(), finalizado: rootStyles.getPropertyValue('--phase-finalizado').trim() }; }
@@ -704,15 +718,39 @@
             function formatTime(s) { return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
             function formatTotalTime(s) { return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
             function calculateAndDisplayEstimatedTime() { if (allSelects.some(sel => !sel)) return; const cfg = { numSeries: parseInt(numSeriesSelect.value), numEjercicios: parseInt(numEjerciciosSelect.value), tiempoEjercicio: parseInt(tiempoEjercicioSelect.value), descansoEjercicio: parseInt(descansoEjercicioSelect.value), descansoSerie: parseInt(descansoSerieSelect.value) }; let totalEstimatedTime = PREPARATION_TIME; if (cfg.numSeries <= 0 || cfg.numEjercicios <= 0) { if (estimatedTimeDisplayEl) estimatedTimeDisplayEl.textContent = formatTotalTime(PREPARATION_TIME); return; } let timeForOneSet = (cfg.numEjercicios * cfg.tiempoEjercicio) + (cfg.numEjercicios > 1 ? (cfg.numEjercicios - 1) * cfg.descansoEjercicio : 0); totalEstimatedTime += timeForOneSet * cfg.numSeries + (cfg.numSeries > 1 ? (cfg.numSeries - 1) * cfg.descansoSerie : 0); if (estimatedTimeDisplayEl) estimatedTimeDisplayEl.textContent = formatTotalTime(totalEstimatedTime); }
+            
+            function applyCronometroFontSize(vwValue) {
+                if (cronometroActualEl && bodyEl.classList.contains('full-screen-mode')) {
+                    let appliedVW = vwValue;
+                    let maxVW = (window.innerHeight > window.innerWidth || window.innerWidth < 768) ? MAX_FONT_SIZE_VW_PORTRAIT : MAX_FONT_SIZE_VW_LANDSCAPE;
+                    appliedVW = Math.max(MIN_FONT_SIZE_VW, Math.min(appliedVW, maxVW));
+                    cronometroActualEl.style.fontSize = `${appliedVW}vw`;
+                }
+            }
+
+            function loadFontSizePreference() {
+                const savedSizeVW = localStorage.getItem(FONT_SIZE_KEY_FS);
+                let initialVW;
+                if (window.innerHeight > window.innerWidth || window.innerWidth < 768) { 
+                    initialVW = DEFAULT_FONT_SIZE_FS_VW_PORTRAIT;
+                } else { 
+                    initialVW = DEFAULT_FONT_SIZE_FS_VW_LANDSCAPE;
+                }
+                currentCronometroFSFontSizeVW = savedSizeVW ? parseFloat(savedSizeVW) : initialVW;
+                applyCronometroFontSize(currentCronometroFSFontSizeVW);
+            }
+            
             function updateUIDisplay() { if (cronometroActualEl) cronometroActualEl.textContent = formatTime(currentPhaseRemainingSeconds); if (cronometroTotalEl) cronometroTotalEl.textContent = formatTotalTime(totalSessionSeconds); if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden'); } if (estadoActualEl) estadoActualEl.className = ''; if (timerDisplaySection) { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); } const phaseClassPrefix = 'phase-'; const bodyClassesToRemove = Array.from(bodyEl.classList).filter(c => c.startsWith(phaseClassPrefix) && c !== 'dark-theme'); bodyEl.classList.remove(...bodyClassesToRemove, 'active-timer-bg'); const containerClassesToRemove = Array.from(containerEl.classList).filter(c => c.startsWith(phaseClassPrefix)); containerEl.classList.remove(...containerClassesToRemove, 'active-timer-bg'); let estadoTexto = '', serieInfo = (config.numSeries > 1) ? ` (Serie ${currentSerieCount}/${config.numSeries})` : ''; let timerDisplayBgClass = '', estadoActualTextClass = '', currentPhaseForStyling = '', bodyPhaseColorToApply = '', currentExerciseName = ''; if (isRePreparing) { estadoTexto = "¡Ajusta Posición!"; timerDisplayBgClass = 'bg-preparacion'; estadoActualTextClass = 'preparacion-text'; currentPhaseForStyling = 'preparacion'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount - 1]) currentExerciseName = config.exerciseNames[currentExerciseCount - 1]; else if (config.numEjercicios > 0) currentExerciseName = `Ejercicio ${currentExerciseCount}`; } else if (isRunning && currentPhase && currentPhase !== 'finalizado') { currentPhaseForStyling = currentPhase; switch (currentPhase) { case 'preparacion': estadoTexto = "Prepárate"; timerDisplayBgClass = 'bg-preparacion'; estadoActualTextClass = 'preparacion-text'; if (config.exerciseNames && config.exerciseNames[0]) currentExerciseName = `Siguiente: ${config.exerciseNames[0]}`; else if (config.numEjercicios > 0) currentExerciseName = `Siguiente: Ejercicio 1`; break; case 'ejercicio': estadoTexto = `Ejercicio ${currentExerciseCount}${serieInfo}`; timerDisplayBgClass = 'bg-ejercicio'; estadoActualTextClass = 'ejercicio-text'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount - 1]) currentExerciseName = config.exerciseNames[currentExerciseCount - 1]; else if (config.numEjercicios > 0) currentExerciseName = `Ejercicio ${currentExerciseCount}`; break; case 'descanso_ejercicio': estadoTexto = `Descanso Ej.${serieInfo}`; timerDisplayBgClass = 'bg-descanso'; estadoActualTextClass = 'descanso-text'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount]) currentExerciseName = `Siguiente: ${config.exerciseNames[currentExerciseCount]}`; else if (config.numEjercicios > 0 && currentExerciseCount < config.numEjercicios) currentExerciseName = `Siguiente: Ejercicio ${currentExerciseCount + 1}`; break; case 'descanso_serie': estadoTexto = "Descanso Serie"; timerDisplayBgClass = 'bg-descanso'; estadoActualTextClass = 'descanso-text'; if (config.exerciseNames && config.exerciseNames[0]) currentExerciseName = `Siguiente: ${config.exerciseNames[0]}`; else if (config.numEjercicios > 0) currentExerciseName = `Siguiente: Ejercicio 1`; break; } } else if (currentPhase === 'finalizado') { estadoTexto = "¡Finalizado!"; timerDisplayBgClass = 'bg-finalizado'; estadoActualTextClass = 'finalizado-text'; currentPhaseForStyling = 'finalizado'; currentExerciseName = "¡Buen trabajo!"; } else { estadoTexto = "Listo"; if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.add('hidden'); } if (currentPhaseForStyling && phaseColors[currentPhaseForStyling]) { bodyPhaseColorToApply = phaseColors[currentPhaseForStyling]; bodyEl.classList.add(`phase-${currentPhaseForStyling}`); containerEl.classList.add(`phase-${currentPhaseForStyling}`); if (isRunning || isRePreparing) { bodyEl.classList.add('active-timer-bg'); containerEl.classList.add('active-timer-bg'); } } if ((bodyEl.classList.contains('full-screen-mode') && (isRunning || isRePreparing || currentPhase === 'finalizado')) || (!bodyEl.classList.contains('full-screen-mode') && (isRunning || isRePreparing || currentPhase === 'finalizado'))) bodyEl.style.backgroundColor = bodyPhaseColorToApply || ''; else bodyEl.style.backgroundColor = ''; if (estadoActualEl) { estadoActualEl.textContent = estadoTexto; if (estadoActualTextClass) estadoActualEl.classList.add(estadoActualTextClass); } if (currentExerciseNameDisplayEl && currentExerciseName) { currentExerciseNameDisplayEl.textContent = currentExerciseName; currentExerciseNameDisplayEl.classList.remove('hidden'); } else if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.classList.add('hidden'); } if (timerDisplaySection && timerDisplayBgClass) timerDisplaySection.classList.add(timerDisplayBgClass); else if (timerDisplaySection) { const bgClasses = Array.from(timerDisplaySection.classList).filter(c => c.startsWith('bg-')); timerDisplaySection.classList.remove(...bgClasses); } if (isPaused && isRunning && timerDisplaySection && !isRePreparing) timerDisplaySection.classList.add('paused-overlay'); }
             function setUIState(state) { const enableConfig = (state === 'initial' || state === 'finished'); const isFullScreen = bodyEl.classList.contains('full-screen-mode'); allSelects.forEach(s => { if (s) s.disabled = !enableConfig; }); if (configuracionSection) configuracionSection.classList.toggle('hidden', isFullScreen || !enableConfig); if (estimatedTimeSectionEl) estimatedTimeSectionEl.classList.toggle('hidden', isFullScreen || !enableConfig); if (exerciseNamesContainerEl) { const nameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]'); nameInputs.forEach(input => input.disabled = !enableConfig); const numEj = numEjerciciosSelect ? parseInt(numEjerciciosSelect.value) : 0; exerciseNamesContainerEl.classList.toggle('hidden', isFullScreen || !enableConfig || numEj === 0); if (enableConfig) populateExerciseNameInputs(); } if (userLogoEl.classList.contains('hidden')) userLogoEl.style.display = 'none'; else userLogoEl.style.display = 'block'; if (timerDisplaySection) { timerDisplaySection.classList.toggle('hidden', state === 'initial' && !isFullScreen); if (state === 'initial') { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); if(estadoActualEl) { estadoActualEl.className = ''; estadoActualEl.textContent = "Listo"; } if(cronometroActualEl) cronometroActualEl.textContent = "00:00"; if(cronometroTotalEl) cronometroTotalEl.textContent = "00:00:00"; if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden');} currentPhase = ''; isRePreparing = false; if (exerciseProgressContainer) exerciseProgressContainer.innerHTML = ''; if (seriesProgressContainer) seriesProgressContainer.innerHTML = ''; } else { if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.remove('hidden'); } } if (startPauseResumeBtn) { startPauseResumeBtn.classList.remove('paused'); const iconEl = startPauseResumeBtn.querySelector('i.feather'); const textEl = startPauseResumeBtn.querySelector('.btn-text'); if (state === 'initial') { if (textEl) textEl.textContent = "Iniciar"; if (iconEl) iconEl.setAttribute('data-feather', 'play'); } else if (state === 'running') { if (textEl) textEl.textContent = "Pausar"; if (iconEl) iconEl.setAttribute('data-feather', 'pause'); } else if (state === 'paused') { if (textEl) textEl.textContent = "Reanudar"; if (iconEl) iconEl.setAttribute('data-feather', 'play-circle'); startPauseResumeBtn.classList.add('paused'); } else if (state === 'finished') { if (textEl) textEl.textContent = "Nuevo"; if (iconEl) iconEl.setAttribute('data-feather', 'refresh-cw'); } if (iconEl && typeof feather !== 'undefined') feather.replace(); } if (finishBtn) finishBtn.classList.toggle('hidden', !(state === 'running' || state === 'paused') || isRePreparing); if (restartExerciseBtn) { const showRestartButton = state === 'running' && currentPhase === 'ejercicio' && !isRePreparing && !isPaused; restartExerciseBtn.classList.toggle('hidden', !showRestartButton); } if (state === 'finished') { currentPhase = 'finalizado'; isRePreparing = false; } 
-                // Lógica para ocultar/mostrar .progress-indicators
                 if (progressIndicatorsEl) {
-                    const showIndicators = config && config.numEjercicios > 1 || (config && config.numSeries > 1);
-                    progressIndicatorsEl.classList.toggle('hidden', !showIndicators || isFullScreen && (state === 'initial' || state === 'finished'));
-                    if (isFullScreen && (state === 'initial' || state === 'finished')) { // Ocultar también si está en full-screen y no ha empezado o ha terminado
-                        progressIndicatorsEl.classList.add('hidden');
-                    }
+                    const showIndicators = (config && config.numEjercicios > 1) || (config && config.numSeries > 1);
+                    let hideProgressInFullScreenSpecial = isFullScreen && (state === 'initial' || state === 'finished');
+                    progressIndicatorsEl.classList.toggle('hidden', !showIndicators || hideProgressInFullScreenSpecial);
+                }
+                if (fontAdjustControls) {
+                    const showFontControls = isFullScreen && (state === 'running' || state === 'paused' || state === 'finished' || isRePreparing);
+                    fontAdjustControls.classList.toggle('hidden', !showFontControls);
+                    if(showFontControls && typeof feather !== 'undefined') feather.replace();
                 }
                 updateUIDisplay(); 
             }
@@ -733,95 +771,67 @@
             
             if (toggleFullScreenBtn) { 
                 const icon = toggleFullScreenBtn.querySelector('i.feather'); 
-                
-                function isFullScreenElement() {
-                    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
-                }
-
-                function toggleBrowserFullScreen() {
-                    if (!isFullScreenElement()) {
-                        if (document.documentElement.requestFullscreen) {
-                            document.documentElement.requestFullscreen().catch(err => { console.warn(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);});
-                        } else if (document.documentElement.webkitRequestFullscreen) { 
-                            document.documentElement.webkitRequestFullscreen();
-                        } else if (document.documentElement.msRequestFullscreen) { 
-                            document.documentElement.msRequestFullscreen();
-                        }
-                    } else {
-                        if (document.exitFullscreen) {
-                            document.exitFullscreen();
-                        } else if (document.webkitExitFullscreen) { 
-                            document.webkitExitFullscreen();
-                        } else if (document.msExitFullscreen) { 
-                            document.msExitFullscreen();
-                        }
-                    }
-                }
-
+                function isFullScreenElement() { return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement); }
+                function toggleBrowserFullScreen() { if (!isFullScreenElement()) { if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen().catch(err => { console.warn(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);}); } else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); } else if (document.documentElement.msRequestFullscreen) { document.documentElement.msRequestFullscreen(); } } else { if (document.exitFullscreen) { document.exitFullscreen(); } else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); } else if (document.msExitFullscreen) { document.msExitFullscreen(); } } }
                 toggleFullScreenBtn.addEventListener('click', () => { 
                     bodyEl.classList.toggle('full-screen-mode'); 
                     const isAppFullScreen = bodyEl.classList.contains('full-screen-mode');
                     
-                    if (isAppFullScreen) {
-                        if (!isFullScreenElement()) {
-                           toggleBrowserFullScreen(); 
-                        }
-                    } else {
-                        if (isFullScreenElement()) {
-                            toggleBrowserFullScreen(); 
-                        }
+                    if (isAppFullScreen) { 
+                        if (!isFullScreenElement()) { toggleBrowserFullScreen(); }
+                        loadFontSizePreference(); 
+                    } else { 
+                        if (isFullScreenElement()) { toggleBrowserFullScreen(); }
+                        if (cronometroActualEl) cronometroActualEl.style.fontSize = ''; 
                     }
                     
                     if (icon) icon.setAttribute('data-feather', isAppFullScreen ? 'minimize' : 'maximize'); 
                     toggleFullScreenBtn.title = isAppFullScreen ? "Modo Compacto" : "Modo Pantalla Completa"; 
-                    
                     if (appFooterEl) appFooterEl.style.display = isAppFullScreen ? 'none' : 'flex'; 
                     if (typeof feather !== 'undefined') feather.replace(); 
-                    
-                    let cs; 
-                    if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; 
-                    else if (currentPhase === 'finalizado') cs = 'finished'; 
-                    else if (isPaused) cs = 'paused'; 
-                    else cs = 'running'; 
-                    setUIState(cs); 
+                    let cs; if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; else if (currentPhase === 'finalizado') cs = 'finished'; else if (isPaused) cs = 'paused'; else cs = 'running'; setUIState(cs); 
                 }); 
-
                 function handleFullScreenChange() {
-                    const isBrowserFS = isFullScreenElement();
-                    const isAppFS = bodyEl.classList.contains('full-screen-mode');
-
-                    if (!isBrowserFS && isAppFS) {
+                    const isBrowserFS = isFullScreenElement(); const isAppFS = bodyEl.classList.contains('full-screen-mode');
+                    if (!isBrowserFS && isAppFS) { 
                         bodyEl.classList.remove('full-screen-mode');
+                        if (cronometroActualEl) cronometroActualEl.style.fontSize = '';
                         if (icon) icon.setAttribute('data-feather', 'maximize');
                         toggleFullScreenBtn.title = "Modo Pantalla Completa";
                         if (appFooterEl) appFooterEl.style.display = 'flex';
+                        let cs; if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; else if (currentPhase === 'finalizado') cs = 'finished'; else if (isPaused) cs = 'paused'; else cs = 'running'; setUIState(cs);
                         if (typeof feather !== 'undefined') feather.replace();
-                        
-                        let cs; 
-                        if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; 
-                        else if (currentPhase === 'finalizado') cs = 'finished'; 
-                        else if (isPaused) cs = 'paused'; 
-                        else cs = 'running'; 
-                        setUIState(cs);
-                    } else if (isBrowserFS && !isAppFS) {
+                    } else if (isBrowserFS && !isAppFS) { 
                         bodyEl.classList.add('full-screen-mode');
+                        loadFontSizePreference();
                         if (icon) icon.setAttribute('data-feather', 'minimize');
                         toggleFullScreenBtn.title = "Modo Compacto";
                         if (appFooterEl) appFooterEl.style.display = 'none';
                          if (typeof feather !== 'undefined') feather.replace();
-                        
-                        let cs; 
-                        if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; 
-                        else if (currentPhase === 'finalizado') cs = 'finished'; 
-                        else if (isPaused) cs = 'paused'; 
-                        else cs = 'running'; 
-                        setUIState(cs);
+                        let cs; if (!isRunning && !isPaused && currentPhase === '') cs = 'initial'; else if (currentPhase === 'finalizado') cs = 'finished'; else if (isPaused) cs = 'paused'; else cs = 'running'; setUIState(cs);
                     }
                 }
-                document.addEventListener('fullscreenchange', handleFullScreenChange);
-                document.addEventListener('webkitfullscreenchange', handleFullScreenChange);
-                document.addEventListener('mozfullscreenchange', handleFullScreenChange);
-                document.addEventListener('MSFullscreenChange', handleFullScreenChange);
+                document.addEventListener('fullscreenchange', handleFullScreenChange); document.addEventListener('webkitfullscreenchange', handleFullScreenChange); document.addEventListener('mozfullscreenchange', handleFullScreenChange); document.addEventListener('MSFullscreenChange', handleFullScreenChange);
+            }
+
+            if (increaseFontSizeBtn) {
+                increaseFontSizeBtn.addEventListener('click', () => {
+                    let maxVW = (window.innerHeight > window.innerWidth || window.innerWidth < 768) ? MAX_FONT_SIZE_VW_PORTRAIT : MAX_FONT_SIZE_VW_LANDSCAPE;
+                    if (currentCronometroFSFontSizeVW < maxVW) {
+                        currentCronometroFSFontSizeVW += FONT_STEP_VW;
+                        applyCronometroFontSize(currentCronometroFSFontSizeVW);
+                        localStorage.setItem(FONT_SIZE_KEY_FS, currentCronometroFSFontSizeVW);
+                    }
+                });
+            }
+            if (decreaseFontSizeBtn) {
+                decreaseFontSizeBtn.addEventListener('click', () => {
+                    if (currentCronometroFSFontSizeVW > MIN_FONT_SIZE_VW) {
+                        currentCronometroFSFontSizeVW -= FONT_STEP_VW;
+                        applyCronometroFontSize(currentCronometroFSFontSizeVW);
+                        localStorage.setItem(FONT_SIZE_KEY_FS, currentCronometroFSFontSizeVW);
+                    }
+                });
             }
 
             const themeIcon = toggleThemeBtn ? toggleThemeBtn.querySelector('i.feather') : null;
@@ -844,7 +854,13 @@
                 calculateAndDisplayEstimatedTime();
                 const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTheme(savedTheme);
-                setUIState('initial');
+                // Config se inicializa como objeto vacío o en startWorkout,
+                // pero necesitamos que exista para la lógica de progressIndicatorsEl en setUIState
+                config = { 
+                    numEjercicios: parseInt(numEjerciciosSelect.value) || 0, 
+                    numSeries: parseInt(numSeriesSelect.value) || 0 
+                };
+                setUIState('initial'); 
                 populateExerciseNameInputs();
                 if (typeof feather !== 'undefined') feather.replace();
             }).catch(async error => {
@@ -854,6 +870,10 @@
                 calculateAndDisplayEstimatedTime();
                 const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTheme(savedTheme);
+                config = { 
+                    numEjercicios: parseInt(numEjerciciosSelect.value) || 0, 
+                    numSeries: parseInt(numSeriesSelect.value) || 0 
+                };
                 setUIState('initial');
                 populateExerciseNameInputs(); 
                 if (typeof feather !== 'undefined') feather.replace();
