@@ -13,7 +13,7 @@
     <meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado","Almacenamiento de lista global de ejercicios","Resetear lista de nombres de ejercicios guardados","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
     <style>
         :root {
             --font-display: 'Oswald', sans-serif; --font-body: 'Roboto Condensed', sans-serif;
@@ -120,7 +120,6 @@
         .app-footer .creator-info { margin:0; text-align:right; flex-grow:1; }
         .app-footer .creator-info .seo-name { font-weight:700; color:var(--color-txt-prim); }
         .app-footer .creator-info .footer-app-icon { width:36px; height:36px; vertical-align:middle; margin-right:8px; object-fit:cover; border-radius:4px; }
-        /* Generic Modal Styles (reused for explanation and manage names) */
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
         .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:900px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; }
@@ -130,14 +129,12 @@
         .modal-close-btn { background:transparent; border:none; color:var(--color-txt-prim); cursor:pointer; padding:5px; line-height:0; }
         body.dark-theme .modal-close-btn { color:var(--color-txt-prim-d); }
         .modal-close-btn i.feather { width:1.5em; height:1.5em; }
-        /* Explanation Screen Specific */
         .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; flex-grow:1; }
         .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height:120px; }
         body.dark-theme .explanation-item { background-color:var(--color-bg-d); color:var(--color-txt-prim-d); border-color:var(--color-prim-acc-d); }
         .explanation-item-number { font-family:var(--font-display); font-size:2.5em; font-weight:700; color:var(--color-hl); margin-bottom:10px; }
         body.dark-theme .explanation-item-number { color:var(--color-hl-d); }
         .explanation-item-name { font-family:var(--font-body); font-size:1.1em; font-weight:700; word-break:break-word; }
-        /* Manage Names Screen Specific */
         #manageNamesList { list-style:none; padding:0; margin:0; flex-grow:1; overflow-y:auto; }
         #manageNamesList li { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-prim-acc); }
         #manageNamesList li:last-child { border-bottom:none; }
@@ -146,7 +143,6 @@
         #manageNamesList .delete-name-btn:hover { border-color:var(--phase-end); color:var(--phase-end); }
         #manageNamesList .delete-name-btn i.feather { width:1em; height:1em; }
         .no-names-message { margin-top: 20px; color: var(--color-txt-sec); }
-
         body:not(.full-screen-mode) .footer-controls #showExplanationBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #manageNamesBtn.hidden-during-run,
         body.full-screen-mode .footer-controls #showExplanationBtn,
@@ -159,7 +155,7 @@
             .top-bar-container { margin-bottom:10px; }
             body.logo-visible .top-bar-container { margin-bottom:25px; }
             .page-main-title { font-size:1.8em; }
-            .modal-content { padding:20px; max-height:85vh; } /* Generic modal adjustment */
+            .modal-content { padding:20px; max-height:85vh; }
             .modal-header h2 { font-size:1.5em; }
             .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; }
             .explanation-item { padding:12px; min-height:100px; }
@@ -284,7 +280,7 @@
             <button id="exportSettingsBtn" class="footer-btn" title="Exportar Configuración"><i data-feather="download"></i><span class="btn-text">Exportar</span></button>
             <input type="file" id="importSettingsInput" accept=".json" class="hidden">
             <button id="importSettingsBtn" class="footer-btn" title="Importar Configuración"><i data-feather="upload-cloud"></i><span class="btn-text">Importar</span></button>
-            <button id="resetExerciseNamesBtn" class="footer-btn" title="Resetear Nombres de Ejercicios Guardados"><i data-feather="delete"></i><span class="btn-text">Reset Nombres</span></button>
+            <!-- Botón "Reset Nombres" eliminado -->
             <button id="manageNamesBtn" class="footer-btn" title="Gestionar Nombres Guardados"><i data-feather="edit-3"></i><span class="btn-text">Gestionar Nombres</span></button>
             <button id="showExplanationBtn" class="footer-btn" title="Mostrar Explicación de Ejercicios"><i data-feather="layout"></i><span class="btn-text">Ver Ejercicios</span></button>
         </div>
@@ -321,9 +317,10 @@
             const allSels = [numEjSel, numSerSel, tEjSel, dEjSel, dSerSel];
             if (allSels.some(s => !s)) { console.error("CRITICAL: Selects not found."); alert("Error: Controls not loaded."); return; }
 
-            const startBtn = getEl('startPauseResumeBtn'), finishBtn = getEl('finishBtn'), restartEjBtn = getEl('restartExerciseBtn'), fsBtn = getEl('toggleFullScreenBtn'), themeBtn = getEl('toggleThemeBtn'), cfgSec = getEl('configuracionSection'), estTimeEl = getEl('estimatedTimeSection'), estTimeDispEl = getEl('estimatedTimeDisplay'), timerDispSec = getEl('timerDisplaySection'), estadoEl = getEl('estadoActual'), cronoActEl = getEl('cronometroActual'), cronoTotalEl = getEl('cronometroTotal'), ejProgEl = getEl('exerciseProgress'), serProgEl = getEl('seriesProgress'), bodyEl = document.body, contEl = qS('.container'), footerEl = qS('.app-footer'), ejNamesContEl = getEl('exerciseNamesContainer'), curEjNameDispEl = getEl('currentExerciseNameDisplay'), logoEl = getEl('userLogo'), logoUploadIn = getEl('logoUploadInput'), uploadLogoBtn = getEl('uploadLogoBtn'), remLogoBtn = getEl('removeLogoBtn'), exportBtn = getEl('exportSettingsBtn'), importIn = getEl('importSettingsInput'), importBtn = getEl('importSettingsBtn'), resetNamesBtn = getEl('resetExerciseNamesBtn'), progIndEl = qS('.progress-indicators');
+            const startBtn = getEl('startPauseResumeBtn'), finishBtn = getEl('finishBtn'), restartEjBtn = getEl('restartExerciseBtn'), fsBtn = getEl('toggleFullScreenBtn'), themeBtn = getEl('toggleThemeBtn'), cfgSec = getEl('configuracionSection'), estTimeEl = getEl('estimatedTimeSection'), estTimeDispEl = getEl('estimatedTimeDisplay'), timerDispSec = getEl('timerDisplaySection'), estadoEl = getEl('estadoActual'), cronoActEl = getEl('cronometroActual'), cronoTotalEl = getEl('cronometroTotal'), ejProgEl = getEl('exerciseProgress'), serProgEl = getEl('seriesProgress'), bodyEl = document.body, contEl = qS('.container'), footerEl = qS('.app-footer'), ejNamesContEl = getEl('exerciseNamesContainer'), curEjNameDispEl = getEl('currentExerciseNameDisplay'), logoEl = getEl('userLogo'), logoUploadIn = getEl('logoUploadInput'), uploadLogoBtn = getEl('uploadLogoBtn'), remLogoBtn = getEl('removeLogoBtn'), exportBtn = getEl('exportSettingsBtn'), importIn = getEl('importSettingsInput'), importBtn = getEl('importSettingsBtn'), progIndEl = qS('.progress-indicators');
             const showExplBtn = getEl('showExplanationBtn'), explScreenEl = getEl('explanationScreen'), closeExplBtn = getEl('closeExplanationBtn'), explGridEl = getEl('explanationGrid');
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
+            // La constante resetNamesBtn ya no es necesaria
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { rootSt = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootSt.getPropertyValue('--phase-prep').trim(), ejercicio: rootSt.getPropertyValue('--phase-ex').trim(), descanso: rootSt.getPropertyValue('--phase-rest').trim(), descanso_ejercicio: rootSt.getPropertyValue('--phase-rest').trim(), descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), finalizado: rootSt.getPropertyValue('--phase-end').trim() }; }
@@ -401,10 +398,9 @@
             async function getCurCfgObj(){const s={numEjercicios:parseInt(numEjSel.value),numSeries:parseInt(numSerSel.value),tiempoEjercicio:parseInt(tEjSel.value),descansoEjercicio:parseInt(dEjSel.value),descansoSerie:parseInt(dSerSel.value),exerciseNames:[],theme:localStorage.getItem('theme')||'light'};const nInps=ejNamesContEl.querySelectorAll('input[type="text"]');nInps.forEach((inp,i)=>{s.exerciseNames[i]=inp.value.trim()||`Ejercicio ${i+1}`});for(let i=s.exerciseNames.length;i<s.numEjercicios;i++)s.exerciseNames[i]=`Ejercicio ${i+1}`;s.allExerciseNames=Array.from(allEjNamesSet);s.userLogoBase64=(logoEl.src&&logoEl.src!=='#'&&!logoEl.classList.contains('hidden'))?logoEl.src:null;return s}
             if(exportBtn)exportBtn.onclick=async()=>{const s=await getCurCfgObj(),j=JSON.stringify(s,null,2),b=new Blob([j],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='chrono_hiit_settings.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);if(typeof feather!=='undefined')feather.replace()};
             if(importBtn)importBtn.onclick=()=>{importIn.click();if(typeof feather!=='undefined')feather.replace()};
-            if(importIn)importIn.onchange=async e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=async ev=>{try{const s=JSON.parse(ev.target.result);await applyImpCfg(s);alert('Conf. importada.')}catch(err){console.error('Err import conf:',err);alert('Err import.')}};r.readAsText(f);e.target.value=null}};
-            async function applyImpCfg(s){if(!s)return;if(s.numEjercicios!==undefined)numEjSel.value=s.numEjercicios;if(s.numSeries!==undefined)numSerSel.value=s.numSeries;if(s.tiempoEjercicio!==undefined)tEjSel.value=s.tiempoEjercicio;if(s.descansoEjercicio!==undefined)dEjSel.value=s.descansoEjercicio;if(s.descansoSerie!==undefined)dSerSel.value=s.descansoSerie;if(s.theme){localStorage.setItem('theme',s.theme);applyTh(s.theme)}if(s.allExerciseNames&&Array.isArray(s.allExerciseNames)){allEjNamesSet=new Set(s.allExerciseNames);await saveToDB(EJ_NAMES_K,Array.from(allEjNamesSet))}cfg.exerciseNames=s.exerciseNames||[];if(s.userLogoBase64){try{await saveToDB(LOGO_K,s.userLogoBase64);loadLogo()}catch(e){console.error('Err save imported logo:',e)}}else if(s.userLogoBase64===null){try{await delFromDB(LOGO_K);loadLogo()}catch(e){console.error('Err rem logo from import:',e)}}calcEstTime();if(running)finishWorkout(false);else setUI('initial');popEjNameInputs()}
-            async function resetAllSavedEjNames(){if(confirm("Borrar todos los nombres de ejercicios guardados?")){allEjNamesSet=new Set();try{await delFromDB(EJ_NAMES_K);const dlEl=getEl('ej-names-sugg');if(dlEl)dlEl.innerHTML='';if(cfgSec&&!cfgSec.classList.contains('hidden'))popEjNameInputs();alert("Nombres borrados.")}catch(e){console.error("Err reset global names:",e);alert("Err borrando nombres.")}}}
-            if(resetNamesBtn)resetNamesBtn.onclick=async()=>{await resetAllSavedEjNames();if(typeof feather!=='undefined')feather.replace()};
+            if(importIn)importIn.onchange=async e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=async ev=>{try{const s=JSON.parse(ev.target.result);await applyImpCfg(s);alert('Conf. importada con éxito. La página se recargará.'); window.location.reload(); /* MODIFIED: Reload page */ }catch(err){console.error('Err import conf:',err);alert('Err import.')}};r.readAsText(f);e.target.value=null}};
+            async function applyImpCfg(s){if(!s)return;if(s.numEjercicios!==undefined)numEjSel.value=s.numEjercicios;if(s.numSeries!==undefined)numSerSel.value=s.numSeries;if(s.tiempoEjercicio!==undefined)tEjSel.value=s.tiempoEjercicio;if(s.descansoEjercicio!==undefined)dEjSel.value=s.descansoEjercicio;if(s.descansoSerie!==undefined)dSerSel.value=s.descansoSerie;if(s.theme){localStorage.setItem('theme',s.theme); /* Apply theme before reload is better handled by reload itself */ }if(s.allExerciseNames&&Array.isArray(s.allExerciseNames)){allEjNamesSet=new Set(s.allExerciseNames);await saveToDB(EJ_NAMES_K,Array.from(allEjNamesSet))}cfg.exerciseNames=s.exerciseNames||[];if(s.userLogoBase64){try{await saveToDB(LOGO_K,s.userLogoBase64); /* loadLogo() will be handled by reload */ }catch(e){console.error('Err save imported logo:',e)}}else if(s.userLogoBase64===null){try{await delFromDB(LOGO_K); /* loadLogo() will be handled by reload */}catch(e){console.error('Err rem logo from import:',e)}} /* Other UI updates will be handled by reload */ }
+            // resetAllSavedEjNames function and its button listener are removed.
             function popExplGrid(){if(!explGridEl||!numEjSel)return;explGridEl.innerHTML='';const numEj=parseInt(numEjSel.value)||0,ejNameInps=ejNamesContEl.querySelectorAll('input[type="text"]');for(let i=0;i<numEj;i++){const itmD=document.createElement('div');itmD.className='explanation-item';const numS=document.createElement('span');numS.className='explanation-item-number';numS.textContent=i+1;const nameS=document.createElement('span');nameS.className='explanation-item-name';let ejN=`Ejercicio ${i+1}`;if(ejNameInps[i]&&ejNameInps[i].value.trim())ejN=ejNameInps[i].value.trim();else if(cfg&&cfg.exerciseNames&&cfg.exerciseNames[i])ejN=cfg.exerciseNames[i];nameS.textContent=ejN;itmD.append(numS,nameS);explGridEl.appendChild(itmD)}}
             if(showExplBtn&&explScreenEl&&closeExplBtn){showExplBtn.onclick=()=>{popExplGrid();explScreenEl.classList.remove('hidden');bodyEl.style.overflow='hidden';if(typeof feather!=='undefined')feather.replace()};closeExplBtn.onclick=()=>{explScreenEl.classList.add('hidden');bodyEl.style.overflow=''};window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!explScreenEl.classList.contains('hidden')){explScreenEl.classList.add('hidden');bodyEl.style.overflow=''}});explScreenEl.onclick=e=>{if(e.target===explScreenEl){explScreenEl.classList.add('hidden');bodyEl.style.overflow=''}}}
 
@@ -412,54 +408,27 @@
                 if (!manageNamesListEl || !noNamesMsgEl) return;
                 manageNamesListEl.innerHTML = '';
                 const sortedNames = Array.from(allEjNamesSet).sort((a, b) => a.localeCompare(b));
-
-                if (sortedNames.length === 0) {
-                    noNamesMsgEl.classList.remove('hidden');
-                } else {
-                    noNamesMsgEl.classList.add('hidden');
-                    sortedNames.forEach(name => {
-                        const li = document.createElement('li');
-                        const nameSpan = document.createElement('span');
-                        nameSpan.className = 'managed-name-text';
-                        nameSpan.textContent = name;
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.className = 'delete-name-btn';
-                        deleteBtn.innerHTML = '<i data-feather="trash-2"></i>';
-                        deleteBtn.title = `Eliminar "${name}"`;
-                        deleteBtn.onclick = async () => {
-                            if (confirm(`¿Seguro que quieres eliminar el ejercicio "${name}" de tus nombres guardados?`)) {
-                                const success = await removeEjNameFromGlobal(name);
-                                if (success) {
-                                    li.remove(); // Quitar de la lista en el modal
-                                    popEjNameInputs(); // Actualizar datalist principal
-                                    if (manageNamesListEl.children.length === 0) {
-                                        noNamesMsgEl.classList.remove('hidden');
-                                    }
-                                } else {
-                                    alert(`Error al eliminar "${name}".`);
-                                }
-                            }
-                        };
-                        li.appendChild(nameSpan);
-                        li.appendChild(deleteBtn);
-                        manageNamesListEl.appendChild(li);
-                    });
-                }
+                noNamesMsgEl.classList.toggle('hidden', sortedNames.length > 0);
+                sortedNames.forEach(name => {
+                    const li = document.createElement('li');
+                    const nameSpan = document.createElement('span'); nameSpan.className = 'managed-name-text'; nameSpan.textContent = name;
+                    const deleteBtn = document.createElement('button'); deleteBtn.className = 'delete-name-btn'; deleteBtn.innerHTML = '<i data-feather="trash-2"></i>'; deleteBtn.title = `Eliminar "${name}"`;
+                    deleteBtn.onclick = async () => {
+                        if (confirm(`¿Seguro que quieres eliminar el ejercicio "${name}" de tus nombres guardados?`)) {
+                            if (await removeEjNameFromGlobal(name)) {
+                                li.remove(); popEjNameInputs();
+                                if (manageNamesListEl.children.length === 0) noNamesMsgEl.classList.remove('hidden');
+                            } else alert(`Error al eliminar "${name}".`);
+                        }
+                    };
+                    li.append(nameSpan, deleteBtn); manageNamesListEl.appendChild(li);
+                });
                 if (typeof feather !== 'undefined') feather.replace();
             }
 
             if (manageNamesBtn && manageNamesScreenEl && closeManageNamesBtn) {
-                manageNamesBtn.onclick = () => {
-                    populateManageNamesModal();
-                    manageNamesScreenEl.classList.remove('hidden');
-                    bodyEl.style.overflow = 'hidden';
-                    if (typeof feather !== 'undefined') feather.replace();
-                };
-                const closeManageModal = () => {
-                    manageNamesScreenEl.classList.add('hidden');
-                    bodyEl.style.overflow = '';
-                    popEjNameInputs(); // Asegurar que el datalist se actualiza al cerrar
-                };
+                manageNamesBtn.onclick = () => { populateManageNamesModal(); manageNamesScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; if (typeof feather !== 'undefined') feather.replace(); };
+                const closeManageModal = () => { manageNamesScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; popEjNameInputs(); };
                 closeManageNamesBtn.onclick = closeManageModal;
                 window.addEventListener('keydown', e => { if (e.key === 'Escape' && !manageNamesScreenEl.classList.contains('hidden')) closeManageModal(); });
                 manageNamesScreenEl.onclick = e => { if (e.target === manageNamesScreenEl) closeManageModal(); };
