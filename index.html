@@ -37,7 +37,7 @@
         #toggleFullScreenBtn, #toggleThemeBtn { background:transparent; border:1px solid var(--btn-head-brd); color:var(--btn-head-clr); padding:8px; border-radius:var(--brd-rad-sm); cursor:pointer; line-height:0; min-width:auto; transition:opacity .3s ease, transform .3s ease, background-color .2s ease, color .2s ease, border-color .2s ease; }
         #toggleFullScreenBtn i.feather, #toggleThemeBtn i.feather { width:1.2em; height:1.2em; stroke:currentColor !important; }
         #toggleFullScreenBtn:hover, #toggleThemeBtn:hover { background-color:var(--btn-head-hover-bg); }
-        .page-main-title { font-family:var(--font-display); font-weight:700; color:var(--color-txt-prim); font-size:2.2em; letter-spacing:normal; /* MODIFIED */ line-height:1.1; margin:0; text-align:left; flex-grow:1; transition:color .4s ease-in-out, font-size .3s ease; }
+        .page-main-title { font-family:var(--font-display); font-weight:700; color:var(--color-txt-prim); font-size:2.2em; letter-spacing:normal; line-height:1.1; margin:0; text-align:left; flex-grow:1; transition:color .4s ease-in-out, font-size .3s ease; }
         body.full-screen-mode .page-main-title { display:none; }
         #userLogo { max-width:150px; max-height:80px; object-fit:contain; margin-bottom:20px; transition:all .3s ease-in-out; background-color:transparent; padding:0; border-radius:var(--brd-rad-sm); }
         body.full-screen-mode #userLogo { position:fixed; top:2vh; left:2vw; max-width:120px; max-height:var(--logo-h-fs); width:auto; height:auto; margin:0; z-index:1001; background-color:transparent; padding:0; box-shadow:none; border:none; }
@@ -70,7 +70,11 @@
         .progress-circle.active { border-color:var(--prog-circ-act-brd); }
         .progress-circle.completed { background-color:var(--prog-circ-comp-bg); border-color:var(--prog-circ-comp-bg); }
         body.full-screen-mode .progress-circle { border-color:color-mix(in srgb, var(--txt-phase-bg) 40%, transparent); }
-        body.full-screen-mode .progress-circle.active { border-color:var(--txt-phase-bg); background-color:color-mix(in srgb, var(--txt-phase-bg) 10%, transparent); box-shadow:0 0 10px color-mix(in srgb, var(--txt-phase-bg) 30%, transparent); }
+        body.full-screen-mode .progress-circle.active {
+            border-color:var(--txt-phase-bg);
+            /* background-color: color-mix(in srgb, var(--txt-phase-bg) 10%, transparent); REMOVED for no bg tint */
+            box-shadow:0 0 10px color-mix(in srgb, var(--txt-phase-bg) 30%, transparent);
+        }
         body.full-screen-mode .progress-circle.completed { background-color:var(--txt-phase-bg); border-color:var(--txt-phase-bg); }
         .controls-section { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; transition:width .3s ease-in-out, gap .3s ease-in-out; }
         .controls-section button { font-family:var(--font-display); font-weight:700; padding:10px 12px; font-size:.9em; background-color:transparent; border:2px solid var(--color-txt-prim); color:var(--color-txt-prim); border-radius:var(--brd-rad-sm); cursor:pointer; transition:background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease, box-shadow .2s ease; min-width:auto; letter-spacing:.5px; text-transform:uppercase; display:inline-flex; align-items:center; justify-content:center; gap:6px; }
