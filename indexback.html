@@ -13,7 +13,7 @@
     <meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres, guardar rutinas, cargar rutinas","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado y ejercicios predefinidos con imágenes","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios con imágenes predefinidas", "Guardar rutinas personalizadas", "Cargar rutinas guardadas"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres, guardar rutinas, cargar rutinas","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado y ejercicios predefinidos con imágenes","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios con imágenes predefinidas y opción de maximizar", "Guardar rutinas personalizadas", "Cargar rutinas guardadas"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
     <style>
         :root {
             --font-display: 'Oswald', sans-serif; --font-body: 'Roboto Condensed', sans-serif;
@@ -112,24 +112,34 @@
         body.full-screen-mode .controls-section { width:80%; max-width:600px; margin-top:1vh; margin-bottom:1vh; gap:8px; }
         .app-footer { margin-top:auto; width:100%; padding:15px 20px; background-color:transparent; border-top:1px solid transparent; color:var(--color-txt-sec); font-size:.85em; display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; transition:all .3s ease-in-out; }
         body.full-screen-mode .app-footer { display:none; }
-        .app-footer .footer-controls { display:flex; gap:8px; /* Ajustar gap si es necesario */ flex-grow:1; justify-content:flex-start; flex-wrap:wrap; }
-        .app-footer .footer-btn { font-family:var(--font-body); font-weight:400; padding:8px 10px; /* Un poco menos padding si hay muchos botones */ font-size:.75em; /* Un poco más pequeño */ background-color:transparent; border:1px solid var(--color-txt-sec); color:var(--color-txt-sec); border-radius:var(--brd-rad-sm); cursor:pointer; transition:background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-width:unset; }
+        .app-footer .footer-controls { display:flex; gap:8px; flex-grow:1; justify-content:flex-start; flex-wrap:wrap; }
+        .app-footer .footer-btn { font-family:var(--font-body); font-weight:400; padding:8px 10px; font-size:.75em; background-color:transparent; border:1px solid var(--color-txt-sec); color:var(--color-txt-sec); border-radius:var(--brd-rad-sm); cursor:pointer; transition:background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-width:unset; }
         .app-footer .footer-btn i.feather { width:.8em; height:.8em; stroke-width:2; stroke:currentColor; }
         .app-footer .footer-btn:hover { background-color:var(--btn-head-hover-bg); color:var(--color-txt-prim); border-color:var(--color-txt-prim); }
         .app-footer .footer-btn:active { transform:scale(.97); }
         .app-footer .creator-info { margin:0; text-align:right; flex-grow:1; }
         .app-footer .creator-info .seo-name { font-weight:700; color:var(--color-txt-prim); }
         .app-footer .creator-info .footer-app-icon { width:36px; height:36px; vertical-align:middle; margin-right:8px; object-fit:cover; border-radius:4px; }
+
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
-        .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; /* Reducido para modales de lista */ max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; }
+        .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
         body.dark-theme .modal-content { background-color:var(--color-surf-d); color:var(--color-txt-prim-d); }
         .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--color-prim-acc); padding-bottom:15px; }
-        .modal-header h2 { font-family:var(--font-display); margin:0; font-size:1.8em; }
-        .modal-close-btn { background:transparent; border:none; color:var(--color-txt-prim); cursor:pointer; padding:5px; line-height:0; }
-        body.dark-theme .modal-close-btn { color:var(--color-txt-prim-d); }
-        .modal-close-btn i.feather { width:1.5em; height:1.5em; }
-        .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; flex-grow:1; }
+        .modal-header h2 { font-family:var(--font-display); margin:0; font-size:1.8em; flex-grow: 1; }
+        .modal-header-buttons { display:flex; gap: 10px; align-items: center; }
+        .modal-fs-btn, .modal-close-btn { background:transparent; border:none; color:var(--color-txt-prim); cursor:pointer; padding:5px; line-height:0; }
+        body.dark-theme .modal-fs-btn, body.dark-theme .modal-close-btn { color:var(--color-txt-prim-d); }
+        .modal-fs-btn i.feather, .modal-close-btn i.feather { width:1.3em; height:1.3em; }
+
+        #explanationScreen.modal-fullscreen-active .modal-content { max-width:100vw; max-height:100vh; width:100vw; height:100vh; border-radius:0; padding:20px; box-sizing: border-box;}
+        #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; align-content: flex-start;}
+        #explanationScreen.modal-fullscreen-active .explanation-item { min-height:280px; /* Aumentado aun más */ padding:25px; justify-content:center; }
+        #explanationScreen.modal-fullscreen-active .explanation-item-number { font-size:3.5em; margin-bottom:20px; }
+        #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:2em; /* Aumentado */ margin-bottom:25px; }
+        #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:180px; /* Aumentado */ }
+
+        .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:15px; flex-grow:1; }
         .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; min-height:180px; }
         body.dark-theme .explanation-item { background-color:var(--color-bg-d); color:var(--color-txt-prim-d); border-color:var(--color-prim-acc-d); }
         .explanation-item-number { font-family:var(--font-display); font-size:2em; font-weight:700; color:var(--color-hl); margin-bottom:8px; }
@@ -140,13 +150,12 @@
         #manageNamesList, #loadRoutineList { list-style:none; padding:0; margin:0; flex-grow:1; overflow-y:auto; }
         #manageNamesList li, #loadRoutineList li { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-prim-acc); }
         #manageNamesList li:last-child, #loadRoutineList li:last-child { border-bottom:none; }
-        #manageNamesList .managed-name-text, #loadRoutineList .routine-name-text { flex-grow:1; text-align:left; word-break:break-all; }
+        #manageNamesList .managed-name-text, #loadRoutineList .routine-name-text { flex-grow:1; text-align:left; word-break:break-all; margin-right: 10px; }
         #manageNamesList .delete-name-btn, #loadRoutineList .routine-action-btn { background:transparent; border:1px solid var(--color-txt-sec); color:var(--color-txt-sec); border-radius:var(--brd-rad-sm); padding:5px 8px; cursor:pointer; margin-left:5px; font-size:0.8em;}
         #manageNamesList .delete-name-btn:hover, #loadRoutineList .routine-action-btn:hover { border-color:var(--phase-end); color:var(--phase-end); }
         #manageNamesList .delete-name-btn i.feather, #loadRoutineList .routine-action-btn i.feather { width:1em; height:1em; vertical-align: middle; margin-right: 3px;}
-        #loadRoutineList .routine-actions { display: flex; gap: 5px; }
+        #loadRoutineList .routine-actions { display: flex; gap: 5px; flex-shrink: 0; }
         .no-items-message { margin-top: 20px; color: var(--color-txt-sec); }
-
         body:not(.full-screen-mode) .footer-controls #showExplanationBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #manageNamesBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #saveRoutineBtn.hidden-during-run,
@@ -156,6 +165,10 @@
         body.full-screen-mode .footer-controls #saveRoutineBtn,
         body.full-screen-mode .footer-controls #loadRoutineBtn { display:none !important; }
 
+        @media (min-width: 769px) {
+            #explanationScreen:not(.modal-fullscreen-active) .explanation-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            #explanationScreen:not(.modal-fullscreen-active) .modal-content { max-width: 900px; }
+        }
         @media (max-width:768px) {
             .app-footer .footer-controls { justify-content:center; gap: 5px; }
             .app-footer .footer-btn { padding: 6px 8px; font-size: .7em;}
@@ -165,12 +178,14 @@
             body.logo-visible .top-bar-container { margin-bottom:25px; }
             .page-main-title { font-size:1.8em; }
             .modal-content { padding:20px; max-height:85vh; max-width: 90%;}
+            #explanationScreen.modal-fullscreen-active .modal-content { max-width: 100vw; max-height: 100vh; }
             .modal-header h2 { font-size:1.5em; }
             .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; }
             .explanation-item { padding:12px; min-height:160px; }
             .explanation-item-number { font-size:1.8em; }
             .explanation-item-name { font-size:1em; margin-bottom: 12px; }
             .explanation-item-image-container { height: 100px; }
+            #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
         }
         @media (max-width:480px) {
             .controls-section:not(.full-screen-mode .controls-section) button { padding:10px 12px; font-size:.85em; }
@@ -183,14 +198,11 @@
             body.full-screen-mode .progress-label { font-size:clamp(.9em, 2vh, 1.5em); }
             body.full-screen-mode .progress-circle { width:clamp(15px, 2.5vh, 30px); height:clamp(15px, 2.5vh, 30px); }
             .app-footer { align-items:stretch; }
-            /* .app-footer .creator-info { justify-content:flex-start; } */ /* Ya centrado en 768px */
-            body.full-screen-mode #userLogo { max-width:100px; --logo-h-fs:50px; }
-            body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) { margin-top:calc(var(--logo-h-fs) + 1.5vh); }
-            body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { margin-top:calc(var(--logo-h-fs) + 1.5vh); }
             .explanation-grid { grid-template-columns:1fr; }
             #manageNamesList li, #loadRoutineList li { flex-direction: column; align-items: flex-start; gap: 8px;}
             #manageNamesList .delete-name-btn, #loadRoutineList .routine-actions { margin-left:0; width: 100%;}
             #loadRoutineList .routine-action-btn { flex-grow: 1; text-align: center;}
+            #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
         }
         @media (max-width:420px) {
             .container:not(.full-screen-mode .container) { padding:25px 20px; }
@@ -302,7 +314,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Vista de Ejercicios</h2>
-                <button id="closeExplanationBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                <div class="modal-header-buttons">
+                    <button id="toggleExplanationFSBtn" class="modal-fs-btn" title="Maximizar Vista"><i data-feather="maximize-2"></i></button>
+                    <button id="closeExplanationBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                </div>
             </div>
             <div id="explanationGrid" class="explanation-grid"></div>
         </div>
@@ -312,18 +327,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Gestionar Nombres Guardados</h2>
-                <button id="closeManageNamesBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                 <div class="modal-header-buttons">
+                    <button id="closeManageNamesBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                </div>
             </div>
             <ul id="manageNamesList"></ul>
             <p id="noNamesMessage" class="no-items-message hidden">No hay nombres de ejercicios guardados.</p>
         </div>
     </div>
-
+    
     <div id="loadRoutineScreen" class="modal-screen hidden">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Cargar Rutina Guardada</h2>
-                <button id="closeLoadRoutineBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                <div class="modal-header-buttons">
+                    <button id="closeLoadRoutineBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                </div>
             </div>
             <ul id="loadRoutineList"></ul>
             <p id="noRoutinesMessage" class="no-items-message hidden">No hay rutinas guardadas.</p>
@@ -340,7 +359,7 @@
             if (allSels.some(s => !s)) { console.error("CRITICAL: Selects not found."); alert("Error: Controls not loaded."); return; }
 
             const startBtn = getEl('startPauseResumeBtn'), finishBtn = getEl('finishBtn'), restartEjBtn = getEl('restartExerciseBtn'), fsBtn = getEl('toggleFullScreenBtn'), themeBtn = getEl('toggleThemeBtn'), cfgSec = getEl('configuracionSection'), estTimeEl = getEl('estimatedTimeSection'), estTimeDispEl = getEl('estimatedTimeDisplay'), timerDispSec = getEl('timerDisplaySection'), estadoEl = getEl('estadoActual'), cronoActEl = getEl('cronometroActual'), cronoTotalEl = getEl('cronometroTotal'), ejProgEl = getEl('exerciseProgress'), serProgEl = getEl('seriesProgress'), bodyEl = document.body, contEl = qS('.container'), footerEl = qS('.app-footer'), ejNamesContEl = getEl('exerciseNamesContainer'), curEjNameDispEl = getEl('currentExerciseNameDisplay'), logoEl = getEl('userLogo'), logoUploadIn = getEl('logoUploadInput'), uploadLogoBtn = getEl('uploadLogoBtn'), remLogoBtn = getEl('removeLogoBtn'), exportBtn = getEl('exportSettingsBtn'), importIn = getEl('importSettingsInput'), importBtn = getEl('importSettingsBtn'), progIndEl = qS('.progress-indicators');
-            const showExplBtn = getEl('showExplanationBtn'), explScreenEl = getEl('explanationScreen'), closeExplBtn = getEl('closeExplanationBtn'), explGridEl = getEl('explanationGrid');
+            const showExplBtn = getEl('showExplanationBtn'), explScreenEl = getEl('explanationScreen'), closeExplBtn = getEl('closeExplanationBtn'), explGridEl = getEl('explanationGrid'), toggleExplFSBtn = getEl('toggleExplanationFSBtn');
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
 
@@ -358,7 +377,7 @@
             let cfg = { exerciseNames: [] }, curSer = 1, curEj = 1;
             let curPhase = '', running = false, paused = false, rePrep = false;
             const PREP_TIME = 5, RE_PREP_TIME = 5;
-            const DB_NAME = 'ChronoHIIT_DB', DB_VER = 2; // Increment DB_VER for new object store
+            const DB_NAME = 'ChronoHIIT_DB', DB_VER = 2;
             const USER_SETTINGS_STORE = 'userSettings', SAVED_ROUTINES_STORE = 'savedRoutines';
             const LOGO_K = 'userLogoData', EJ_NAMES_K = 'allExerciseNames';
             let db, allEjNamesSet = new Set();
@@ -368,25 +387,25 @@
                 req.onupgradeneeded = e => {
                     const d = e.target.result;
                     if (!d.objectStoreNames.contains(USER_SETTINGS_STORE)) d.createObjectStore(USER_SETTINGS_STORE);
-                    if (!d.objectStoreNames.contains(SAVED_ROUTINES_STORE)) d.createObjectStore(SAVED_ROUTINES_STORE, { keyPath: 'nombreRutina' }); // Use nombreRutina as key
+                    if (!d.objectStoreNames.contains(SAVED_ROUTINES_STORE)) d.createObjectStore(SAVED_ROUTINES_STORE, { keyPath: 'nombreRutina' });
                 };
                 req.onsuccess = e => { db = e.target.result; res(db); };
                 req.onerror = e => { console.error('IDB err:', e.target.errorCode); rej('IDB err.'); };
             });
-            const dbAction = async (storeName, mode, action, key, data) => {
+            const dbAction = async (storeName, mode, action, keyOrData, dataOnlyForPutKv) => {
                 if (!db) await openDB();
                 return new Promise((res, rej) => {
                     const tx = db.transaction([storeName], mode);
                     const store = tx.objectStore(storeName);
                     let req;
-                    if (action === 'put') req = store.put(data); // For SAVED_ROUTINES_STORE, data should include keyPath field
-                    else if (action === 'put_kv') req = store.put(data, key); // For USER_SETTINGS_STORE
-                    else if (action === 'get') req = store.get(key);
-                    else if (action === 'delete') req = store.delete(key);
+                    if (action === 'put' && storeName === SAVED_ROUTINES_STORE) req = store.put(keyOrData);
+                    else if (action === 'put_kv' && storeName === USER_SETTINGS_STORE) req = store.put(dataOnlyForPutKv, keyOrData);
+                    else if (action === 'get') req = store.get(keyOrData);
+                    else if (action === 'delete') req = store.delete(keyOrData);
                     else if (action === 'getAll') req = store.getAll();
                     else return rej('Invalid DB action');
                     req.onsuccess = e => res(action === 'get' || action === 'getAll' ? e.target.result : true);
-                    req.onerror = e => { console.error(`DB ${action} err:`, e); rej(e); };
+                    req.onerror = e => { console.error(`DB ${action} err on ${storeName}:`, e); rej(e); };
                 });
             };
 
@@ -394,8 +413,8 @@
             async function addEjNameToGlobal(name) { if (name && !allEjNamesSet.has(name) && !predefinedExercises[name]) { allEjNamesSet.add(name); try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv', EJ_NAMES_K, Array.from(allEjNamesSet)); } catch (err) { console.error("Err save global ej name list:", err); } } }
             async function removeEjNameFromGlobal(name) { if (name && allEjNamesSet.has(name)) { allEjNamesSet.delete(name); try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv', EJ_NAMES_K, Array.from(allEjNamesSet)); return true; } catch (err) { console.error("Err removing ej name from global list:", err); return false;} } return false; }
             async function loadLogo() { try { const stored = await dbAction(USER_SETTINGS_STORE, 'readonly', 'get', LOGO_K); logoEl.src = stored || '#'; logoEl.classList.toggle('hidden', !stored); logoEl.style.display = stored ? 'block' : 'none'; remLogoBtn.classList.toggle('hidden', !stored); uploadLogoBtn.classList.toggle('hidden', !!stored); bodyEl.classList.toggle('logo-visible', !!stored); if (typeof feather!=='undefined') feather.replace(); } catch (err) { console.error('Err load logo:', err); logoEl.src='#'; logoEl.classList.add('hidden'); logoEl.style.display='none'; remLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); bodyEl.classList.remove('logo-visible'); if(typeof feather!=='undefined')feather.replace();}}
-            function handleLogoUpload(e) { const f = e.target.files[0]; if (f && f.type.startsWith('image/')) { const r = new FileReader(); r.onload = async ev => { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv', LOGO_K, ev.target.result); loadLogo(); } catch (err) { console.error('Err save logo:', err); alert('Err save logo.'); } }; r.readAsDataURL(f); } else if (f) alert('Use PNG/JPG.'); }
-            async function remLogo() { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete', LOGO_K); loadLogo(); } catch (err) { console.error('Err rem logo:', err); alert('Err rem logo.'); } }
+            function handleLogoUpload(e) { const f = e.target.files[0]; if (f && f.type.startsWith('image/')) { const r = new FileReader(); r.onload = async ev => { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv',LOGO_K, ev.target.result); loadLogo(); } catch (err) { console.error('Err save logo:', err); alert('Err save logo.'); } }; r.readAsDataURL(f); } else if (f) alert('Use PNG/JPG.'); }
+            async function remLogo() { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete',LOGO_K); loadLogo(); } catch (err) { console.error('Err rem logo:', err); alert('Err rem logo.'); } }
             function popEjNameInputs() {
                 if (!ejNamesContEl || !numEjSel) return;
                 const numEj = parseInt(numEjSel.value) || 0;
@@ -461,16 +480,10 @@
                 nInps.forEach((inp, i) => { exerciseNames[i] = inp.value.trim() || `Ejercicio ${i + 1}`; });
                 for (let i = exerciseNames.length; i < currentConfig.numEjercicios; i++) exerciseNames[i] = `Ejercicio ${i + 1}`;
 
-                if (forRoutineSave) { // For saving a named routine
+                if (forRoutineSave) {
                     return { config: currentConfig, exerciseNames: exerciseNames };
-                } else { // For JSON export
-                    return {
-                        ...currentConfig, // Spread config properties directly
-                        exerciseNames: exerciseNames,
-                        theme: localStorage.getItem('theme') || 'light',
-                        allExerciseNames: Array.from(allEjNamesSet),
-                        userLogoBase64: (logoEl.src && logoEl.src !== '#' && !logoEl.classList.contains('hidden')) ? logoEl.src : null
-                    };
+                } else {
+                    return { ...currentConfig, exerciseNames: exerciseNames, theme: localStorage.getItem('theme') || 'light', allExerciseNames: Array.from(allEjNamesSet), userLogoBase64: (logoEl.src && logoEl.src !== '#' && !logoEl.classList.contains('hidden')) ? logoEl.src : null };
                 }
             }
             if(exportBtn)exportBtn.onclick=async()=>{const s=await getCurCfgObj(false),j=JSON.stringify(s,null,2),b=new Blob([j],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='chrono_hiit_settings.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);if(typeof feather!=='undefined')feather.replace()};
@@ -496,7 +509,38 @@
                     explGridEl.appendChild(itmD)
                 }
             }
-            if(showExplBtn&&explScreenEl&&closeExplBtn){showExplBtn.onclick=()=>{popExplGrid();explScreenEl.classList.remove('hidden');bodyEl.style.overflow='hidden';if(typeof feather!=='undefined')feather.replace()};closeExplBtn.onclick=()=>{explScreenEl.classList.add('hidden');bodyEl.style.overflow=''};window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!explScreenEl.classList.contains('hidden')){explScreenEl.classList.add('hidden');bodyEl.style.overflow=''}});explScreenEl.onclick=e=>{if(e.target===explScreenEl){explScreenEl.classList.add('hidden');bodyEl.style.overflow=''}}}
+
+            if(showExplBtn && explScreenEl && closeExplBtn && toggleExplFSBtn){
+                showExplBtn.onclick = () => {
+                    popExplGrid();
+                    explScreenEl.classList.remove('hidden', 'modal-fullscreen-active');
+                    const icon = toggleExplFSBtn.querySelector('i.feather');
+                    if(icon) icon.setAttribute('data-feather', 'maximize-2');
+                    toggleExplFSBtn.title = "Maximizar Vista";
+                    bodyEl.style.overflow = 'hidden';
+                    if(typeof feather !== 'undefined') feather.replace();
+                };
+                const closeExplModal = () => {
+                    explScreenEl.classList.add('hidden');
+                    explScreenEl.classList.remove('modal-fullscreen-active'); 
+                    const icon = toggleExplFSBtn.querySelector('i.feather');
+                    if(icon) icon.setAttribute('data-feather', 'maximize-2'); 
+                    toggleExplFSBtn.title = "Maximizar Vista";
+                    bodyEl.style.overflow = '';
+                    if(typeof feather !== 'undefined') feather.replace();
+                };
+                closeExplBtn.onclick = closeExplModal;
+                toggleExplFSBtn.onclick = () => {
+                    explScreenEl.classList.toggle('modal-fullscreen-active');
+                    const isModalFS = explScreenEl.classList.contains('modal-fullscreen-active');
+                    const icon = toggleExplFSBtn.querySelector('i.feather');
+                    if(icon) icon.setAttribute('data-feather', isModalFS ? 'minimize-2' : 'maximize-2');
+                    toggleExplFSBtn.title = isModalFS ? "Restaurar Vista" : "Maximizar Vista";
+                    if(typeof feather !== 'undefined') feather.replace();
+                };
+                window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!explScreenEl.classList.contains('hidden')) closeExplModal(); });
+                explScreenEl.onclick=e=>{if(e.target===explScreenEl) closeExplModal(); };
+            }
 
             function populateManageNamesModal() {
                 if (!manageNamesListEl || !noNamesMsgEl) return;
@@ -530,63 +574,39 @@
             async function saveCurrentRoutine() {
                 const routineName = prompt("Introduce un nombre para esta rutina:", `Rutina ${new Date().toLocaleDateString()}`);
                 if (!routineName || routineName.trim() === "") { alert("Nombre de rutina inválido."); return; }
-                
-                const routineData = await getCurCfgObj(true); // true to get data formatted for routine save
-                routineData.nombreRutina = routineName.trim(); // Add the routine name, used as keyPath
-                // console.log("Saving routine:", routineData); // For debugging
-
-                try {
-                    await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'put', null, routineData);
-                    alert(`Rutina "${routineData.nombreRutina}" guardada.`);
-                } catch (err) {
-                    console.error("Error guardando rutina:", err);
-                    alert("Error al guardar la rutina. ¿El nombre ya existe o hay un problema con la base de datos?");
-                }
+                const routineConfig = await getCurCfgObj(true);
+                const routineToSave = { nombreRutina: routineName.trim(), config: routineConfig.config, exerciseNames: routineConfig.exerciseNames };
+                try { await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'put', routineToSave); alert(`Rutina "${routineToSave.nombreRutina}" guardada.`); } 
+                catch (err) { console.error("Error guardando rutina:", err); if (err.name === 'ConstraintError') { alert("Error: Ya existe una rutina con ese nombre."); } else { alert("Error al guardar la rutina."); } }
             }
 
             async function populateLoadRoutineModal() {
                 if (!loadRoutineListEl || !noRoutinesMsgEl) return;
                 loadRoutineListEl.innerHTML = '';
                 try {
-                    const routines = await dbAction(SAVED_ROUTINES_STORE, 'readonly', 'getAll');
-                    noRoutinesMsgEl.classList.toggle('hidden', routines && routines.length > 0);
-                    if (routines && routines.length > 0) {
+                    const routines = await dbAction(SAVED_ROUTINES_STORE, 'readonly', 'getAll') || [];
+                    noRoutinesMsgEl.classList.toggle('hidden', routines.length > 0);
+                    if (routines.length > 0) {
                         routines.sort((a,b) => a.nombreRutina.localeCompare(b.nombreRutina)).forEach(r => {
                             const li = document.createElement('li');
                             const nameSpan = document.createElement('span'); nameSpan.className = 'routine-name-text'; nameSpan.textContent = r.nombreRutina;
-                            
                             const actionsDiv = document.createElement('div'); actionsDiv.className = 'routine-actions';
-                            
                             const loadBtn = document.createElement('button'); loadBtn.className = 'routine-action-btn'; loadBtn.innerHTML = '<i data-feather="download-cloud"></i> Cargar';
                             loadBtn.onclick = () => {
-                                numEjSel.value = r.config.numEjercicios;
-                                numSerSel.value = r.config.numSeries;
-                                tEjSel.value = r.config.tiempoEjercicio;
-                                dEjSel.value = r.config.descansoEjercicio;
-                                dSerSel.value = r.config.descansoSerie;
-                                cfg.exerciseNames = r.exerciseNames || []; // Cargar nombres
-                                
-                                allSels.forEach(sel => sel.dispatchEvent(new Event('change'))); // Para actualizar UI y estimatedTime
-                                popEjNameInputs(); // Para rellenar los campos de nombres
-                                calcEstTime();
-                                
+                                numEjSel.value = r.config.numEjercicios; numSerSel.value = r.config.numSeries; tEjSel.value = r.config.tiempoEjercicio; dEjSel.value = r.config.descansoEjercicio; dSerSel.value = r.config.descansoSerie;
+                                cfg.exerciseNames = r.exerciseNames || [];
+                                allSels.forEach(sel => sel.dispatchEvent(new Event('change'))); popEjNameInputs(); calcEstTime();
                                 if (running) finishWorkout(false); else setUI('initial');
-                                loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = '';
-                                alert(`Rutina "${r.nombreRutina}" cargada.`);
+                                loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; alert(`Rutina "${r.nombreRutina}" cargada.`);
                             };
-
                             const deleteBtn = document.createElement('button'); deleteBtn.className = 'routine-action-btn'; deleteBtn.innerHTML = '<i data-feather="trash-2"></i> Eliminar';
                             deleteBtn.onclick = async () => {
                                 if (confirm(`¿Seguro que quieres eliminar la rutina "${r.nombreRutina}"?`)) {
-                                    try {
-                                        await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'delete', r.nombreRutina);
-                                        populateLoadRoutineModal(); // Refresh list
-                                    } catch (err) { console.error("Error eliminando rutina:", err); alert("Error al eliminar rutina."); }
+                                    try { await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'delete', r.nombreRutina); populateLoadRoutineModal(); } 
+                                    catch (err) { console.error("Error eliminando rutina:", err); alert("Error al eliminar rutina."); }
                                 }
                             };
-                            actionsDiv.append(loadBtn, deleteBtn);
-                            li.append(nameSpan, actionsDiv); 
-                            loadRoutineListEl.appendChild(li);
+                            actionsDiv.append(loadBtn, deleteBtn); li.append(nameSpan, actionsDiv); loadRoutineListEl.appendChild(li);
                         });
                     }
                 } catch (err) { console.error("Error cargando rutinas guardadas:", err); noRoutinesMsgEl.classList.remove('hidden'); }
