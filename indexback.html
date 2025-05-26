@@ -382,7 +382,30 @@
             async function resetAllSavedExerciseNames() { if (confirm("¿Estás seguro de que quieres borrar todos los nombres de ejercicios guardados? Esta acción no se puede deshacer.")) { allExerciseNamesSet = new Set(); try { await deleteFromIndexedDB(EXERCISE_NAMES_LIST_KEY); console.log("Lista global de nombres de ejercicios reseteada."); const datalistEl = document.getElementById('exercise-names-suggestions'); if (datalistEl) datalistEl.innerHTML = ''; if (configuracionSection && !configuracionSection.classList.contains('hidden')) populateExerciseNameInputs(); alert("Todos los nombres de ejercicios guardados han sido borrados."); } catch (error) { console.error("Error reseteando la lista global de nombres:", error); alert("Hubo un error al borrar los nombres."); } } }
             if (resetExerciseNamesBtn) { resetExerciseNamesBtn.addEventListener('click', async () => { await resetAllSavedExerciseNames(); if (typeof feather !== 'undefined') feather.replace(); }); }
 
-            openIndexedDB().then(async () => { await loadAllExerciseNames(); loadUserLogo(); calculateAndDisplayEstimatedTime(); const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme); setUIState('initial'); populateExerciseNameInputs(); if (typeof feather !== 'undefined') feather.replace(); }).catch(async error => { console.error("No se pudo iniciar IndexedDB:", error); alert("Advertencia: No se pudo cargar el almacenamiento local."); await loadAllExerciseNames(); calculateAndDisplayEstimatedTime(); const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme); setUIState('initial'); populateExerciseNameInputs(); if (typeof feather !== 'undefined') feather.replace(); });
+            openIndexedDB().then(async () => {
+                await loadAllExerciseNames();
+                loadUserLogo();
+                calculateAndDisplayEstimatedTime();
+                // --- MODIFICACIÓN AQUÍ ---
+                const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                applyTheme(savedTheme);
+                setUIState('initial');
+                populateExerciseNameInputs();
+                if (typeof feather !== 'undefined') feather.replace();
+            }).catch(async error => {
+                console.error("No se pudo iniciar IndexedDB:", error);
+                alert("Advertencia: No se pudo cargar el almacenamiento local. Algunas funcionalidades como el guardado de logo o nombres de ejercicios podrían no estar disponibles.");
+                // Intentar cargar lo que no dependa de IndexedDB o tenga fallbacks
+                await loadAllExerciseNames(); // Esto podría fallar o usar un Set vacío si IndexedDB falló
+                // No llamamos a loadUserLogo() si depende estrictamente de IndexedDB y este falló.
+                calculateAndDisplayEstimatedTime();
+                 // --- MODIFICACIÓN AQUÍ TAMBIÉN ---
+                const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                applyTheme(savedTheme);
+                setUIState('initial');
+                populateExerciseNameInputs(); // Esto podría usar un allExerciseNamesSet vacío
+                if (typeof feather !== 'undefined') feather.replace();
+            });
         });
     </script>
 </body>
