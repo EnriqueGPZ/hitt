@@ -101,6 +101,7 @@
             --border-radius-main: 10px;
             --border-radius-small: 6px;
             --box-shadow-none: none;
+            --logo-height-full-screen: 60px; /* Variable para altura del logo en full-screen */
         }
         body.dark-theme {
             --color-background: #BDBDBD; 
@@ -136,6 +137,9 @@
             margin-bottom: 15px; 
             padding: 0; 
             position: relative; 
+        }
+        body.logo-visible .top-bar-container { /* AJUSTE ESPACIO LOGO */
+            margin-bottom: 30px; /* Más espacio si hay logo */
         }
         body.full-screen-mode .top-bar-container {
             margin-bottom: 0; 
@@ -178,8 +182,31 @@
             display: none; 
         }
 
-        #userLogo { max-width: 150px; max-height: 80px; object-fit: contain; margin-bottom: 20px; transition: all 0.3s ease-in-out; background-color: transparent; padding: 0; border-radius: var(--border-radius-small); }
-        body.full-screen-mode #userLogo { position: fixed; top: 2vh; left: 2vw; max-width: 200px; max-height: 100px; width: auto; height: auto; margin: 0; z-index: 1001; background-color: transparent; padding: 0; box-shadow: none; border: none; }
+        #userLogo { 
+            max-width: 150px; 
+            max-height: 80px; 
+            object-fit: contain; 
+            margin-bottom: 20px; /* Espacio por defecto después del logo */
+            transition: all 0.3s ease-in-out; 
+            background-color: transparent; 
+            padding: 0; 
+            border-radius: var(--border-radius-small); 
+        }
+        body.full-screen-mode #userLogo { 
+            position: fixed; 
+            top: 2vh; 
+            left: 2vw; 
+            max-width: 120px; /* Reducido un poco para móviles */
+            max-height: var(--logo-height-full-screen); 
+            width: auto; 
+            height: auto; 
+            margin: 0; 
+            z-index: 1001; 
+            background-color: transparent; 
+            padding: 0; 
+            box-shadow: none; 
+            border: none; 
+        }
         .container { background-color: transparent; padding: 30px 25px; border-radius: var(--border-radius-main); box-shadow: none; width: 100%; max-width: 480px; margin-bottom: 20px; border: none; transition: all 0.3s ease-in-out; z-index: 1; position: relative; margin-top: 0; }
         .configuracion-section, .controls-section, .estimated-time-section { margin-bottom: 25px; }
         .timer-display-section { margin-bottom: 25px; padding: 20px 15px; border-radius: var(--border-radius-main); margin-top: 25px; transition: background-color 0.4s ease-in-out, width 0.3s ease-in-out, padding 0.3s ease-in-out; position: relative; overflow: hidden; }
@@ -266,12 +293,49 @@
         body.full-screen-mode { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
         body.full-screen-mode .container { max-width: 100%; width: 100%; height: 100%; margin: 0; border-radius: 0; border: none; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none; flex-grow: 1; }
         body.full-screen-mode #configuracionSection, body.full-screen-mode #estimatedTimeSection { display: none !important; }
-        body.full-screen-mode .progress-indicators { gap: 1.5vh; margin-bottom: 2vh; }
+        
+        body.full-screen-mode .progress-indicators { 
+            gap: 1.5vh; 
+            margin-bottom: 2vh; 
+            /* EVITAR SUPERPOSICIÓN LOGO FULLSCREEN MÓVIL */
+            margin-top: 0; /* Reset por si acaso */
+        }
+        body.full-screen-mode.logo-visible .progress-indicators {
+            margin-top: calc(var(--logo-height-full-screen) + 2vh); /* Altura del logo + un poco de espacio */
+        }
+
         body.full-screen-mode .progress-label { font-size: clamp(0.8em, 2vh, 1.3em); }
         body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); }
         body.full-screen-mode .progress-circle.active { border-width: clamp(2px, 0.5vh, 4px); }
         body.full-screen-mode .progress-circles { gap: clamp(8px, 1.5vh, 15px); }
-        body.full-screen-mode #timerDisplaySection { width: 95%; max-width: 1200px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 0; margin-bottom: 10px; padding: 2vw; }
+        
+        body.full-screen-mode #timerDisplaySection { 
+            width: 95%; 
+            max-width: 1200px; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            margin-top: 0;  /* Ajustado por .progress-indicators si hay logo */
+            margin-bottom: 10px; 
+            padding: 2vw; 
+        }
+        /* EVITAR SUPERPOSICIÓN LOGO FULLSCREEN MÓVIL
+           Si no hay indicadores de progreso visibles (ej. solo 1 ejercicio/serie)
+           y hay logo, el timer display necesita margen superior.
+           Esto es un fallback, idealmente los indicadores siempre se mostrarían
+           o la lógica de JS ajustaría la visibilidad de los indicadores.
+        */
+        body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection,
+        body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) + #timerDisplaySection {
+             /* No necesita margen extra aquí si progress-indicators ya lo tiene */
+        }
+         body.full-screen-mode.logo-visible .progress-indicators.hidden ~ #timerDisplaySection {
+            margin-top: calc(var(--logo-height-full-screen) + 2vh);
+        }
+
+
         body.full-screen-mode #estadoActual { font-size: clamp(1.8em, 5vh, 4em); margin-bottom: 1vh; min-height: auto; }
         
         body.full-screen-mode #cronometroActual { 
@@ -289,7 +353,7 @@
         .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 12px; font-size: 0.8em; background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
         .app-footer .footer-btn i.feather { width: 0.9em; height: 0.9em; stroke-width: 2; stroke: currentColor; }
         .app-footer .footer-btn:hover { background-color: var(--button-header-hover-bg); color: var(--color-text-primary); border-color: var(--color-text-primary); }
-        .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; }
+        .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; } /* Por defecto a la derecha en desktop */
         .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-text-primary); }
         
         .app-footer .creator-info .footer-app-icon {
@@ -303,10 +367,20 @@
 
         @media (max-width: 768px) { 
             .app-footer .footer-controls { justify-content: center; } 
-            .app-footer { flex-direction: column; align-items: center; } 
-            .app-footer .creator-info { text-align: center; margin-top:10px} 
+            .app-footer { flex-direction: column; align-items: center; } /* Centra todo el footer */
+            .app-footer .creator-info { 
+                text-align: left; /* ALINEACIÓN FOOTER MÓVIL */
+                width: 100%; /* Para que text-align left funcione bien si es flex item */
+                margin-top:10px;
+                display: flex; /* Para alinear icono y texto */
+                align-items: center; /* Centrar verticalmente icono y texto */
+                justify-content: flex-start; /* Alinea el contenido a la izquierda */
+            } 
             .top-bar-container {
                  margin-bottom: 10px;
+            }
+            body.logo-visible .top-bar-container { /* AJUSTE ESPACIO LOGO MÓVIL */
+                margin-bottom: 25px; 
             }
             .page-main-title {
                 font-size: 1.8em; 
@@ -327,9 +401,21 @@
             body.full-screen-mode .controls-section button i.feather { width: clamp(1em, 3vh, 1.5em); height: clamp(1em, 3vh, 1.5em); } 
             body.full-screen-mode .progress-label { font-size: clamp(0.9em, 2vh, 1.5em); } 
             body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); } 
-            .app-footer { flex-direction: column; align-items: stretch; gap: 10px; } 
-            .app-footer .footer-controls { justify-content: center; } 
-            .app-footer .creator-info { text-align: center; } 
+            .app-footer { align-items: stretch; } /* Para que creator-info ocupe todo el ancho */
+            .app-footer .creator-info { 
+                justify-content: center; /* En pantallas muy pequeñas, centrarlo de nuevo puede ser mejor */
+            } 
+             body.full-screen-mode #userLogo {
+                max-width: 100px;
+                --logo-height-full-screen: 50px;
+            }
+            body.full-screen-mode.logo-visible .progress-indicators {
+                 margin-top: calc(var(--logo-height-full-screen) + 1.5vh);
+            }
+             body.full-screen-mode.logo-visible .progress-indicators.hidden ~ #timerDisplaySection {
+                margin-top: calc(var(--logo-height-full-screen) + 1.5vh);
+            }
+
         }
         
         @media (max-width: 420px) { 
@@ -370,12 +456,19 @@
                 padding: 5px; 
                 gap: 1vh; 
             }
-            body.full-screen-mode #userLogo {
+            body.full-screen-mode #userLogo { /* Ajuste para logo en landscape */
                 max-width: 80px !important; 
-                max-height: 40px !important;
+                --logo-height-full-screen: 40px !important;
                 top: 1vh !important;
                 left: 1vw !important;
             }
+            body.full-screen-mode.logo-visible .progress-indicators { /* Margen superior para landscape */
+                 margin-top: calc(var(--logo-height-full-screen) + 1vh) !important;
+            }
+             body.full-screen-mode.logo-visible .progress-indicators.hidden ~ #timerDisplaySection { /* Margen superior para landscape */
+                margin-top: calc(var(--logo-height-full-screen) + 1vh) !important;
+            }
+
             body.full-screen-mode .progress-indicators {
                 flex-direction: row; 
                 justify-content: center;
@@ -438,6 +531,9 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+            }
+             body:not(.full-screen-mode).logo-visible .top-bar-container { /* AJUSTE ESPACIO LOGO MÓVIL LANDSCAPE */
+                margin-bottom: 20px; 
             }
             body:not(.full-screen-mode) .page-main-title {
                  font-size: 1.8em; 
@@ -539,7 +635,39 @@
             async function deleteFromIndexedDB(key) { if (!db) await openIndexedDB(); const transaction = db.transaction([OBJECT_STORE_NAME], 'readwrite'); const store = transaction.objectStore(OBJECT_STORE_NAME); return new Promise((resolve, reject) => { const request = store.delete(key); request.onsuccess = () => resolve(); request.onerror = e => reject(e); }); }
             async function loadAllExerciseNames() { try { const storedNames = await getFromIndexedDB(EXERCISE_NAMES_LIST_KEY); if (storedNames && Array.isArray(storedNames)) allExerciseNamesSet = new Set(storedNames); else allExerciseNamesSet = new Set(); } catch (error) { console.error("Error loading all exercise names:", error); allExerciseNamesSet = new Set(); } }
             async function addExerciseNameToGlobalList(name) { if (name && !allExerciseNamesSet.has(name)) { allExerciseNamesSet.add(name); try { await saveToIndexedDB(EXERCISE_NAMES_LIST_KEY, Array.from(allExerciseNamesSet)); } catch (error) { console.error("Error saving global exercise name list:", error); } } }
-            async function loadUserLogo() { try { const storedLogo = await getFromIndexedDB(LOGO_KEY); if (storedLogo) { userLogoEl.src = storedLogo; userLogoEl.classList.remove('hidden'); userLogoEl.style.display = 'block'; removeLogoBtn.classList.remove('hidden'); uploadLogoBtn.classList.add('hidden'); } else { userLogoEl.src = '#'; userLogoEl.classList.add('hidden'); userLogoEl.style.display = 'none'; removeLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); } if (typeof feather !== 'undefined') feather.replace(); } catch (error) { console.error('Error loading logo:', error); userLogoEl.src = '#'; userLogoEl.classList.add('hidden'); userLogoEl.style.display = 'none'; removeLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); if (typeof feather !== 'undefined') feather.replace(); } }
+            
+            // MODIFICADO: Añadir/quitar clase 'logo-visible' al body
+            async function loadUserLogo() { 
+                try { 
+                    const storedLogo = await getFromIndexedDB(LOGO_KEY); 
+                    if (storedLogo) { 
+                        userLogoEl.src = storedLogo; 
+                        userLogoEl.classList.remove('hidden'); 
+                        userLogoEl.style.display = 'block'; 
+                        removeLogoBtn.classList.remove('hidden'); 
+                        uploadLogoBtn.classList.add('hidden'); 
+                        bodyEl.classList.add('logo-visible'); // <-- AÑADIDO
+                    } else { 
+                        userLogoEl.src = '#'; 
+                        userLogoEl.classList.add('hidden'); 
+                        userLogoEl.style.display = 'none'; 
+                        removeLogoBtn.classList.add('hidden'); 
+                        uploadLogoBtn.classList.remove('hidden'); 
+                        bodyEl.classList.remove('logo-visible'); // <-- AÑADIDO
+                    } 
+                    if (typeof feather !== 'undefined') feather.replace(); 
+                } catch (error) { 
+                    console.error('Error loading logo:', error); 
+                    userLogoEl.src = '#'; 
+                    userLogoEl.classList.add('hidden'); 
+                    userLogoEl.style.display = 'none'; 
+                    removeLogoBtn.classList.add('hidden'); 
+                    uploadLogoBtn.classList.remove('hidden'); 
+                    bodyEl.classList.remove('logo-visible'); // <-- AÑADIDO
+                    if (typeof feather !== 'undefined') feather.replace(); 
+                } 
+            }
+
             function handleLogoUpload(event) { const file = event.target.files[0]; if (file && file.type.startsWith('image/')) { const reader = new FileReader(); reader.onload = async e => { try { await saveToIndexedDB(LOGO_KEY, e.target.result); loadUserLogo(); } catch (error) { console.error('Error saving logo:', error); alert('Error al guardar el logo.'); } }; reader.readAsDataURL(file); } else if (file) { alert('Por favor, sube un archivo de imagen válido (PNG, JPG).'); } }
             async function removeUserLogo() { try { await deleteFromIndexedDB(LOGO_KEY); loadUserLogo(); } catch (error) { console.error('Error removing logo:', error); alert('Error al quitar el logo.'); } }
             function populateExerciseNameInputs() { if (!exerciseNamesContainerEl || !numEjerciciosSelect) return; const numEjercicios = parseInt(numEjerciciosSelect.value) || 0; exerciseNamesContainerEl.innerHTML = ''; const datalistId = 'exercise-names-suggestions'; let datalistEl = document.getElementById(datalistId); if (!datalistEl) { datalistEl = document.createElement('datalist'); datalistEl.id = datalistId; document.body.appendChild(datalistEl); } datalistEl.innerHTML = ''; allExerciseNamesSet.forEach(name => { const option = document.createElement('option'); option.value = name; datalistEl.appendChild(option); }); if (numEjercicios === 0 || numEjerciciosSelect.disabled) { exerciseNamesContainerEl.classList.add('hidden'); return; } exerciseNamesContainerEl.classList.remove('hidden'); for (let i = 0; i < numEjercicios; i++) { const itemDiv = document.createElement('div'); itemDiv.classList.add('exercise-name-item'); const label = document.createElement('label'); label.htmlFor = `exerciseName${i + 1}`; label.textContent = `Ejercicio ${i + 1}:`; const input = document.createElement('input'); input.type = 'text'; input.id = `exerciseName${i + 1}`; input.placeholder = `Nombre Ej. ${i + 1}`; input.dataset.index = i; input.disabled = numEjerciciosSelect.disabled; input.setAttribute('list', datalistId); input.addEventListener('blur', async (event) => { const enteredName = event.target.value.trim(); if (enteredName && !enteredName.startsWith('Ejercicio ')) { await addExerciseNameToGlobalList(enteredName); datalistEl.innerHTML = ''; allExerciseNamesSet.forEach(name => { const option = document.createElement('option'); option.value = name; datalistEl.appendChild(option); }); } }); if (config && config.exerciseNames && config.exerciseNames[i]) input.value = config.exerciseNames[i]; itemDiv.appendChild(label); itemDiv.appendChild(input); exerciseNamesContainerEl.appendChild(itemDiv); } }
@@ -643,8 +771,6 @@
                         else cs = 'running'; 
                         setUIState(cs);
                     } else if (isBrowserFS && !isAppFS) {
-                        // Si el navegador entró en FS (quizás por otra vía) pero la app no,
-                        // forzamos la entrada al modo FS de la app para sincronizar.
                         bodyEl.classList.add('full-screen-mode');
                         if (icon) icon.setAttribute('data-feather', 'minimize');
                         toggleFullScreenBtn.title = "Modo Compacto";
@@ -681,7 +807,7 @@
 
             openIndexedDB().then(async () => {
                 await loadAllExerciseNames();
-                loadUserLogo();
+                loadUserLogo(); // Asegúrate que esto se llama para que .logo-visible se aplique
                 calculateAndDisplayEstimatedTime();
                 const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTheme(savedTheme);
@@ -692,6 +818,8 @@
                 console.error("No se pudo iniciar IndexedDB:", error);
                 alert("Advertencia: No se pudo cargar el almacenamiento local. Algunas funcionalidades como el guardado de logo o nombres de ejercicios podrían no estar disponibles.");
                 await loadAllExerciseNames(); 
+                // No llamamos loadUserLogo si falla IndexedDB, pero 'logo-visible' no se aplicará
+                calculateAndDisplayEstimatedTime();
                 const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTheme(savedTheme);
                 setUIState('initial');
