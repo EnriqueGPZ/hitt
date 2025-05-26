@@ -73,27 +73,65 @@
         :root {
             --font-display: 'Oswald', sans-serif; 
             --font-body: 'Roboto Condensed', sans-serif;
-            --color-background: #A0A0A0; 
-            --color-surface: #A8A8A8;   
-            --color-primary-accent: #ffffff;
-            --color-text-primary: #ffffff;
-            --color-text-secondary: #ffffff;
-            --color-highlight: #ffffff;
+            
+            /* Colores base tema CLARO */
+            --color-background-light: #A0A0A0; 
+            --color-surface-light: #A8A8A8;   
+            --color-primary-accent-light: #ffffff;
+            --color-text-primary-light: #ffffff;
+            --color-text-secondary-light: #ffffff;
+            --color-highlight-light: #ffffff;
+            --text-on-phase-bg-light: #FFFFFF; /* Texto blanco para fases en tema claro */
+            --text-on-phase-finalizado-bg-light: #FFFFFF; 
+            --button-header-border-light: #ffffff;
+            --button-header-color-light: #ffffff;
+            --select-border-light: #ffffff;
+            --progress-circle-border-light: #ffffff;
+            --progress-circle-completed-bg-light: #ffffff;
+            --progress-circle-active-border-light: #ffffff;
+
+
+            /* Colores base tema OSCURO */
+            --color-background-dark: #BDBDBD; 
+            --color-surface-dark: #C5C5C5;    
+            --color-primary-accent-dark: #000000;
+            --color-text-primary-dark: #000000;
+            --color-text-secondary-dark: #000000;
+            --color-highlight-dark: #000000;
+            --text-on-phase-bg-dark: #000000; /* Texto negro para fases en tema oscuro */
+            --text-on-phase-finalizado-bg-dark: #000000;
+            --button-header-border-dark: #000000;
+            --button-header-color-dark: #000000;
+            --select-border-dark: #000000;
+            --progress-circle-border-dark: #000000;
+            --progress-circle-completed-bg-dark: #000000;
+            --progress-circle-active-border-dark: #000000;
+
+            /* Variables generales (se adaptarán según el tema) */
+            --color-background: var(--color-background-light); 
+            --color-surface: var(--color-surface-light);   
+            --color-primary-accent: var(--color-primary-accent-light);
+            --color-text-primary: var(--color-text-primary-light);
+            --color-text-secondary: var(--color-text-secondary-light);
+            --color-highlight: var(--color-highlight-light);
+            --text-on-phase-bg: var(--text-on-phase-bg-light);
+            --text-on-phase-finalizado-bg: var(--text-on-phase-finalizado-bg-light);
+            --button-header-border: var(--button-header-border-light);
+            --button-header-color: var(--button-header-color-light);
+            --select-border: var(--select-border-light);
+            --progress-circle-border: var(--progress-circle-border-light);
+            --progress-circle-completed-bg: var(--progress-circle-completed-bg-light);
+            --progress-circle-active-border: var(--progress-circle-active-border-light);
+
+
             --box-shadow-subtle: 0 4px 12px rgba(0,0,0,0.1);
-            --text-on-phase-bg: #ffffff;
-            --text-on-phase-finalizado-bg: #ffffff;
-            --phase-paused-overlay: rgba(28, 28, 43, 0.85);
-            --button-header-border: #ffffff;
-            --button-header-color: #ffffff;
-            --button-header-hover-bg: rgba(255,255,255,0.1);
+            --phase-paused-overlay: rgba(28, 28, 43, 0.85); /* Overlay siempre oscuro para contraste */
+            --button-header-hover-bg: rgba(255,255,255,0.1); /* Se adaptará por el color del texto/borde */
             --select-bg: transparent;
-            --select-border: #ffffff;
             --select-disabled-bg: transparent;
-            --select-disabled-color: rgba(255,255,255,0.5);
+            --select-disabled-color: rgba(255,255,255,0.5); /* Se adaptará */
             --estimated-time-bg: transparent;
-            --progress-circle-border: #ffffff;
-            --progress-circle-completed-bg: #ffffff;
-            --progress-circle-active-border: #ffffff;
+            
             --phase-preparacion: #00a8ff;
             --phase-ejercicio: #2ed573;
             --phase-descanso: #ffa502;
@@ -101,30 +139,28 @@
             --border-radius-main: 10px;
             --border-radius-small: 6px;
             --box-shadow-none: none;
-            --logo-height-full-screen: 60px; /* Variable para altura del logo en full-screen */
+            --logo-height-full-screen: 60px; 
         }
         body.dark-theme {
-            --color-background: #BDBDBD; 
-            --color-surface: #C5C5C5;    
-            --color-primary-accent: #000000;
-            --color-text-primary: #000000;
-            --color-text-secondary: #000000;
-            --color-highlight: #000000;
+            --color-background: var(--color-background-dark); 
+            --color-surface: var(--color-surface-dark);    
+            --color-primary-accent: var(--color-primary-accent-dark);
+            --color-text-primary: var(--color-text-primary-dark);
+            --color-text-secondary: var(--color-text-secondary-dark);
+            --color-highlight: var(--color-highlight-dark);
+            --text-on-phase-bg: var(--text-on-phase-bg-dark);
+            --text-on-phase-finalizado-bg: var(--text-on-phase-finalizado-bg-dark);
+            --button-header-border: var(--button-header-border-dark);
+            --button-header-color: var(--button-header-color-dark);
+            --select-border: var(--select-border-dark);
+            --progress-circle-border: var(--progress-circle-border-dark);
+            --progress-circle-completed-bg: var(--progress-circle-completed-bg-dark);
+            --progress-circle-active-border: var(--progress-circle-active-border-dark);
+
             --box-shadow-subtle: 0 4px 15px rgba(0,0,0,0.3);
-            --text-on-phase-bg: #000000;
-            --text-on-phase-finalizado-bg: #000000;
-            --phase-paused-overlay: rgba(0, 0, 0, 0.85);
-            --button-header-border: #000000;
-            --button-header-color: #000000;
+            --phase-paused-overlay: rgba(0, 0, 0, 0.85); /* Overlay negro para tema oscuro */
             --button-header-hover-bg: rgba(0,0,0,0.1);
-            --select-bg: transparent;
-            --select-border: #000000;
-            --select-disabled-bg: transparent;
             --select-disabled-color: rgba(0,0,0,0.5);
-            --estimated-time-bg: transparent;
-            --progress-circle-border: #000000;
-            --progress-circle-completed-bg: #000000;
-            --progress-circle-active-border: #000000;
         }
         html, body { height: 100%; margin: 0; }
         body { font-family: var(--font-body); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100%; background-color: var(--color-background); color: var(--color-text-primary); padding: 20px; box-sizing: border-box; text-align: center; transition: background-color 0.4s ease-in-out, padding 0.3s ease-in-out, color 0.3s ease; position: relative; }
@@ -138,8 +174,8 @@
             padding: 0; 
             position: relative; 
         }
-        body.logo-visible .top-bar-container { /* AJUSTE ESPACIO LOGO */
-            margin-bottom: 30px; /* Más espacio si hay logo */
+        body.logo-visible .top-bar-container {
+            margin-bottom: 30px; 
         }
         body.full-screen-mode .top-bar-container {
             margin-bottom: 0; 
@@ -186,7 +222,7 @@
             max-width: 150px; 
             max-height: 80px; 
             object-fit: contain; 
-            margin-bottom: 20px; /* Espacio por defecto después del logo */
+            margin-bottom: 20px;
             transition: all 0.3s ease-in-out; 
             background-color: transparent; 
             padding: 0; 
@@ -196,7 +232,7 @@
             position: fixed; 
             top: 2vh; 
             left: 2vw; 
-            max-width: 120px; /* Reducido un poco para móviles */
+            max-width: 120px; 
             max-height: var(--logo-height-full-screen); 
             width: auto; 
             height: auto; 
@@ -213,8 +249,7 @@
         .config-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--color-primary-accent); transition: border-color 0.3s ease; }
         .config-item:last-child { border-bottom: none; margin-bottom: 0; }
         .config-item label { font-weight: 400; margin-right: 15px; flex-basis: 60%; text-align: left; color: var(--color-text-secondary); font-size: 1em; word-break: break-word; transition: color 0.3s ease; }
-        body.full-screen-mode.active-timer-bg .config-item label { color: var(--text-on-phase-bg); }
-        body.full-screen-mode.active-timer-bg.phase-finalizado .config-item label { color: var(--text-on-phase-finalizado-bg); }
+        /* Texto en Fases: Ya se usa --text-on-phase-bg y --text-on-phase-finalizado-bg, que se adaptan con el tema. */
         .config-item select { font-family: var(--font-body); padding: 10px 12px; border-radius: var(--border-radius-small); border: 1px solid var(--select-border); background-color: var(--select-bg); color: var(--color-text-primary); flex-basis: 35%; font-size: 1em; transition: border-color 0.2s ease, background-color 0.3s ease, color 0.3s ease; }
         .config-item select:focus { border-color: var(--color-highlight); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent); }
         .config-item select:disabled { background-color: var(--select-disabled-bg); color: var(--select-disabled-color); opacity: 0.7; cursor: not-allowed; border-color: var(--color-primary-accent); }
@@ -228,22 +263,17 @@
         .exercise-name-item input[type="text"]:disabled { background-color: var(--select-disabled-bg); color: var(--select-disabled-color); opacity: 0.7; cursor: not-allowed; }
         body.full-screen-mode #exerciseNamesContainer { display: none !important; }
         .estimated-time-section { padding: 12px 18px; background-color: var(--estimated-time-bg); border-radius: var(--border-radius-small); font-size: 0.95em; color: var(--color-text-secondary); margin-top: 10px; transition: background-color 0.3s ease, color 0.3s ease; }
-        body.active-timer-bg .estimated-time-section { background-color: rgba(0,0,0,0.1); }
-        body.active-timer-bg .estimated-time-section p, body.active-timer-bg #estimatedTimeDisplay { color: var(--text-on-phase-bg); }
-        body.active-timer-bg.phase-finalizado .estimated-time-section p, body.active-timer-bg.phase-finalizado #estimatedTimeDisplay { color: var(--text-on-phase-finalizado-bg); }
+        /* Texto en Fases para .estimated-time-section ya usa las variables --text-on-phase-bg */
         .estimated-time-section p { margin: 0; font-weight: 400; }
         #estimatedTimeDisplay { font-weight: 700; color: var(--color-text-primary); transition: color 0.3s ease; }
-        .progress-indicators { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; width: 100%; align-items: center; transition: gap 0.3s ease, margin-bottom 0.3s ease; }
+        .progress-indicators { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; width: 100%; align-items: center; transition: gap 0.3s ease, margin-bottom 0.3s ease, margin-top 0.3s ease; }
         .progress-section { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .progress-label { font-size: 0.9em; color: var(--color-text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: font-size 0.3s ease, color 0.3s ease; }
         .progress-circles { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; transition: gap 0.3s ease; }
         .progress-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--progress-circle-border); background-color: transparent; transition: all 0.3s ease; }
         body:not(.active-timer-bg) .progress-circle.active { border-color: var(--progress-circle-active-border); }
         body:not(.active-timer-bg) .progress-circle.completed { background-color: var(--progress-circle-completed-bg); border-color: var(--progress-circle-completed-bg); }
-        .progress-circle.active { border-color: var(--text-on-phase-bg); border-width: 3px; background-color: transparent; transform: scale(1.15); }
-        .progress-circle.completed { background-color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
-        body.active-timer-bg .progress-label { color: var(--text-on-phase-bg); }
-        body.active-timer-bg.phase-finalizado .progress-label { color: var(--text-on-phase-finalizado-bg); }
+        /* Progreso y etiquetas en Fases ya usan --text-on-phase-bg */
         body.full-screen-mode .progress-circle { border-color: color-mix(in srgb, var(--text-on-phase-bg) 40%, transparent); }
         body.full-screen-mode .progress-circle.active { border-color: var(--text-on-phase-bg); background-color: color-mix(in srgb, var(--text-on-phase-bg) 10%, transparent); box-shadow: 0 0 10px color-mix(in srgb, var(--text-on-phase-bg) 30%, transparent); }
         body.full-screen-mode .progress-circle.completed { background-color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
@@ -252,25 +282,31 @@
         .controls-section button i.feather { width: 1em; height: 1em; stroke-width: 2.5; stroke: currentColor; transition: width 0.3s ease-in-out, height 0.3s ease-in-out; }
         .controls-section button .btn-text { display: inline-block; }
         .controls-section button:hover { transform: translateY(-1px); box-shadow: 0 2px 5px color-mix(in srgb, var(--color-text-primary) 8%, transparent); }
-        .controls-section button:active { transform: translateY(0px); box-shadow: 0 1px 3px color-mix(in srgb, var(--color-text-primary) 5%, transparent); }
+        .controls-section button:active { transform: translateY(0px) scale(0.98); box-shadow: 0 1px 3px color-mix(in srgb, var(--color-text-primary) 5%, transparent); }
         .controls-section #startPauseResumeBtn.paused { border-color: var(--color-text-primary); color: var(--color-text-primary); background-color: transparent; }
         body.full-screen-mode .controls-section button { padding: 1.5vh 2vw; font-size: clamp(0.9em, 2.5vh, 1.5em); gap: 0.8vw; flex-grow: 1; border: 2px solid var(--color-text-primary); color: var(--color-text-primary); background-color: transparent; }
-        body.full-screen-mode .controls-section #startPauseResumeBtn.paused { background-color: transparent; border-color: var(--color-text-primary); color: var(--color-text-primary); }
-        body.full-screen-mode.active-timer-bg .controls-section button { border-color: var(--text-on-phase-bg); color: var(--text-on-phase-bg); background-color: transparent; }
-        body.full-screen-mode.active-timer-bg .controls-section button:hover { background-color: color-mix(in srgb, var(--text-on-phase-bg) 15%, transparent); border-color: var(--text-on-phase-bg); color: var(--text-on-phase-bg); }
-        body.full-screen-mode.active-timer-bg .controls-section button:active { background-color: color-mix(in srgb, var(--text-on-phase-bg) 25%, transparent); }
-        body.full-screen-mode.active-timer-bg .controls-section #startPauseResumeBtn.paused { background-color: transparent; color: var(--text-on-phase-bg); border-color: var(--text-on-phase-bg); }
-        body.full-screen-mode.active-timer-bg .controls-section #startPauseResumeBtn.paused:hover { background-color: color-mix(in srgb, var(--text-on-phase-bg) 10%, transparent); border-color: var(--text-on-phase-bg); }
+        /* Controles en Fases ya usan --text-on-phase-bg */
         .timer-display-section.bg-preparacion { background-color: var(--phase-preparacion); } .timer-display-section.bg-ejercicio { background-color: var(--phase-ejercicio); } .timer-display-section.bg-descanso { background-color: var(--phase-descanso); } .timer-display-section.bg-finalizado { background-color: var(--phase-finalizado); }
         .timer-display-section.paused-overlay::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--phase-paused-overlay); z-index: 1; }
         #estadoActual, #cronometroActual, #cronometroTotalLabel, #cronometroTotal, .current-exercise-name { position: relative; z-index: 2; transition: font-size 0.3s ease-in-out, margin-bottom 0.3s ease-in-out, color 0.3s ease; }
         #estadoActual { font-family: var(--font-body); font-size: 1.5em; font-weight: 700; margin-bottom: 8px; min-height: 1.5em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-primary); }
-        #estadoActual.preparacion-text, #estadoActual.ejercicio-text, #estadoActual.descanso-text { color: var(--text-on-phase-bg); }
-        #estadoActual.finalizado-text { color: var(--text-on-phase-finalizado-bg); }
-        .current-exercise-name { font-family: var(--font-body); font-size: 1.1em; font-weight: 400; color: var(--color-text-primary); margin-bottom: 5px; min-height: 1.2em; text-transform: capitalize; transition: color 0.3s ease, font-size 0.3s ease; }
-        .timer-display-section.bg-preparacion .current-exercise-name, .timer-display-section.bg-ejercicio .current-exercise-name, .timer-display-section.bg-descanso .current-exercise-name { color: var(--text-on-phase-bg); }
-        .timer-display-section.bg-finalizado .current-exercise-name { color: var(--text-on-phase-finalizado-bg); }
-        #timerDisplaySection:not([class*="bg-"]) .current-exercise-name { color: var(--color-text-primary); }
+        .current-exercise-name { 
+            font-family: var(--font-body); 
+            font-size: 1.1em; 
+            font-weight: 400; 
+            color: var(--color-text-primary); 
+            margin-bottom: 5px; 
+            min-height: 1.2em; 
+            text-transform: capitalize; 
+            transition: color 0.3s ease, font-size 0.3s ease; 
+            /* Manejo de nombres largos */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block; /* Para que text-overflow funcione bien */
+            width: 100%; /* Para que text-overflow funcione bien */
+        }
+        /* Texto en Fases para display (estado, nombre ejercicio, cronos) ya usa variables --text-on-phase-bg */
         body.full-screen-mode .current-exercise-name { font-size: clamp(1.2em, 3vh, 2.5em); margin-bottom: 1vh; }
         
         #cronometroActual { 
@@ -281,13 +317,8 @@
             line-height: 1; 
             color: var(--color-text-primary); 
         }
-
-        .timer-display-section.bg-preparacion #cronometroActual, .timer-display-section.bg-ejercicio #cronometroActual, .timer-display-section.bg-descanso #cronometroActual { color: var(--text-on-phase-bg); }
-        .timer-display-section.bg-finalizado #cronometroActual { color: var(--text-on-phase-finalizado-bg); }
         #cronometroTotalLabel { font-family: var(--font-body); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; font-weight: 400; margin-top: 10px; color: var(--color-text-secondary); }
         #cronometroTotal { font-family: var(--font-display); font-weight: 700; font-size: 1.4em; color: var(--color-text-secondary); }
-        .timer-display-section.bg-preparacion #cronometroTotalLabel, .timer-display-section.bg-preparacion #cronometroTotal, .timer-display-section.bg-ejercicio #cronometroTotalLabel, .timer-display-section.bg-ejercicio #cronometroTotal, .timer-display-section.bg-descanso #cronometroTotalLabel, .timer-display-section.bg-descanso #cronometroTotal { color: var(--text-on-phase-bg); }
-        .timer-display-section.bg-finalizado #cronometroTotalLabel, .timer-display-section.bg-finalizado #cronometroTotal { color: var(--text-on-phase-finalizado-bg); }
         #timerDisplaySection:not([class*="bg-"]) #estadoActual { color: var(--color-text-primary); } #timerDisplaySection:not([class*="bg-"]) #cronometroActual { color: var(--color-text-primary); } #timerDisplaySection:not([class*="bg-"]) #cronometroTotalLabel, #timerDisplaySection:not([class*="bg-"]) #cronometroTotal { color: var(--color-text-secondary); }
         .hidden { display: none !important; }
         body.full-screen-mode { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
@@ -297,11 +328,10 @@
         body.full-screen-mode .progress-indicators { 
             gap: 1.5vh; 
             margin-bottom: 2vh; 
-            /* EVITAR SUPERPOSICIÓN LOGO FULLSCREEN MÓVIL */
-            margin-top: 0; /* Reset por si acaso */
+            margin-top: 0; 
         }
-        body.full-screen-mode.logo-visible .progress-indicators {
-            margin-top: calc(var(--logo-height-full-screen) + 2vh); /* Altura del logo + un poco de espacio */
+        body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) { /* Solo si hay indicadores Y logo */
+            margin-top: calc(var(--logo-height-full-screen) + 2vh); 
         }
 
         body.full-screen-mode .progress-label { font-size: clamp(0.8em, 2vh, 1.3em); }
@@ -317,21 +347,11 @@
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            margin-top: 0;  /* Ajustado por .progress-indicators si hay logo */
+            margin-top: 0;
             margin-bottom: 10px; 
             padding: 2vw; 
         }
-        /* EVITAR SUPERPOSICIÓN LOGO FULLSCREEN MÓVIL
-           Si no hay indicadores de progreso visibles (ej. solo 1 ejercicio/serie)
-           y hay logo, el timer display necesita margen superior.
-           Esto es un fallback, idealmente los indicadores siempre se mostrarían
-           o la lógica de JS ajustaría la visibilidad de los indicadores.
-        */
-        body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection,
-        body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) + #timerDisplaySection {
-             /* No necesita margen extra aquí si progress-indicators ya lo tiene */
-        }
-         body.full-screen-mode.logo-visible .progress-indicators.hidden ~ #timerDisplaySection {
+        body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { /* Si NO hay indicadores Y hay logo */
             margin-top: calc(var(--logo-height-full-screen) + 2vh);
         }
 
@@ -350,10 +370,11 @@
         .app-footer { margin-top: auto; width: 100%; padding: 15px 20px; background-color: transparent; border-top: 1px solid transparent; color: var(--color-text-secondary); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; transition: all 0.3s ease-in-out; }
         body.full-screen-mode .app-footer { display: none; }
         .app-footer .footer-controls { display: flex; gap: 10px; flex-grow: 1; justify-content: flex-start; flex-wrap: wrap; }
-        .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 12px; font-size: 0.8em; background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
+        .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 12px; font-size: 0.8em; background-color: transparent; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); border-radius: var(--border-radius-small); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
         .app-footer .footer-btn i.feather { width: 0.9em; height: 0.9em; stroke-width: 2; stroke: currentColor; }
         .app-footer .footer-btn:hover { background-color: var(--button-header-hover-bg); color: var(--color-text-primary); border-color: var(--color-text-primary); }
-        .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; } /* Por defecto a la derecha en desktop */
+        .app-footer .footer-btn:active { transform: scale(0.97); } /* Feedback para botones de footer */
+        .app-footer .creator-info { margin: 0; text-align: right; flex-grow: 1; } 
         .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-text-primary); }
         
         .app-footer .creator-info .footer-app-icon {
@@ -367,19 +388,19 @@
 
         @media (max-width: 768px) { 
             .app-footer .footer-controls { justify-content: center; } 
-            .app-footer { flex-direction: column; align-items: center; } /* Centra todo el footer */
+            .app-footer { flex-direction: column; align-items: center; } 
             .app-footer .creator-info { 
-                text-align: left; /* ALINEACIÓN FOOTER MÓVIL */
-                width: 100%; /* Para que text-align left funcione bien si es flex item */
-                margin-top:10px;
-                display: flex; /* Para alinear icono y texto */
-                align-items: center; /* Centrar verticalmente icono y texto */
-                justify-content: flex-start; /* Alinea el contenido a la izquierda */
+                text-align: left; 
+                width: 100%; 
+                margin-top:15px; /* Un poco más de espacio */
+                display: flex; 
+                align-items: center; 
+                justify-content: flex-start; 
             } 
             .top-bar-container {
                  margin-bottom: 10px;
             }
-            body.logo-visible .top-bar-container { /* AJUSTE ESPACIO LOGO MÓVIL */
+            body.logo-visible .top-bar-container { 
                 margin-bottom: 25px; 
             }
             .page-main-title {
@@ -401,18 +422,18 @@
             body.full-screen-mode .controls-section button i.feather { width: clamp(1em, 3vh, 1.5em); height: clamp(1em, 3vh, 1.5em); } 
             body.full-screen-mode .progress-label { font-size: clamp(0.9em, 2vh, 1.5em); } 
             body.full-screen-mode .progress-circle { width: clamp(15px, 2.5vh, 30px); height: clamp(15px, 2.5vh, 30px); } 
-            .app-footer { align-items: stretch; } /* Para que creator-info ocupe todo el ancho */
+            .app-footer { align-items: stretch; } 
             .app-footer .creator-info { 
-                justify-content: center; /* En pantallas muy pequeñas, centrarlo de nuevo puede ser mejor */
+                justify-content: flex-start; /* Mantener a la izquierda en móviles pequeños */
             } 
              body.full-screen-mode #userLogo {
                 max-width: 100px;
                 --logo-height-full-screen: 50px;
             }
-            body.full-screen-mode.logo-visible .progress-indicators {
+            body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) {
                  margin-top: calc(var(--logo-height-full-screen) + 1.5vh);
             }
-             body.full-screen-mode.logo-visible .progress-indicators.hidden ~ #timerDisplaySection {
+             body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection {
                 margin-top: calc(var(--logo-height-full-screen) + 1.5vh);
             }
 
@@ -446,6 +467,9 @@
             #estadoActual:not(.full-screen-mode #estadoActual) { font-size: 1.2em; } 
             .current-exercise-name:not(body.full-screen-mode .current-exercise-name) { font-size: 0.9em; } 
             .page-main-title { font-size: 1.5em; } 
+            .app-footer .creator-info { /* En el más pequeño, centrar puede ser mejor */
+                justify-content: center;
+            }
         }
 
         @media (orientation: landscape) and (max-height: 500px) and (min-width: 568px) { 
@@ -456,16 +480,16 @@
                 padding: 5px; 
                 gap: 1vh; 
             }
-            body.full-screen-mode #userLogo { /* Ajuste para logo en landscape */
+            body.full-screen-mode #userLogo { 
                 max-width: 80px !important; 
                 --logo-height-full-screen: 40px !important;
                 top: 1vh !important;
                 left: 1vw !important;
             }
-            body.full-screen-mode.logo-visible .progress-indicators { /* Margen superior para landscape */
+            body.full-screen-mode.logo-visible .progress-indicators:not(.hidden) { 
                  margin-top: calc(var(--logo-height-full-screen) + 1vh) !important;
             }
-             body.full-screen-mode.logo-visible .progress-indicators.hidden ~ #timerDisplaySection { /* Margen superior para landscape */
+             body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { 
                 margin-top: calc(var(--logo-height-full-screen) + 1vh) !important;
             }
 
@@ -532,7 +556,7 @@
                 justify-content: space-between;
                 align-items: center;
             }
-             body:not(.full-screen-mode).logo-visible .top-bar-container { /* AJUSTE ESPACIO LOGO MÓVIL LANDSCAPE */
+             body:not(.full-screen-mode).logo-visible .top-bar-container { 
                 margin-bottom: 20px; 
             }
             body:not(.full-screen-mode) .page-main-title {
@@ -549,7 +573,6 @@
     </style>
 </head>
 <body>
-    <!-- NUEVO CONTENEDOR HEADER-TITLE -->
     <div class="top-bar-container">
         <h1 class="page-main-title">Chrono HIIT</h1>
         <div class="app-header">
@@ -614,6 +637,7 @@
             if (allSelects.some(sel => !sel)) { console.error("ERROR CRÍTICO: Selects no encontrados."); alert("Error crítico: Controles no cargados."); return; }
 
             const startPauseResumeBtn = document.getElementById('startPauseResumeBtn'), finishBtn = document.getElementById('finishBtn'), restartExerciseBtn = document.getElementById('restartExerciseBtn'), toggleFullScreenBtn = document.getElementById('toggleFullScreenBtn'), toggleThemeBtn = document.getElementById('toggleThemeBtn'), configuracionSection = document.getElementById('configuracionSection'), estimatedTimeSectionEl = document.getElementById('estimatedTimeSection'), estimatedTimeDisplayEl = document.getElementById('estimatedTimeDisplay'), timerDisplaySection = document.getElementById('timerDisplaySection'), estadoActualEl = document.getElementById('estadoActual'), cronometroActualEl = document.getElementById('cronometroActual'), cronometroTotalEl = document.getElementById('cronometroTotal'), exerciseProgressContainer = document.getElementById('exerciseProgress'), seriesProgressContainer = document.getElementById('seriesProgress'), bodyEl = document.body, containerEl = document.querySelector('.container'), appFooterEl = document.querySelector('.app-footer'), exerciseNamesContainerEl = document.getElementById('exerciseNamesContainer'), currentExerciseNameDisplayEl = document.getElementById('currentExerciseNameDisplay'), userLogoEl = document.getElementById('userLogo'), logoUploadInput = document.getElementById('logoUploadInput'), uploadLogoBtn = document.getElementById('uploadLogoBtn'), removeLogoBtn = document.getElementById('removeLogoBtn'), exportSettingsBtn = document.getElementById('exportSettingsBtn'), importSettingsInput = document.getElementById('importSettingsInput'), importSettingsBtn = document.getElementById('importSettingsBtn'), resetExerciseNamesBtn = document.getElementById('resetExerciseNamesBtn');
+            const progressIndicatorsEl = document.querySelector('.progress-indicators'); // Necesario para lógica de visibilidad
 
             let rootStyles = getComputedStyle(document.documentElement), phaseColors = {};
             function updatePhaseColorsFromCSS() { rootStyles = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootStyles.getPropertyValue('--phase-preparacion').trim(), ejercicio: rootStyles.getPropertyValue('--phase-ejercicio').trim(), descanso: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_ejercicio: rootStyles.getPropertyValue('--phase-descanso').trim(), descanso_serie: rootStyles.getPropertyValue('--phase-descanso').trim(), finalizado: rootStyles.getPropertyValue('--phase-finalizado').trim() }; }
@@ -636,7 +660,6 @@
             async function loadAllExerciseNames() { try { const storedNames = await getFromIndexedDB(EXERCISE_NAMES_LIST_KEY); if (storedNames && Array.isArray(storedNames)) allExerciseNamesSet = new Set(storedNames); else allExerciseNamesSet = new Set(); } catch (error) { console.error("Error loading all exercise names:", error); allExerciseNamesSet = new Set(); } }
             async function addExerciseNameToGlobalList(name) { if (name && !allExerciseNamesSet.has(name)) { allExerciseNamesSet.add(name); try { await saveToIndexedDB(EXERCISE_NAMES_LIST_KEY, Array.from(allExerciseNamesSet)); } catch (error) { console.error("Error saving global exercise name list:", error); } } }
             
-            // MODIFICADO: Añadir/quitar clase 'logo-visible' al body
             async function loadUserLogo() { 
                 try { 
                     const storedLogo = await getFromIndexedDB(LOGO_KEY); 
@@ -646,14 +669,14 @@
                         userLogoEl.style.display = 'block'; 
                         removeLogoBtn.classList.remove('hidden'); 
                         uploadLogoBtn.classList.add('hidden'); 
-                        bodyEl.classList.add('logo-visible'); // <-- AÑADIDO
+                        bodyEl.classList.add('logo-visible'); 
                     } else { 
                         userLogoEl.src = '#'; 
                         userLogoEl.classList.add('hidden'); 
                         userLogoEl.style.display = 'none'; 
                         removeLogoBtn.classList.add('hidden'); 
                         uploadLogoBtn.classList.remove('hidden'); 
-                        bodyEl.classList.remove('logo-visible'); // <-- AÑADIDO
+                        bodyEl.classList.remove('logo-visible'); 
                     } 
                     if (typeof feather !== 'undefined') feather.replace(); 
                 } catch (error) { 
@@ -663,7 +686,7 @@
                     userLogoEl.style.display = 'none'; 
                     removeLogoBtn.classList.add('hidden'); 
                     uploadLogoBtn.classList.remove('hidden'); 
-                    bodyEl.classList.remove('logo-visible'); // <-- AÑADIDO
+                    bodyEl.classList.remove('logo-visible'); 
                     if (typeof feather !== 'undefined') feather.replace(); 
                 } 
             }
@@ -682,7 +705,17 @@
             function formatTotalTime(s) { return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
             function calculateAndDisplayEstimatedTime() { if (allSelects.some(sel => !sel)) return; const cfg = { numSeries: parseInt(numSeriesSelect.value), numEjercicios: parseInt(numEjerciciosSelect.value), tiempoEjercicio: parseInt(tiempoEjercicioSelect.value), descansoEjercicio: parseInt(descansoEjercicioSelect.value), descansoSerie: parseInt(descansoSerieSelect.value) }; let totalEstimatedTime = PREPARATION_TIME; if (cfg.numSeries <= 0 || cfg.numEjercicios <= 0) { if (estimatedTimeDisplayEl) estimatedTimeDisplayEl.textContent = formatTotalTime(PREPARATION_TIME); return; } let timeForOneSet = (cfg.numEjercicios * cfg.tiempoEjercicio) + (cfg.numEjercicios > 1 ? (cfg.numEjercicios - 1) * cfg.descansoEjercicio : 0); totalEstimatedTime += timeForOneSet * cfg.numSeries + (cfg.numSeries > 1 ? (cfg.numSeries - 1) * cfg.descansoSerie : 0); if (estimatedTimeDisplayEl) estimatedTimeDisplayEl.textContent = formatTotalTime(totalEstimatedTime); }
             function updateUIDisplay() { if (cronometroActualEl) cronometroActualEl.textContent = formatTime(currentPhaseRemainingSeconds); if (cronometroTotalEl) cronometroTotalEl.textContent = formatTotalTime(totalSessionSeconds); if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden'); } if (estadoActualEl) estadoActualEl.className = ''; if (timerDisplaySection) { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); } const phaseClassPrefix = 'phase-'; const bodyClassesToRemove = Array.from(bodyEl.classList).filter(c => c.startsWith(phaseClassPrefix) && c !== 'dark-theme'); bodyEl.classList.remove(...bodyClassesToRemove, 'active-timer-bg'); const containerClassesToRemove = Array.from(containerEl.classList).filter(c => c.startsWith(phaseClassPrefix)); containerEl.classList.remove(...containerClassesToRemove, 'active-timer-bg'); let estadoTexto = '', serieInfo = (config.numSeries > 1) ? ` (Serie ${currentSerieCount}/${config.numSeries})` : ''; let timerDisplayBgClass = '', estadoActualTextClass = '', currentPhaseForStyling = '', bodyPhaseColorToApply = '', currentExerciseName = ''; if (isRePreparing) { estadoTexto = "¡Ajusta Posición!"; timerDisplayBgClass = 'bg-preparacion'; estadoActualTextClass = 'preparacion-text'; currentPhaseForStyling = 'preparacion'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount - 1]) currentExerciseName = config.exerciseNames[currentExerciseCount - 1]; else if (config.numEjercicios > 0) currentExerciseName = `Ejercicio ${currentExerciseCount}`; } else if (isRunning && currentPhase && currentPhase !== 'finalizado') { currentPhaseForStyling = currentPhase; switch (currentPhase) { case 'preparacion': estadoTexto = "Prepárate"; timerDisplayBgClass = 'bg-preparacion'; estadoActualTextClass = 'preparacion-text'; if (config.exerciseNames && config.exerciseNames[0]) currentExerciseName = `Siguiente: ${config.exerciseNames[0]}`; else if (config.numEjercicios > 0) currentExerciseName = `Siguiente: Ejercicio 1`; break; case 'ejercicio': estadoTexto = `Ejercicio ${currentExerciseCount}${serieInfo}`; timerDisplayBgClass = 'bg-ejercicio'; estadoActualTextClass = 'ejercicio-text'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount - 1]) currentExerciseName = config.exerciseNames[currentExerciseCount - 1]; else if (config.numEjercicios > 0) currentExerciseName = `Ejercicio ${currentExerciseCount}`; break; case 'descanso_ejercicio': estadoTexto = `Descanso Ej.${serieInfo}`; timerDisplayBgClass = 'bg-descanso'; estadoActualTextClass = 'descanso-text'; if (config.exerciseNames && config.exerciseNames[currentExerciseCount]) currentExerciseName = `Siguiente: ${config.exerciseNames[currentExerciseCount]}`; else if (config.numEjercicios > 0 && currentExerciseCount < config.numEjercicios) currentExerciseName = `Siguiente: Ejercicio ${currentExerciseCount + 1}`; break; case 'descanso_serie': estadoTexto = "Descanso Serie"; timerDisplayBgClass = 'bg-descanso'; estadoActualTextClass = 'descanso-text'; if (config.exerciseNames && config.exerciseNames[0]) currentExerciseName = `Siguiente: ${config.exerciseNames[0]}`; else if (config.numEjercicios > 0) currentExerciseName = `Siguiente: Ejercicio 1`; break; } } else if (currentPhase === 'finalizado') { estadoTexto = "¡Finalizado!"; timerDisplayBgClass = 'bg-finalizado'; estadoActualTextClass = 'finalizado-text'; currentPhaseForStyling = 'finalizado'; currentExerciseName = "¡Buen trabajo!"; } else { estadoTexto = "Listo"; if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.add('hidden'); } if (currentPhaseForStyling && phaseColors[currentPhaseForStyling]) { bodyPhaseColorToApply = phaseColors[currentPhaseForStyling]; bodyEl.classList.add(`phase-${currentPhaseForStyling}`); containerEl.classList.add(`phase-${currentPhaseForStyling}`); if (isRunning || isRePreparing) { bodyEl.classList.add('active-timer-bg'); containerEl.classList.add('active-timer-bg'); } } if ((bodyEl.classList.contains('full-screen-mode') && (isRunning || isRePreparing || currentPhase === 'finalizado')) || (!bodyEl.classList.contains('full-screen-mode') && (isRunning || isRePreparing || currentPhase === 'finalizado'))) bodyEl.style.backgroundColor = bodyPhaseColorToApply || ''; else bodyEl.style.backgroundColor = ''; if (estadoActualEl) { estadoActualEl.textContent = estadoTexto; if (estadoActualTextClass) estadoActualEl.classList.add(estadoActualTextClass); } if (currentExerciseNameDisplayEl && currentExerciseName) { currentExerciseNameDisplayEl.textContent = currentExerciseName; currentExerciseNameDisplayEl.classList.remove('hidden'); } else if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.classList.add('hidden'); } if (timerDisplaySection && timerDisplayBgClass) timerDisplaySection.classList.add(timerDisplayBgClass); else if (timerDisplaySection) { const bgClasses = Array.from(timerDisplaySection.classList).filter(c => c.startsWith('bg-')); timerDisplaySection.classList.remove(...bgClasses); } if (isPaused && isRunning && timerDisplaySection && !isRePreparing) timerDisplaySection.classList.add('paused-overlay'); }
-            function setUIState(state) { const enableConfig = (state === 'initial' || state === 'finished'); const isFullScreen = bodyEl.classList.contains('full-screen-mode'); allSelects.forEach(s => { if (s) s.disabled = !enableConfig; }); if (configuracionSection) configuracionSection.classList.toggle('hidden', isFullScreen || !enableConfig); if (estimatedTimeSectionEl) estimatedTimeSectionEl.classList.toggle('hidden', isFullScreen || !enableConfig); if (exerciseNamesContainerEl) { const nameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]'); nameInputs.forEach(input => input.disabled = !enableConfig); const numEj = numEjerciciosSelect ? parseInt(numEjerciciosSelect.value) : 0; exerciseNamesContainerEl.classList.toggle('hidden', isFullScreen || !enableConfig || numEj === 0); if (enableConfig) populateExerciseNameInputs(); } if (userLogoEl.classList.contains('hidden')) userLogoEl.style.display = 'none'; else userLogoEl.style.display = 'block'; if (timerDisplaySection) { timerDisplaySection.classList.toggle('hidden', state === 'initial' && !isFullScreen); if (state === 'initial') { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); if(estadoActualEl) { estadoActualEl.className = ''; estadoActualEl.textContent = "Listo"; } if(cronometroActualEl) cronometroActualEl.textContent = "00:00"; if(cronometroTotalEl) cronometroTotalEl.textContent = "00:00:00"; if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden');} currentPhase = ''; isRePreparing = false; if (exerciseProgressContainer) exerciseProgressContainer.innerHTML = ''; if (seriesProgressContainer) seriesProgressContainer.innerHTML = ''; } else { if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.remove('hidden'); } } if (startPauseResumeBtn) { startPauseResumeBtn.classList.remove('paused'); const iconEl = startPauseResumeBtn.querySelector('i.feather'); const textEl = startPauseResumeBtn.querySelector('.btn-text'); if (state === 'initial') { if (textEl) textEl.textContent = "Iniciar"; if (iconEl) iconEl.setAttribute('data-feather', 'play'); } else if (state === 'running') { if (textEl) textEl.textContent = "Pausar"; if (iconEl) iconEl.setAttribute('data-feather', 'pause'); } else if (state === 'paused') { if (textEl) textEl.textContent = "Reanudar"; if (iconEl) iconEl.setAttribute('data-feather', 'play-circle'); startPauseResumeBtn.classList.add('paused'); } else if (state === 'finished') { if (textEl) textEl.textContent = "Nuevo"; if (iconEl) iconEl.setAttribute('data-feather', 'refresh-cw'); } if (iconEl && typeof feather !== 'undefined') feather.replace(); } if (finishBtn) finishBtn.classList.toggle('hidden', !(state === 'running' || state === 'paused') || isRePreparing); if (restartExerciseBtn) { const showRestartButton = state === 'running' && currentPhase === 'ejercicio' && !isRePreparing && !isPaused; restartExerciseBtn.classList.toggle('hidden', !showRestartButton); } if (state === 'finished') { currentPhase = 'finalizado'; isRePreparing = false; } updateUIDisplay(); }
+            function setUIState(state) { const enableConfig = (state === 'initial' || state === 'finished'); const isFullScreen = bodyEl.classList.contains('full-screen-mode'); allSelects.forEach(s => { if (s) s.disabled = !enableConfig; }); if (configuracionSection) configuracionSection.classList.toggle('hidden', isFullScreen || !enableConfig); if (estimatedTimeSectionEl) estimatedTimeSectionEl.classList.toggle('hidden', isFullScreen || !enableConfig); if (exerciseNamesContainerEl) { const nameInputs = exerciseNamesContainerEl.querySelectorAll('input[type="text"]'); nameInputs.forEach(input => input.disabled = !enableConfig); const numEj = numEjerciciosSelect ? parseInt(numEjerciciosSelect.value) : 0; exerciseNamesContainerEl.classList.toggle('hidden', isFullScreen || !enableConfig || numEj === 0); if (enableConfig) populateExerciseNameInputs(); } if (userLogoEl.classList.contains('hidden')) userLogoEl.style.display = 'none'; else userLogoEl.style.display = 'block'; if (timerDisplaySection) { timerDisplaySection.classList.toggle('hidden', state === 'initial' && !isFullScreen); if (state === 'initial') { const currentClasses = Array.from(timerDisplaySection.classList); const classesToRemove = currentClasses.filter(cls => cls.startsWith('bg-') || cls === 'paused-overlay'); timerDisplaySection.classList.remove(...classesToRemove); if(estadoActualEl) { estadoActualEl.className = ''; estadoActualEl.textContent = "Listo"; } if(cronometroActualEl) cronometroActualEl.textContent = "00:00"; if(cronometroTotalEl) cronometroTotalEl.textContent = "00:00:00"; if (currentExerciseNameDisplayEl) { currentExerciseNameDisplayEl.textContent = ''; currentExerciseNameDisplayEl.classList.add('hidden');} currentPhase = ''; isRePreparing = false; if (exerciseProgressContainer) exerciseProgressContainer.innerHTML = ''; if (seriesProgressContainer) seriesProgressContainer.innerHTML = ''; } else { if (currentExerciseNameDisplayEl) currentExerciseNameDisplayEl.classList.remove('hidden'); } } if (startPauseResumeBtn) { startPauseResumeBtn.classList.remove('paused'); const iconEl = startPauseResumeBtn.querySelector('i.feather'); const textEl = startPauseResumeBtn.querySelector('.btn-text'); if (state === 'initial') { if (textEl) textEl.textContent = "Iniciar"; if (iconEl) iconEl.setAttribute('data-feather', 'play'); } else if (state === 'running') { if (textEl) textEl.textContent = "Pausar"; if (iconEl) iconEl.setAttribute('data-feather', 'pause'); } else if (state === 'paused') { if (textEl) textEl.textContent = "Reanudar"; if (iconEl) iconEl.setAttribute('data-feather', 'play-circle'); startPauseResumeBtn.classList.add('paused'); } else if (state === 'finished') { if (textEl) textEl.textContent = "Nuevo"; if (iconEl) iconEl.setAttribute('data-feather', 'refresh-cw'); } if (iconEl && typeof feather !== 'undefined') feather.replace(); } if (finishBtn) finishBtn.classList.toggle('hidden', !(state === 'running' || state === 'paused') || isRePreparing); if (restartExerciseBtn) { const showRestartButton = state === 'running' && currentPhase === 'ejercicio' && !isRePreparing && !isPaused; restartExerciseBtn.classList.toggle('hidden', !showRestartButton); } if (state === 'finished') { currentPhase = 'finalizado'; isRePreparing = false; } 
+                // Lógica para ocultar/mostrar .progress-indicators
+                if (progressIndicatorsEl) {
+                    const showIndicators = config && config.numEjercicios > 1 || (config && config.numSeries > 1);
+                    progressIndicatorsEl.classList.toggle('hidden', !showIndicators || isFullScreen && (state === 'initial' || state === 'finished'));
+                    if (isFullScreen && (state === 'initial' || state === 'finished')) { // Ocultar también si está en full-screen y no ha empezado o ha terminado
+                        progressIndicatorsEl.classList.add('hidden');
+                    }
+                }
+                updateUIDisplay(); 
+            }
             function phaseTick() { if (isPaused && !isRePreparing) return; if (isRePreparing) { if (currentPhaseRemainingSeconds <= RE_PREPARATION_TIME && currentPhaseRemainingSeconds >= 1 && currentPhaseRemainingSeconds <= 3) playBeep(beepMidCountdownBuffer); } else if (currentPhase === 'ejercicio' && isRunning) { if (config.tiempoEjercicio >= 20 && currentPhaseRemainingSeconds === Math.ceil(config.tiempoEjercicio / 2) && currentPhaseRemainingSeconds > 5) playBeep(beepMidCountdownBuffer); if (currentPhaseRemainingSeconds <= 5 && currentPhaseRemainingSeconds >= 1) playBeep(beepMidCountdownBuffer); } currentPhaseRemainingSeconds--; updateUIDisplay(); if (currentPhaseRemainingSeconds < 0) { if (isRePreparing) { isRePreparing = false; playBeep(beepStartExerciseBuffer); startPhase('ejercicio', config.tiempoEjercicio); } else { if (isRunning) { if (currentPhase === 'ejercicio') { updateProgressCircles('exercise', currentExerciseCount, true); if (currentExerciseCount === config.numEjercicios) updateProgressCircles('series', currentSerieCount, true); } playBeep(beepEndPhaseBuffer); } advanceToNextPhase(); } } }
             function totalSessionTick() { if (isPaused || !isRunning) return; totalSessionSeconds++; if (cronometroTotalEl) cronometroTotalEl.textContent = formatTotalTime(totalSessionSeconds); }
             function advanceToNextPhase() { clearInterval(currentPhaseTimerInterval); currentPhaseTimerInterval = null; let nextPhaseName = '', nextPhaseDuration = 0; if (currentPhase === 'preparacion') { nextPhaseName = 'ejercicio'; nextPhaseDuration = config.tiempoEjercicio; } else if (currentPhase === 'ejercicio') { if (config.numEjercicios > 1 && currentExerciseCount < config.numEjercicios) { nextPhaseName = 'descanso_ejercicio'; nextPhaseDuration = config.descansoEjercicio; } else { if (currentSerieCount < config.numSeries) { nextPhaseName = 'descanso_serie'; nextPhaseDuration = config.descansoSerie; } else { finishWorkout(true); return; } } } else if (currentPhase === 'descanso_ejercicio') { currentExerciseCount++; nextPhaseName = 'ejercicio'; nextPhaseDuration = config.tiempoEjercicio; } else if (currentPhase === 'descanso_serie') { currentSerieCount++; currentExerciseCount = 1; nextPhaseName = 'ejercicio'; nextPhaseDuration = config.tiempoEjercicio; } else { console.error("Estado de fase desconocido:", currentPhase); finishWorkout(false); return; } startPhase(nextPhaseName, nextPhaseDuration); }
@@ -807,7 +840,7 @@
 
             openIndexedDB().then(async () => {
                 await loadAllExerciseNames();
-                loadUserLogo(); // Asegúrate que esto se llama para que .logo-visible se aplique
+                loadUserLogo(); 
                 calculateAndDisplayEstimatedTime();
                 const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTheme(savedTheme);
@@ -818,7 +851,6 @@
                 console.error("No se pudo iniciar IndexedDB:", error);
                 alert("Advertencia: No se pudo cargar el almacenamiento local. Algunas funcionalidades como el guardado de logo o nombres de ejercicios podrían no estar disponibles.");
                 await loadAllExerciseNames(); 
-                // No llamamos loadUserLogo si falla IndexedDB, pero 'logo-visible' no se aplicará
                 calculateAndDisplayEstimatedTime();
                 const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTheme(savedTheme);
