@@ -120,6 +120,91 @@
         .controls-section button:active { transform:translateY(0px) scale(.98); box-shadow:0 1px 3px color-mix(in srgb, var(--color-txt-prim) 5%, transparent); }
         .controls-section #startPauseResumeBtn.paused { border-color:var(--color-txt-prim); color:var(--color-txt-prim); background-color:transparent; }
         body.full-screen-mode .controls-section button { padding:1.5vh 2vw; font-size:clamp(.9em, 2.5vh, 1.5em); gap:.8vw; flex-grow:1; border:2px solid var(--color-txt-prim); color:var(--color-txt-prim); background-color:transparent; }
+        
+        /* ESTILOS PARA LA NUEVA SECCIÓN DE INFO DE EJERCICIOS */
+        .active-exercise-info {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px; /* Espacio entre las tarjetas */
+            margin-bottom: 25px; /* Espacio antes del display del timer */
+            width: 100%;
+            max-width: 480px; /* Mismo max-width que .container para alineación */
+            margin-left: auto; /* Centrar si .container no tiene width: 100% */
+            margin-right: auto;
+        }
+        .exercise-info-card {
+            background-color: var(--color-surf);
+            padding: 15px;
+            border-radius: var(--brd-rad-sm);
+            border: 1px solid var(--color-prim-acc);
+            box-shadow: var(--box-shdw-subtle);
+            flex: 1; /* Que ambas tarjetas ocupen espacio similar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 180px; /* Ancho mínimo para que no se aplasten mucho */
+            transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+        }
+        body.dark-theme .exercise-info-card {
+            background-color: var(--color-surf-d);
+            border-color: var(--color-prim-acc-d);
+        }
+        .exercise-info-card h3 {
+            font-family: var(--font-body);
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--color-txt-sec);
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            transition: color .3s ease;
+        }
+        body.dark-theme .exercise-info-card h3 {
+            color: var(--color-txt-sec-d);
+        }
+        .exercise-info-card .exercise-image-container {
+            width: 100%;
+            height: 100px; /* Altura fija para la imagen, ajustar según necesidad */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            background-color: transparent; /* o un color de fondo sutil */
+            border-radius: var(--brd-rad-sm);
+            overflow: hidden; /* Para asegurar que la imagen no se desborde */
+        }
+        .exercise-info-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Para que la imagen se vea completa sin recortar */
+        }
+        .exercise-info-card p {
+            font-family: var(--font-body);
+            font-size: 1em;
+            font-weight: 400;
+            color: var(--color-txt-prim);
+            margin: 0;
+            word-break: break-word; /* Para nombres largos */
+            transition: color .3s ease;
+        }
+        body.dark-theme .exercise-info-card p {
+            color: var(--color-txt-prim-d);
+        }
+        body.full-screen-mode .active-exercise-info {
+            display: none !important;
+        }
+        @media (max-width: 480px) {
+            .active-exercise-info:not(body.full-screen-mode .active-exercise-info) {
+                flex-direction: column; /* Apilar verticalmente en móviles */
+                gap: 15px;
+            }
+            .exercise-info-card:not(body.full-screen-mode .exercise-info-card) {
+                width: 100%; /* Ocupar todo el ancho disponible */
+            }
+        }
+        /* FIN ESTILOS NUEVA SECCIÓN */
+
         .timer-display-section.bg-preparacion { background-color:var(--phase-prep); } .timer-display-section.bg-ejercicio { background-color:var(--phase-ex); } .timer-display-section.bg-descanso { background-color:var(--phase-rest); } .timer-display-section.bg-finalizado { background-color:var(--phase-end); }
         .timer-display-section.paused-overlay::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background-color:var(--phase-paused-overlay); z-index:1; }
         #estadoActual, #cronometroActual, #cronometroTotalLabel, #cronometroTotal, .current-exercise-name { position:relative; z-index:2; transition:font-size .3s ease-in-out, margin-bottom .3s ease-in-out, color .3s ease; }
@@ -385,15 +470,37 @@
             <div class="config-item"><label for="descansoSerie">T. Desc. Serie (s):</label><select id="descansoSerie"></select></div>
         </div>
         <div id="estimatedTimeSection" class="estimated-time-section"><p>Duración Estimada: <span id="estimatedTimeDisplay">00:00:00</span></p></div>
+        
         <div class="progress-indicators">
            <div class="progress-section"><span class="progress-label">Ejercicio Actual:</span><div id="exerciseProgress" class="progress-circles"></div></div>
            <div class="progress-section"><span class="progress-label">Serie Actual:</span><div id="seriesProgress" class="progress-circles"></div></div>
         </div>
+        
         <div class="controls-section button-group">
             <button id="startPauseResumeBtn"><i data-feather="play"></i><span class="btn-text">Iniciar</span></button>
             <button id="restartExerciseBtn" class="hidden"><i data-feather="rewind"></i><span class="btn-text">Reiniciar Ej.</span></button>
             <button id="finishBtn" class="hidden"><i data-feather="x-circle"></i><span class="btn-text">Finalizar</span></button>
         </div>
+
+        <!-- NUEVA SECCIÓN PARA EJERCICIO ACTUAL Y SIGUIENTE -->
+        <div id="activeExerciseInfo" class="active-exercise-info hidden">
+            <div class="exercise-info-card current-exercise-card">
+                <h3 id="currentExerciseCardTitle">Ejercicio Actual</h3>
+                <div class="exercise-image-container">
+                    <img id="currentExerciseImage" src="images/generic.webp" alt="Ejercicio actual">
+                </div>
+                <p id="currentExerciseCardName">Nombre del Ejercicio</p>
+            </div>
+            <div class="exercise-info-card next-exercise-card">
+                <h3>Siguiente Ejercicio</h3>
+                 <div class="exercise-image-container">
+                    <img id="nextExerciseImage" src="images/generic.webp" alt="Siguiente ejercicio">
+                </div>
+                <p id="nextExerciseCardName">Nombre del Siguiente Ejercicio</p>
+            </div>
+        </div>
+        <!-- FIN NUEVA SECCIÓN -->
+
         <div id="timerDisplaySection" class="timer-display-section hidden">
             <div id="estadoActual">Preparado</div>
             <div id="currentExerciseNameDisplay" class="current-exercise-name hidden"></div>
@@ -576,6 +683,16 @@
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
 
+            // --- Elementos para la nueva UI de ejercicio actual/siguiente ---
+            const activeExerciseInfoEl = getEl('activeExerciseInfo');
+            const currentExerciseImageEl = getEl('currentExerciseImage');
+            const currentExerciseCardNameEl = getEl('currentExerciseCardName');
+            const currentExerciseCardTitleEl = getEl('currentExerciseCardTitle');
+            const nextExerciseImageEl = getEl('nextExerciseImage');
+            const nextExerciseCardNameEl = getEl('nextExerciseCardName');
+            const nextExerciseCardEl = activeExerciseInfoEl ? activeExerciseInfoEl.querySelector('.next-exercise-card') : null;
+
+
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { rootSt = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootSt.getPropertyValue('--phase-prep').trim(), ejercicio: rootSt.getPropertyValue('--phase-ex').trim(), descanso: rootSt.getPropertyValue('--phase-rest').trim(), descanso_ejercicio: rootSt.getPropertyValue('--phase-rest').trim(), descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), finalizado: rootSt.getPropertyValue('--phase-end').trim() }; }
             updPhaseColors();
@@ -730,9 +847,173 @@
             const fmtTime = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
             const fmtTotalTime = s => `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
             function calcEstTime() { if (allSels.some(s => !s)) return; const c = { numS: parseInt(numSerSel.value), numE: parseInt(numEjSel.value), tE: parseInt(tEjSel.value), dE: parseInt(dEjSel.value), dS: parseInt(dSerSel.value) }; let total = PREP_TIME; if (c.numS <= 0 || c.numE <= 0) { if (estTimeDispEl) estTimeDispEl.textContent = fmtTotalTime(PREP_TIME); return; } let tSet = (c.numE * c.tE) + (c.numE > 1 ? (c.numE - 1) * c.dE : 0); total += tSet * c.numS + (c.numS > 1 ? (c.numS - 1) * c.dS : 0); if (estTimeDispEl) estTimeDispEl.textContent = fmtTotalTime(total); }
-            function updUIDisp() { if (cronoActEl) cronoActEl.textContent = fmtTime(phaseSecs); if (cronoTotalEl) cronoTotalEl.textContent = fmtTotalTime(totalSecs); if (curEjNameDispEl) { curEjNameDispEl.textContent = ''; curEjNameDispEl.classList.add('hidden'); } if (estadoEl) estadoEl.className = ''; if (timerDispSec) { const cls = Array.from(timerDispSec.classList); timerDispSec.classList.remove(...cls.filter(c => c.startsWith('bg-') || c === 'paused-overlay')); } const phClsPfx = 'phase-'; bodyEl.classList.remove(...Array.from(bodyEl.classList).filter(c => c.startsWith(phClsPfx) && c !== 'dark-theme'), 'active-timer-bg'); contEl.classList.remove(...Array.from(contEl.classList).filter(c => c.startsWith(phClsPfx)), 'active-timer-bg'); let txt = '', serInfo = (cfg.numSeries > 1) ? ` (Serie ${curSer}/${cfg.numSeries})` : '', timerBgCls = '', stTxtCls = '', curPhStyle = '', bodyPhClr = '', curEjName = ''; if (rePrep) { txt = "¡Ajusta Posición!"; timerBgCls = 'bg-preparacion'; stTxtCls = 'preparacion-text'; curPhStyle = 'preparacion'; curEjName = (cfg.exerciseNames && cfg.exerciseNames[curEj-1]) ? cfg.exerciseNames[curEj-1] : (cfg.numEjercicios > 0 ? `Ejercicio ${curEj}` : ''); } else if (running && curPhase && curPhase !== 'finalizado') { curPhStyle = curPhase; switch (curPhase) { case 'preparacion': txt = "Prepárate"; timerBgCls = 'bg-preparacion'; stTxtCls = 'preparacion-text'; curEjName = (cfg.exerciseNames && cfg.exerciseNames[0]) ? `Siguiente: ${cfg.exerciseNames[0]}` : (cfg.numEjercicios > 0 ? `Siguiente: Ejercicio 1` : ''); break; case 'ejercicio': txt = `Ejercicio ${curEj}${serInfo}`; timerBgCls = 'bg-ejercicio'; stTxtCls = 'ejercicio-text'; curEjName = (cfg.exerciseNames && cfg.exerciseNames[curEj-1]) ? cfg.exerciseNames[curEj-1] : (cfg.numEjercicios > 0 ? `Ejercicio ${curEj}` : ''); break; case 'descanso_ejercicio': txt = `Descanso Ej.${serInfo}`; timerBgCls = 'bg-descanso'; stTxtCls = 'descanso-text'; curEjName = (cfg.exerciseNames && cfg.exerciseNames[curEj]) ? `Siguiente: ${cfg.exerciseNames[curEj]}` : (cfg.numEjercicios > 0 && curEj < cfg.numEjercicios ? `Siguiente: Ejercicio ${curEj+1}` : ''); break; case 'descanso_serie': txt = "Descanso Serie"; timerBgCls = 'bg-descanso'; stTxtCls = 'descanso-text'; curEjName = (cfg.exerciseNames && cfg.exerciseNames[0]) ? `Siguiente: ${cfg.exerciseNames[0]}` : (cfg.numEjercicios > 0 ? `Siguiente: Ejercicio 1` : ''); break; } } else if (curPhase === 'finalizado') { txt = "¡Finalizado!"; timerBgCls = 'bg-finalizado'; stTxtCls = 'finalizado-text'; curPhStyle = 'finalizado'; curEjName = "¡Buen trabajo!"; } else { txt = "Listo"; if (curEjNameDispEl) curEjNameDispEl.classList.add('hidden'); } if (curPhStyle && phaseColors[curPhStyle]) { bodyPhClr = phaseColors[curPhStyle]; bodyEl.classList.add(`phase-${curPhStyle}`); contEl.classList.add(`phase-${curPhStyle}`); if (running || rePrep) { bodyEl.classList.add('active-timer-bg'); contEl.classList.add('active-timer-bg'); } } bodyEl.style.backgroundColor = ((bodyEl.classList.contains('full-screen-mode') && (running || rePrep || curPhase === 'finalizado')) || (!bodyEl.classList.contains('full-screen-mode') && (running || rePrep || curPhase === 'finalizado'))) ? (bodyPhClr || '') : ''; if (estadoEl) { estadoEl.textContent = txt; if (stTxtCls) estadoEl.classList.add(stTxtCls); } if (curEjNameDispEl && curEjName) { curEjNameDispEl.textContent = curEjName; curEjNameDispEl.classList.remove('hidden'); } else if (curEjNameDispEl) curEjNameDispEl.classList.add('hidden'); if (timerDispSec && timerBgCls) timerDispSec.classList.add(timerBgCls); else if (timerDispSec) timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c => c.startsWith('bg-'))); if (paused && running && timerDispSec && !rePrep) timerDispSec.classList.add('paused-overlay'); }
-            function setUI(st) { const enCfg = (st === 'initial' || st === 'finished'), isFs = bodyEl.classList.contains('full-screen-mode'); allSels.forEach(s => { if(s) s.disabled = !enCfg; }); if(cfgSec) cfgSec.classList.toggle('hidden', isFs || !enCfg); if(estTimeEl) estTimeEl.classList.toggle('hidden', isFs || !enCfg); if(ejNamesContEl){const nInps=ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach(i=>i.disabled=!enCfg); const nEj = numEjSel ? parseInt(numEjSel.value) : 0; ejNamesContEl.classList.toggle('hidden', isFs || !enCfg || nEj === 0); if(enCfg) popEjNameInputs();} logoEl.style.display = logoEl.classList.contains('hidden') ? 'none' : 'block'; if(timerDispSec){timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); if(st==='initial'){timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} if(cronoActEl) cronoActEl.textContent="00:00"; if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; if(curEjNameDispEl){curEjNameDispEl.textContent=''; curEjNameDispEl.classList.add('hidden');} curPhase=''; rePrep=false; if(ejProgEl)ejProgEl.innerHTML=''; if(serProgEl)serProgEl.innerHTML='';}else if(curEjNameDispEl)curEjNameDispEl.classList.remove('hidden');} if(startBtn){startBtn.classList.remove('paused'); const ico=startBtn.querySelector('i.feather'), txt=startBtn.querySelector('.btn-text'); if(st==='initial'){if(txt)txt.textContent="Iniciar"; if(ico)ico.setAttribute('data-feather','play');}else if(st==='running'){if(txt)txt.textContent="Pausar"; if(ico)ico.setAttribute('data-feather','pause');}else if(st==='paused'){if(txt)txt.textContent="Reanudar"; if(ico)ico.setAttribute('data-feather','play-circle'); startBtn.classList.add('paused');}else if(st==='finished'){if(txt)txt.textContent="Nuevo"; if(ico)ico.setAttribute('data-feather','refresh-cw');} if(ico && typeof feather!=='undefined')feather.replace();} if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep); if(restartEjBtn){const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show);} if(st==='finished'){curPhase='finalizado';rePrep=false;} if(progIndEl){const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1);let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide);} 
+            
+            function updUIDisp() {
+                if (cronoActEl) cronoActEl.textContent = fmtTime(phaseSecs);
+                if (cronoTotalEl) cronoTotalEl.textContent = fmtTotalTime(totalSecs);
+                
+                // Limpieza inicial para el display original de nombre de ejercicio
+                if (curEjNameDispEl) { 
+                    curEjNameDispEl.textContent = ''; 
+                    curEjNameDispEl.classList.add('hidden'); 
+                }
+
+                if (estadoEl) estadoEl.className = '';
+                if (timerDispSec) {
+                    const cls = Array.from(timerDispSec.classList);
+                    timerDispSec.classList.remove(...cls.filter(c => c.startsWith('bg-') || c === 'paused-overlay'));
+                }
+
+                const phClsPfx = 'phase-';
+                bodyEl.classList.remove(...Array.from(bodyEl.classList).filter(c => c.startsWith(phClsPfx) && c !== 'dark-theme'), 'active-timer-bg');
+                contEl.classList.remove(...Array.from(contEl.classList).filter(c => c.startsWith(phClsPfx)), 'active-timer-bg');
+
+                let txt = '', serInfo = (cfg.numSeries > 1) ? ` (Serie ${curSer}/${cfg.numSeries})` : '', timerBgCls = '', stTxtCls = '', curPhStyle = '', bodyPhClr = '', curEjNameForOriginalDisplay = '';
+
+                if (rePrep) {
+                    txt = "¡Ajusta Posición!";
+                    timerBgCls = 'bg-preparacion'; stTxtCls = 'preparacion-text'; curPhStyle = 'preparacion';
+                    curEjNameForOriginalDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj-1]) ? cfg.exerciseNames[curEj-1] : (cfg.numEjercicios > 0 ? `Ejercicio ${curEj}` : '');
+                } else if (running && curPhase && curPhase !== 'finalizado') {
+                    curPhStyle = curPhase;
+                    switch (curPhase) {
+                        case 'preparacion':
+                            txt = "Prepárate"; timerBgCls = 'bg-preparacion'; stTxtCls = 'preparacion-text';
+                            curEjNameForOriginalDisplay = (cfg.exerciseNames && cfg.exerciseNames[0]) ? `Siguiente: ${cfg.exerciseNames[0]}` : (cfg.numEjercicios > 0 ? `Siguiente: Ejercicio 1` : '');
+                            break;
+                        case 'ejercicio':
+                            txt = `Ejercicio ${curEj}${serInfo}`; timerBgCls = 'bg-ejercicio'; stTxtCls = 'ejercicio-text';
+                            curEjNameForOriginalDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj-1]) ? cfg.exerciseNames[curEj-1] : (cfg.numEjercicios > 0 ? `Ejercicio ${curEj}` : '');
+                            break;
+                        case 'descanso_ejercicio':
+                            txt = `Descanso Ej.${serInfo}`; timerBgCls = 'bg-descanso'; stTxtCls = 'descanso-text';
+                            curEjNameForOriginalDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj]) ? `Siguiente: ${cfg.exerciseNames[curEj]}` : (cfg.numEjercicios > 0 && curEj < cfg.numEjercicios ? `Siguiente: Ejercicio ${curEj+1}` : '');
+                            break;
+                        case 'descanso_serie':
+                            txt = "Descanso Serie"; timerBgCls = 'bg-descanso'; stTxtCls = 'descanso-text';
+                            curEjNameForOriginalDisplay = (cfg.exerciseNames && cfg.exerciseNames[0]) ? `Siguiente: ${cfg.exerciseNames[0]}` : (cfg.numEjercicios > 0 ? `Siguiente: Ejercicio 1` : '');
+                            break;
+                    }
+                } else if (curPhase === 'finalizado') {
+                    txt = "¡Finalizado!"; timerBgCls = 'bg-finalizado'; stTxtCls = 'finalizado-text'; curPhStyle = 'finalizado';
+                    curEjNameForOriginalDisplay = "¡Buen trabajo!";
+                } else {
+                    txt = "Listo";
+                }
+
+                // --- LÓGICA PARA LA NUEVA SECCIÓN DE INFO DE EJERCICIOS ---
+                let showActiveInfo = false;
+                if (activeExerciseInfoEl && currentExerciseImageEl && currentExerciseCardNameEl && nextExerciseImageEl && nextExerciseCardNameEl && nextExerciseCardEl && currentExerciseCardTitleEl) {
+                    let currentExNameToDisplay = "";
+                    let nextExNameToDisplay = "";
+                    let currentCardTitleText = "Ejercicio Actual";
+
+                    if (running && !paused && !bodyEl.classList.contains('full-screen-mode') &&
+                        (curPhase === 'ejercicio' || curPhase === 'descanso_ejercicio' || rePrep || curPhase === 'preparacion')) {
+                        
+                        showActiveInfo = true;
+
+                        // INFO EJERCICIO ACTUAL/SIGUIENTE (dependiendo de la fase)
+                        if (curPhase === 'preparacion') {
+                            // En preparación, la tarjeta "actual" muestra el PRIMER ejercicio
+                            currentExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : (cfg.numEjercicios > 0 ? `Ejercicio 1` : '');
+                            currentCardTitleText = "Comienza con:";
+                            // No hay "siguiente" explícito en preparación para la tarjeta de al lado
+                            nextExNameToDisplay = "";
+
+                        } else { // Para ejercicio, descanso_ejercicio, rePrep
+                             currentExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj - 1]) ? cfg.exerciseNames[curEj - 1] : `Ejercicio ${curEj}`;
+                            if (curPhase === 'ejercicio' || rePrep) {
+                                currentCardTitleText = "Ejercicio Actual";
+                            } else if (curPhase === 'descanso_ejercicio') {
+                                currentCardTitleText = "Descansando de:";
+                            }
+                        }
+                        
+                        currentExerciseImageEl.src = predefinedExercises[currentExNameToDisplay]?.image || 'images/generic.webp';
+                        currentExerciseImageEl.alt = currentExNameToDisplay;
+                        currentExerciseCardNameEl.textContent = currentExNameToDisplay;
+                        currentExerciseCardTitleEl.textContent = currentCardTitleText;
+
+                        // INFO SIGUIENTE EJERCICIO (para la segunda tarjeta)
+                        if (curPhase === 'preparacion') {
+                            // Ya manejado, nextExNameToDisplay es ""
+                        } else if (rePrep) {
+                            nextExNameToDisplay = ""; // Durante la re-preparación, no mostramos "siguiente" en la segunda tarjeta
+                        } else if (curPhase === 'ejercicio') {
+                            if (curEj < cfg.numEjercicios) { // Hay más ejercicios en esta serie
+                                nextExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj]) ? cfg.exerciseNames[curEj] : `Ejercicio ${curEj + 1}`;
+                            } else if (curSer < cfg.numSeries) { // Es el último ejercicio de la serie, pero hay más series
+                                nextExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : `Ejercicio 1 (Sig. Serie)`;
+                            } else {
+                                nextExNameToDisplay = "¡Último ejercicio!"; // O dejar vacío
+                            }
+                        } else if (curPhase === 'descanso_ejercicio') {
+                            // Estamos descansando para el ejercicio 'curEj+1' (índice 'curEj' en el array)
+                            if (curEj < cfg.numEjercicios && cfg.exerciseNames && cfg.exerciseNames[curEj]) {
+                                 nextExNameToDisplay = cfg.exerciseNames[curEj];
+                            } else if (curEj < cfg.numEjercicios) {
+                                nextExNameToDisplay = `Ejercicio ${curEj + 1}`;
+                            } else {
+                                nextExNameToDisplay = ""; // No debería llegar aquí si la lógica de nextPhase es correcta
+                            }
+                        }
+
+                        if (nextExNameToDisplay) {
+                            nextExerciseImageEl.src = predefinedExercises[nextExNameToDisplay]?.image || 'images/generic.webp';
+                            nextExerciseImageEl.alt = nextExNameToDisplay;
+                            nextExerciseCardNameEl.textContent = nextExNameToDisplay;
+                            nextExerciseCardEl.classList.remove('hidden');
+                        } else {
+                            nextExerciseCardEl.classList.add('hidden');
+                        }
+                    }
+                    activeExerciseInfoEl.classList.toggle('hidden', !showActiveInfo);
+                }
+                // --- FIN LÓGICA NUEVA SECCIÓN ---
+
+                if (curPhStyle && phaseColors[curPhStyle]) {
+                    bodyPhClr = phaseColors[curPhStyle];
+                    bodyEl.classList.add(`phase-${curPhStyle}`);
+                    contEl.classList.add(`phase-${curPhStyle}`);
+                    if (running || rePrep) { bodyEl.classList.add('active-timer-bg'); contEl.classList.add('active-timer-bg'); }
+                }
+                bodyEl.style.backgroundColor = ((bodyEl.classList.contains('full-screen-mode') && (running || rePrep || curPhase === 'finalizado')) || (!bodyEl.classList.contains('full-screen-mode') && (running || rePrep || curPhase === 'finalizado'))) ? (bodyPhClr || '') : '';
+                
+                if (estadoEl) {
+                    estadoEl.textContent = txt;
+                    if (stTxtCls) estadoEl.classList.add(stTxtCls);
+                }
+                
+                // Gestionar el display de nombre de ejercicio original
+                if (curEjNameDispEl) {
+                    if (showActiveInfo || bodyEl.classList.contains('full-screen-mode')) { // Si la nueva UI está activa O estamos en fullscreen
+                        curEjNameDispEl.classList.add('hidden'); // Ocultar el original
+                    } else if (curEjNameForOriginalDisplay) {
+                        curEjNameDispEl.textContent = curEjNameForOriginalDisplay;
+                        curEjNameDispEl.classList.remove('hidden');
+                    } else {
+                        curEjNameDispEl.classList.add('hidden');
+                    }
+                }
+
+
+                if (timerDispSec && timerBgCls) timerDispSec.classList.add(timerBgCls);
+                else if (timerDispSec) timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c => c.startsWith('bg-')));
+                
+                if (paused && running && timerDispSec && !rePrep) timerDispSec.classList.add('paused-overlay');
+            }
+
+            function setUI(st) { const enCfg = (st === 'initial' || st === 'finished'), isFs = bodyEl.classList.contains('full-screen-mode'); allSels.forEach(s => { if(s) s.disabled = !enCfg; }); if(cfgSec) cfgSec.classList.toggle('hidden', isFs || !enCfg); if(estTimeEl) estTimeEl.classList.toggle('hidden', isFs || !enCfg); if(ejNamesContEl){const nInps=ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach(i=>i.disabled=!enCfg); const nEj = numEjSel ? parseInt(numEjSel.value) : 0; ejNamesContEl.classList.toggle('hidden', isFs || !enCfg || nEj === 0); if(enCfg) popEjNameInputs();} logoEl.style.display = logoEl.classList.contains('hidden') ? 'none' : 'block'; if(timerDispSec){timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); if(st==='initial'){timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} if(cronoActEl) cronoActEl.textContent="00:00"; if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; if(curEjNameDispEl){curEjNameDispEl.textContent=''; curEjNameDispEl.classList.add('hidden');} curPhase=''; rePrep=false; if(ejProgEl)ejProgEl.innerHTML=''; if(serProgEl)serProgEl.innerHTML='';}else if(curEjNameDispEl && !isFs && !activeExerciseInfoEl.classList.contains('hidden') /*No mostrar si nueva UI está activa y no es FS*/) {curEjNameDispEl.classList.remove('hidden');} else if (curEjNameDispEl) { curEjNameDispEl.classList.add('hidden');}} if(startBtn){startBtn.classList.remove('paused'); const ico=startBtn.querySelector('i.feather'), txt=startBtn.querySelector('.btn-text'); if(st==='initial'){if(txt)txt.textContent="Iniciar"; if(ico)ico.setAttribute('data-feather','play');}else if(st==='running'){if(txt)txt.textContent="Pausar"; if(ico)ico.setAttribute('data-feather','pause');}else if(st==='paused'){if(txt)txt.textContent="Reanudar"; if(ico)ico.setAttribute('data-feather','play-circle'); startBtn.classList.add('paused');}else if(st==='finished'){if(txt)txt.textContent="Nuevo"; if(ico)ico.setAttribute('data-feather','refresh-cw');} if(ico && typeof feather!=='undefined')feather.replace();} if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep); if(restartEjBtn){const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show);} if(st==='finished'){curPhase='finalizado';rePrep=false;} if(progIndEl){const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1);let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide);} 
                 [showExplBtn, manageNamesBtn, saveRoutineBtn, loadRoutineBtn].forEach(btn => { if(btn) btn.classList.toggle('hidden-during-run', st==='running'||st==='paused'||isFs); });
+                
+                // Ocultar/mostrar la info de ejercicios con imágenes
+                if (activeExerciseInfoEl) {
+                    const shouldShowActiveInfo = (st === 'running' || st === 'paused') &&
+                                            (curPhase === 'ejercicio' || curPhase === 'descanso_ejercicio' || rePrep || curPhase === 'preparacion') &&
+                                            !isFs;
+                    activeExerciseInfoEl.classList.toggle('hidden', !shouldShowActiveInfo);
+                }
                 updUIDisp(); 
             }
             function phaseTick() { if (paused && !rePrep) return; if (rePrep) { if (phaseSecs <= RE_PREP_TIME && phaseSecs >= 1 && phaseSecs <= 3) playBeep(beepMidBuf); } else if (curPhase === 'ejercicio' && running) { if (cfg.tiempoEjercicio >= 20 && phaseSecs === Math.ceil(cfg.tiempoEjercicio / 2) && phaseSecs > 5) playBeep(beepMidBuf); if (phaseSecs <= 5 && phaseSecs >= 1) playBeep(beepMidBuf); } phaseSecs--; updUIDisp(); if (phaseSecs < 0) { if (rePrep) { rePrep = false; playBeep(beepStartBuf); startPhase('ejercicio', cfg.tiempoEjercicio); } else { if (running) { if (curPhase === 'ejercicio') { updProgCircles('exercise', curEj, true); if (curEj === cfg.numEjercicios) updProgCircles('series', curSer, true); } playBeep(beepEndBuf); } nextPhase(); } } }
@@ -790,7 +1071,7 @@
                         imgEl.src=predefinedExercises[curEjName].image;
                         imgEl.alt=curEjName;
                     }else{
-                        imgEl.src='images/generic.webp';
+                        imgEl.src='images/generic.webp'; // Asegúrate que esta imagen exista
                         imgEl.alt=curEjName;
                     }
                     imgCont.appendChild(imgEl);
