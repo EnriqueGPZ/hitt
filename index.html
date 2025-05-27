@@ -121,87 +121,77 @@
         .controls-section #startPauseResumeBtn.paused { border-color:var(--color-txt-prim); color:var(--color-txt-prim); background-color:transparent; }
         body.full-screen-mode .controls-section button { padding:1.5vh 2vw; font-size:clamp(.9em, 2.5vh, 1.5em); gap:.8vw; flex-grow:1; border:2px solid var(--color-txt-prim); color:var(--color-txt-prim); background-color:transparent; }
         
-        /* ESTILOS PARA LA NUEVA SECCIÓN DE INFO DE EJERCICIOS */
+        /* ESTILOS PARA LA NUEVA SECCIÓN DE INFO DE EJERCICIOS (SOLO EN FULLSCREEN) */
         .active-exercise-info {
-            display: flex;
+            display: none; /* Oculto por defecto */
             justify-content: space-around;
-            gap: 20px; /* Espacio entre las tarjetas */
-            margin-bottom: 25px; /* Espacio antes del display del timer */
-            width: 100%;
-            max-width: 480px; /* Mismo max-width que .container para alineación */
-            margin-left: auto; /* Centrar si .container no tiene width: 100% */
+            gap: 3vw; /* Espacio relativo al viewport width */
+            margin-bottom: 2vh; /* Espacio relativo al viewport height */
+            width: 90%; /* Ancho relativo en fullscreen */
+            max-width: 800px; /* Un máximo para que no se extienda demasiado en pantallas muy anchas */
+            margin-left: auto; 
             margin-right: auto;
+            position: absolute; /* Posicionarlo respecto al .container en modo fullscreen */
+            bottom: calc(2vh + 60px); /* Abajo, dejando espacio para los controles. Ajustar '60px' según altura de controles */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5; /* Por si acaso, para estar encima de otros elementos del timer si se superponen */
         }
+
+        body.full-screen-mode .active-exercise-info.js-visible-by-state {
+             display: flex !important; /* Mostrar SOLO en modo pantalla completa si JS lo permite por estado */
+        }
+
         .exercise-info-card {
-            background-color: var(--color-surf);
-            padding: 15px;
+            background-color: transparent; 
+            padding: 1vh 1vw; /* Padding relativo */
             border-radius: var(--brd-rad-sm);
-            border: 1px solid var(--color-prim-acc);
-            box-shadow: var(--box-shdw-subtle);
-            flex: 1; /* Que ambas tarjetas ocupen espacio similar */
+            flex: 1; 
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            min-width: 180px; /* Ancho mínimo para que no se aplasten mucho */
-            transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+            min-width: 150px; 
         }
-        body.dark-theme .exercise-info-card {
-            background-color: var(--color-surf-d);
-            border-color: var(--color-prim-acc-d);
-        }
+
         .exercise-info-card h3 {
             font-family: var(--font-body);
-            font-size: 0.9em;
+            font-size: clamp(1em, 2.2vh, 1.5em); /* Tamaño de fuente adaptable */
             font-weight: 700;
-            color: var(--color-txt-sec);
+            color: var(--color-txt-prim); /* Usar color primario de texto para mejor contraste en FS */
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 1vh;
             text-transform: uppercase;
             transition: color .3s ease;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3); /* Sombra para legibilidad si el fondo del body cambia mucho */
         }
-        body.dark-theme .exercise-info-card h3 {
-            color: var(--color-txt-sec-d);
-        }
+        /* No es necesario .dark-theme específico para h3 si usamos --color-txt-prim que ya cambia */
+
         .exercise-info-card .exercise-image-container {
             width: 100%;
-            height: 100px; /* Altura fija para la imagen, ajustar según necesidad */
+            height: clamp(80px, 15vh, 180px); /* Altura de imagen adaptable */
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
-            background-color: transparent; /* o un color de fondo sutil */
+            margin-bottom: 1vh;
+            background-color: transparent; 
             border-radius: var(--brd-rad-sm);
-            overflow: hidden; /* Para asegurar que la imagen no se desborde */
+            overflow: hidden; 
         }
         .exercise-info-card img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* Para que la imagen se vea completa sin recortar */
+            object-fit: contain; 
         }
-        .exercise-info-card p {
+        .exercise-info-card p { /* Nombre del ejercicio */
             font-family: var(--font-body);
-            font-size: 1em;
-            font-weight: 400;
+            font-size: clamp(1.1em, 2.5vh, 1.8em); /* Tamaño de fuente adaptable */
+            font-weight: 700; /* Más peso para destacar */
             color: var(--color-txt-prim);
             margin: 0;
-            word-break: break-word; /* Para nombres largos */
+            word-break: break-word; 
             transition: color .3s ease;
-        }
-        body.dark-theme .exercise-info-card p {
-            color: var(--color-txt-prim-d);
-        }
-        body.full-screen-mode .active-exercise-info {
-            display: none !important;
-        }
-        @media (max-width: 480px) {
-            .active-exercise-info:not(body.full-screen-mode .active-exercise-info) {
-                flex-direction: column; /* Apilar verticalmente en móviles */
-                gap: 15px;
-            }
-            .exercise-info-card:not(body.full-screen-mode .exercise-info-card) {
-                width: 100%; /* Ocupar todo el ancho disponible */
-            }
+             text-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
         /* FIN ESTILOS NUEVA SECCIÓN */
 
@@ -209,16 +199,33 @@
         .timer-display-section.paused-overlay::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background-color:var(--phase-paused-overlay); z-index:1; }
         #estadoActual, #cronometroActual, #cronometroTotalLabel, #cronometroTotal, .current-exercise-name { position:relative; z-index:2; transition:font-size .3s ease-in-out, margin-bottom .3s ease-in-out, color .3s ease; }
         #estadoActual { font-family:var(--font-body); font-size:1.5em; font-weight:700; margin-bottom:8px; min-height:1.5em; text-transform:uppercase; letter-spacing:.5px; color:var(--color-txt-prim); }
-        .current-exercise-name { font-family:var(--font-body); font-size:1.1em; font-weight:400; color:var(--color-txt-prim); margin-bottom:5px; min-height:1.2em; text-transform:capitalize; transition:color .3s ease, font-size .3s ease; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; width:100%; }
-        body.full-screen-mode .current-exercise-name { font-size:clamp(1.2em, 3vh, 2.5em); margin-bottom:1vh; }
+        
+        /* .current-exercise-name es el display de texto original. Lo ocultaremos en FS. */
+        .current-exercise-name { 
+            font-family:var(--font-body); font-size:1.1em; font-weight:400; 
+            color:var(--color-txt-prim); margin-bottom:5px; min-height:1.2em; 
+            text-transform:capitalize; transition:color .3s ease, font-size .3s ease; 
+            overflow:hidden; text-overflow:ellipsis; white-space:nowrap; 
+            display:block; width:100%; 
+        }
+        body.full-screen-mode #currentExerciseNameDisplay { 
+            display: none !important; /* Ocultar el display de texto original en modo pantalla completa */
+        }
+        
         #cronometroActual { font-family:var(--font-display); font-weight:900; font-size:clamp(5em, 28vw, 12em); margin:0 0 10px 0; line-height:1; color:var(--color-txt-prim); }
         #cronometroTotalLabel { font-family:var(--font-body); font-size:.9em; text-transform:uppercase; letter-spacing:1px; font-weight:400; margin-top:10px; color:var(--color-txt-sec); }
         #cronometroTotal { font-family:var(--font-display); font-weight:700; font-size:1.4em; color:var(--color-txt-sec); }
         #timerDisplaySection:not([class*="bg-"]) #estadoActual, #timerDisplaySection:not([class*="bg-"]) #cronometroActual { color:var(--color-txt-prim); }
         #timerDisplaySection:not([class*="bg-"]) #cronometroTotalLabel, #timerDisplaySection:not([class*="bg-"]) #cronometroTotal { color:var(--color-txt-sec); }
-        .hidden { display:none !important; }
+        .hidden { display:none !important; } /* Esta clase la usa JS para ocultar/mostrar elementos */
+        
         body.full-screen-mode { padding:0; overflow:hidden; display:flex; flex-direction:column; }
-        body.full-screen-mode .container { max-width:100%; width:100%; height:100%; margin:0; border-radius:0; border:none; padding:10px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:none; flex-grow:1; }
+        body.full-screen-mode .container { 
+            max-width:100%; width:100%; height:100%; margin:0; border-radius:0; border:none; 
+            padding:10px; box-sizing:border-box; display:flex; flex-direction:column; 
+            justify-content:center; align-items:center; box-shadow:none; flex-grow:1; 
+            position: relative; /* Para que .active-exercise-info se posicione relativo a él */
+        }
         body.full-screen-mode .container:has(#timerDisplaySection:not(.hidden)) { justify-content:space-around; }
         body.full-screen-mode #configuracionSection, body.full-screen-mode #estimatedTimeSection { display:none !important; }
         body.full-screen-mode .progress-indicators { gap:1.5vh; margin-bottom:1vh; margin-top:2vh; }
@@ -230,7 +237,13 @@
         body.full-screen-mode #timerDisplaySection { width:95%; max-width:1200px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:1vh; margin-bottom:1vh; padding:1vw; }
         body.full-screen-mode.logo-visible .progress-indicators.hidden + #timerDisplaySection { margin-top:calc(var(--logo-h-fs) + 2vh); }
         body.full-screen-mode:not(.logo-visible) .progress-indicators.hidden + #timerDisplaySection { margin-top:2vh; }
-        body.full-screen-mode #estadoActual { font-size:clamp(1.8em, 5vh, 4em); margin-bottom:1vh; min-height:auto; }
+        
+        /* Ajustar #estadoActual en FS para que no choque con las nuevas tarjetas */
+        body.full-screen-mode #estadoActual { 
+            font-size:clamp(1.6em, 4vh, 3em); /* Un poco más pequeño si las tarjetas de imagen están presentes */
+            margin-bottom:0.5vh; 
+            min-height:auto; 
+        }
         body.full-screen-mode #cronometroActual { font-size:clamp(6em, 26vw, 18em); line-height:.85; margin-bottom:1.5vh; }
         body.full-screen-mode #cronometroTotalLabel { font-size:clamp(1em, 2.5vh, 2em); }
         body.full-screen-mode #cronometroTotal { font-size:clamp(1.5em, 4vh, 3em); }
@@ -369,7 +382,6 @@
         }
         @media (max-width:480px) {
             .controls-section:not(.full-screen-mode .controls-section) button { padding:10px 12px; font-size:.85em; }
-            body.full-screen-mode #estadoActual { font-size:clamp(2em, 6vh, 4em); }
             body.full-screen-mode #cronometroActual { font-size:clamp(3.5em, 20vw, 8em); }
             body.full-screen-mode #cronometroTotalLabel { font-size:clamp(1em, 3vh, 1.8em); }
             body.full-screen-mode #cronometroTotal { font-size:clamp(1.5em, 4vh, 2.5em); }
@@ -395,6 +407,22 @@
             #explanationScreen.modal-fullscreen-active .explanation-item-name {
                 font-size:1.2em;
             }
+
+            /* En pantallas muy pequeñas en FS, las tarjetas de imagen podrían no caber bien, ajustar o incluso ocultar */
+            body.full-screen-mode .active-exercise-info {
+                /* Podrías querer ocultarlas si el alto o ancho es muy limitado en FS */
+                /* Por ejemplo:
+                @media (max-width: 480px) and (orientation: portrait), (max-height: 400px) and (orientation: landscape) {
+                    display: none !important;
+                }
+                */
+                 gap: 2vw;
+                 bottom: calc(2vh + 50px); /* Ajustar si los controles son más pequeños */
+            }
+             body.full-screen-mode .active-exercise-info .exercise-info-card h3 { font-size: clamp(0.8em, 1.8vh, 1.2em); }
+             body.full-screen-mode .active-exercise-info .exercise-info-card .exercise-image-container { height: clamp(60px, 12vh, 150px); }
+             body.full-screen-mode .active-exercise-info .exercise-info-card p { font-size: clamp(0.9em, 2vh, 1.5em); }
+
         }
         @media (max-width:420px) {
             .container:not(.full-screen-mode .container) { padding:25px 20px; }
@@ -435,13 +463,24 @@
             body.full-screen-mode .progress-circles { gap:clamp(4px, .8vh, 8px) !important; }
             body.full-screen-mode #timerDisplaySection { padding:1vh 1vw !important; margin-bottom:1vh !important; }
             body.full-screen-mode #estadoActual { font-size:clamp(1.4em, 3vh, 2.2em) !important; margin-bottom:.5vh !important; }
-            body.full-screen-mode .current-exercise-name { font-size:clamp(.9em, 2vh, 1.5em) !important; margin-bottom:.5vh !important; }
+            /* .current-exercise-name en FS landscape, ya está oculto por la regla general */
             body.full-screen-mode #cronometroActual { font-size:clamp(5em, 22vh, 12em) !important; line-height:.8 !important; margin-bottom:1vh !important; }
             body.full-screen-mode #cronometroTotalLabel { font-size:clamp(.7em, 1.8vh, 1.2em) !important; margin-top:0 !important; }
             body.full-screen-mode #cronometroTotal { font-size:clamp(1em, 2.5vh, 1.8em) !important; }
             body.full-screen-mode .controls-section { width:95%; max-width:600px; margin-bottom:1vh !important; gap:8px; }
             body.full-screen-mode .controls-section button { font-size:clamp(.8em, 2vh, 1.1em) !important; padding:1vh 1.5vw !important; }
             body.full-screen-mode .controls-section button i.feather { width:clamp(.9em, 2vh, 1.2em) !important; height:clamp(.9em, 2vh, 1.2em) !important; }
+            
+            /* Ajustes para .active-exercise-info en FS landscape */
+            body.full-screen-mode .active-exercise-info {
+                gap: 2vw;
+                bottom: calc(1vh + 40px); /* Ajustar si los controles son más pequeños/diferentes en landscape FS */
+            }
+            body.full-screen-mode .active-exercise-info .exercise-info-card h3 { font-size: clamp(0.7em, 1.5vh, 1em); }
+            body.full-screen-mode .active-exercise-info .exercise-info-card .exercise-image-container { height: clamp(50px, 10vh, 120px); }
+            body.full-screen-mode .active-exercise-info .exercise-info-card p { font-size: clamp(0.8em, 1.8vh, 1.3em); }
+
+
             body:not(.full-screen-mode) .top-bar-container { display:flex; justify-content:space-between; align-items:center; }
             body:not(.full-screen-mode).logo-visible .top-bar-container { margin-bottom:20px; }
             body:not(.full-screen-mode) .page-main-title { font-size:1.8em; margin-bottom:0; }
@@ -482,8 +521,9 @@
             <button id="finishBtn" class="hidden"><i data-feather="x-circle"></i><span class="btn-text">Finalizar</span></button>
         </div>
 
-        <!-- NUEVA SECCIÓN PARA EJERCICIO ACTUAL Y SIGUIENTE -->
-        <div id="activeExerciseInfo" class="active-exercise-info hidden">
+        <!-- INFO EJERCICIO ACTUAL/SIGUIENTE (SOLO EN FULLSCREEN) -->
+        <!-- La visibilidad es controlada por CSS (body.full-screen-mode .active-exercise-info) y JS (clase .js-visible-by-state) -->
+        <div id="activeExerciseInfo" class="active-exercise-info"> <!-- JS añadirá/quitará .js-visible-by-state -->
             <div class="exercise-info-card current-exercise-card">
                 <h3 id="currentExerciseCardTitle">Ejercicio Actual</h3>
                 <div class="exercise-image-container">
@@ -499,11 +539,11 @@
                 <p id="nextExerciseCardName">Nombre del Siguiente Ejercicio</p>
             </div>
         </div>
-        <!-- FIN NUEVA SECCIÓN -->
+        <!-- FIN INFO EJERCICIO ACTUAL/SIGUIENTE -->
 
         <div id="timerDisplaySection" class="timer-display-section hidden">
             <div id="estadoActual">Preparado</div>
-            <div id="currentExerciseNameDisplay" class="current-exercise-name hidden"></div>
+            <div id="currentExerciseNameDisplay" class="current-exercise-name hidden"></div> <!-- Este es el display original -->
             <div id="cronometroActual">00:00</div>
             <div id="cronometroTotalLabel">Tiempo Total Acumulado</div><div id="cronometroTotal">00:00:00</div>
         </div>
@@ -683,7 +723,7 @@
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
 
-            // --- Elementos para la nueva UI de ejercicio actual/siguiente ---
+            // --- Elementos para la nueva UI de ejercicio actual/siguiente (SOLO FULLSCREEN) ---
             const activeExerciseInfoEl = getEl('activeExerciseInfo');
             const currentExerciseImageEl = getEl('currentExerciseImage');
             const currentExerciseCardNameEl = getEl('currentExerciseCardName');
@@ -901,76 +941,75 @@
                     txt = "Listo";
                 }
 
-                // --- LÓGICA PARA LA NUEVA SECCIÓN DE INFO DE EJERCICIOS ---
-                let showActiveInfo = false;
+                // --- LÓGICA PARA LA SECCIÓN DE INFO DE EJERCICIOS (SOLO EN FULLSCREEN) ---
+                let shouldShowActiveInfoForState = false; // Si el estado del timer justifica mostrarlo
                 if (activeExerciseInfoEl && currentExerciseImageEl && currentExerciseCardNameEl && nextExerciseImageEl && nextExerciseCardNameEl && nextExerciseCardEl && currentExerciseCardTitleEl) {
-                    let currentExNameToDisplay = "";
-                    let nextExNameToDisplay = "";
-                    let currentCardTitleText = "Ejercicio Actual";
+                    let currentExNameToDisplayFS = "";
+                    let nextExNameToDisplayFS = "";
+                    let currentCardTitleTextFS = "Ejercicio Actual";
 
-                    if (running && !paused && !bodyEl.classList.contains('full-screen-mode') &&
+                    // Condiciones para *POTENCIALMENTE* mostrar la info (CSS decidirá si es FS)
+                    if (running && !paused &&
                         (curPhase === 'ejercicio' || curPhase === 'descanso_ejercicio' || rePrep || curPhase === 'preparacion')) {
                         
-                        showActiveInfo = true;
+                        shouldShowActiveInfoForState = true;
 
-                        // INFO EJERCICIO ACTUAL/SIGUIENTE (dependiendo de la fase)
                         if (curPhase === 'preparacion') {
-                            // En preparación, la tarjeta "actual" muestra el PRIMER ejercicio
-                            currentExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : (cfg.numEjercicios > 0 ? `Ejercicio 1` : '');
-                            currentCardTitleText = "Comienza con:";
-                            // No hay "siguiente" explícito en preparación para la tarjeta de al lado
-                            nextExNameToDisplay = "";
-
-                        } else { // Para ejercicio, descanso_ejercicio, rePrep
-                             currentExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj - 1]) ? cfg.exerciseNames[curEj - 1] : `Ejercicio ${curEj}`;
+                            currentExNameToDisplayFS = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : (cfg.numEjercicios > 0 ? `Ejercicio 1` : '');
+                            currentCardTitleTextFS = "Comienza con:";
+                            nextExNameToDisplayFS = (cfg.exerciseNames && cfg.numEjercicios > 1 && cfg.exerciseNames[1]) ? cfg.exerciseNames[1] : (cfg.numEjercicios > 1 ? `Ejercicio 2` : '');
+                        } else { 
+                             currentExNameToDisplayFS = (cfg.exerciseNames && cfg.exerciseNames[curEj - 1]) ? cfg.exerciseNames[curEj - 1] : `Ejercicio ${curEj}`;
                             if (curPhase === 'ejercicio' || rePrep) {
-                                currentCardTitleText = "Ejercicio Actual";
+                                currentCardTitleTextFS = "Ejercicio Actual";
                             } else if (curPhase === 'descanso_ejercicio') {
-                                currentCardTitleText = "Descansando de:";
+                                currentCardTitleTextFS = "Descansando de:";
                             }
                         }
                         
-                        currentExerciseImageEl.src = predefinedExercises[currentExNameToDisplay]?.image || 'images/generic.webp';
-                        currentExerciseImageEl.alt = currentExNameToDisplay;
-                        currentExerciseCardNameEl.textContent = currentExNameToDisplay;
-                        currentExerciseCardTitleEl.textContent = currentCardTitleText;
+                        currentExerciseImageEl.src = predefinedExercises[currentExNameToDisplayFS]?.image || 'images/generic.webp';
+                        currentExerciseImageEl.alt = currentExNameToDisplayFS;
+                        currentExerciseCardNameEl.textContent = currentExNameToDisplayFS;
+                        currentExerciseCardTitleEl.textContent = currentCardTitleTextFS;
 
-                        // INFO SIGUIENTE EJERCICIO (para la segunda tarjeta)
                         if (curPhase === 'preparacion') {
-                            // Ya manejado, nextExNameToDisplay es ""
+                            // Ya se definió nextExNameToDisplayFS arriba
                         } else if (rePrep) {
-                            nextExNameToDisplay = ""; // Durante la re-preparación, no mostramos "siguiente" en la segunda tarjeta
+                            nextExNameToDisplayFS = ""; 
                         } else if (curPhase === 'ejercicio') {
-                            if (curEj < cfg.numEjercicios) { // Hay más ejercicios en esta serie
-                                nextExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[curEj]) ? cfg.exerciseNames[curEj] : `Ejercicio ${curEj + 1}`;
-                            } else if (curSer < cfg.numSeries) { // Es el último ejercicio de la serie, pero hay más series
-                                nextExNameToDisplay = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : `Ejercicio 1 (Sig. Serie)`;
+                            if (curEj < cfg.numEjercicios) { 
+                                nextExNameToDisplayFS = (cfg.exerciseNames && cfg.exerciseNames[curEj]) ? cfg.exerciseNames[curEj] : `Ejercicio ${curEj + 1}`;
+                            } else if (curSer < cfg.numSeries) { 
+                                nextExNameToDisplayFS = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : `Ejercicio 1 (Sig. Serie)`;
                             } else {
-                                nextExNameToDisplay = "¡Último ejercicio!"; // O dejar vacío
+                                nextExNameToDisplayFS = ""; 
                             }
                         } else if (curPhase === 'descanso_ejercicio') {
-                            // Estamos descansando para el ejercicio 'curEj+1' (índice 'curEj' en el array)
                             if (curEj < cfg.numEjercicios && cfg.exerciseNames && cfg.exerciseNames[curEj]) {
-                                 nextExNameToDisplay = cfg.exerciseNames[curEj];
+                                 nextExNameToDisplayFS = cfg.exerciseNames[curEj];
                             } else if (curEj < cfg.numEjercicios) {
-                                nextExNameToDisplay = `Ejercicio ${curEj + 1}`;
-                            } else {
-                                nextExNameToDisplay = ""; // No debería llegar aquí si la lógica de nextPhase es correcta
+                                nextExNameToDisplayFS = `Ejercicio ${curEj + 1}`;
+                            } else if (curSer < cfg.numSeries) { // Descanso para el primer ej de la siguiente serie
+                                nextExNameToDisplayFS = (cfg.exerciseNames && cfg.exerciseNames[0]) ? cfg.exerciseNames[0] : `Ejercicio 1 (Sig. Serie)`;
+                            }
+                             else {
+                                nextExNameToDisplayFS = "";
                             }
                         }
 
-                        if (nextExNameToDisplay) {
-                            nextExerciseImageEl.src = predefinedExercises[nextExNameToDisplay]?.image || 'images/generic.webp';
-                            nextExerciseImageEl.alt = nextExNameToDisplay;
-                            nextExerciseCardNameEl.textContent = nextExNameToDisplay;
+                        if (nextExNameToDisplayFS) {
+                            nextExerciseImageEl.src = predefinedExercises[nextExNameToDisplayFS]?.image || 'images/generic.webp';
+                            nextExerciseImageEl.alt = nextExNameToDisplayFS;
+                            nextExerciseCardNameEl.textContent = nextExNameToDisplayFS;
                             nextExerciseCardEl.classList.remove('hidden');
                         } else {
                             nextExerciseCardEl.classList.add('hidden');
                         }
                     }
-                    activeExerciseInfoEl.classList.toggle('hidden', !showActiveInfo);
+                    // JS solo controla si *debería* estar visible por estado, CSS controla por FS
+                    activeExerciseInfoEl.classList.toggle('js-visible-by-state', shouldShowActiveInfoForState);
                 }
-                // --- FIN LÓGICA NUEVA SECCIÓN ---
+                // --- FIN LÓGICA SECCIÓN INFO EJERCICIOS FULLSCREEN ---
 
                 if (curPhStyle && phaseColors[curPhStyle]) {
                     bodyPhClr = phaseColors[curPhStyle];
@@ -985,15 +1024,14 @@
                     if (stTxtCls) estadoEl.classList.add(stTxtCls);
                 }
                 
-                // Gestionar el display de nombre de ejercicio original
+                // Gestionar el display de nombre de ejercicio original (el que está en timerDisplaySection)
                 if (curEjNameDispEl) {
-                    if (showActiveInfo || bodyEl.classList.contains('full-screen-mode')) { // Si la nueva UI está activa O estamos en fullscreen
-                        curEjNameDispEl.classList.add('hidden'); // Ocultar el original
-                    } else if (curEjNameForOriginalDisplay) {
+                    // Mostrar solo si NO estamos en fullscreen Y hay un nombre para mostrar
+                    if (!bodyEl.classList.contains('full-screen-mode') && curEjNameForOriginalDisplay) {
                         curEjNameDispEl.textContent = curEjNameForOriginalDisplay;
                         curEjNameDispEl.classList.remove('hidden');
                     } else {
-                        curEjNameDispEl.classList.add('hidden');
+                        curEjNameDispEl.classList.add('hidden'); // Oculto en FS o si no hay nombre
                     }
                 }
 
@@ -1004,16 +1042,12 @@
                 if (paused && running && timerDispSec && !rePrep) timerDispSec.classList.add('paused-overlay');
             }
 
-            function setUI(st) { const enCfg = (st === 'initial' || st === 'finished'), isFs = bodyEl.classList.contains('full-screen-mode'); allSels.forEach(s => { if(s) s.disabled = !enCfg; }); if(cfgSec) cfgSec.classList.toggle('hidden', isFs || !enCfg); if(estTimeEl) estTimeEl.classList.toggle('hidden', isFs || !enCfg); if(ejNamesContEl){const nInps=ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach(i=>i.disabled=!enCfg); const nEj = numEjSel ? parseInt(numEjSel.value) : 0; ejNamesContEl.classList.toggle('hidden', isFs || !enCfg || nEj === 0); if(enCfg) popEjNameInputs();} logoEl.style.display = logoEl.classList.contains('hidden') ? 'none' : 'block'; if(timerDispSec){timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); if(st==='initial'){timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} if(cronoActEl) cronoActEl.textContent="00:00"; if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; if(curEjNameDispEl){curEjNameDispEl.textContent=''; curEjNameDispEl.classList.add('hidden');} curPhase=''; rePrep=false; if(ejProgEl)ejProgEl.innerHTML=''; if(serProgEl)serProgEl.innerHTML='';}else if(curEjNameDispEl && !isFs && !activeExerciseInfoEl.classList.contains('hidden') /*No mostrar si nueva UI está activa y no es FS*/) {curEjNameDispEl.classList.remove('hidden');} else if (curEjNameDispEl) { curEjNameDispEl.classList.add('hidden');}} if(startBtn){startBtn.classList.remove('paused'); const ico=startBtn.querySelector('i.feather'), txt=startBtn.querySelector('.btn-text'); if(st==='initial'){if(txt)txt.textContent="Iniciar"; if(ico)ico.setAttribute('data-feather','play');}else if(st==='running'){if(txt)txt.textContent="Pausar"; if(ico)ico.setAttribute('data-feather','pause');}else if(st==='paused'){if(txt)txt.textContent="Reanudar"; if(ico)ico.setAttribute('data-feather','play-circle'); startBtn.classList.add('paused');}else if(st==='finished'){if(txt)txt.textContent="Nuevo"; if(ico)ico.setAttribute('data-feather','refresh-cw');} if(ico && typeof feather!=='undefined')feather.replace();} if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep); if(restartEjBtn){const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show);} if(st==='finished'){curPhase='finalizado';rePrep=false;} if(progIndEl){const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1);let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide);} 
+            function setUI(st) { const enCfg = (st === 'initial' || st === 'finished'), isFs = bodyEl.classList.contains('full-screen-mode'); allSels.forEach(s => { if(s) s.disabled = !enCfg; }); if(cfgSec) cfgSec.classList.toggle('hidden', isFs || !enCfg); if(estTimeEl) estTimeEl.classList.toggle('hidden', isFs || !enCfg); if(ejNamesContEl){const nInps=ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach(i=>i.disabled=!enCfg); const nEj = numEjSel ? parseInt(numEjSel.value) : 0; ejNamesContEl.classList.toggle('hidden', isFs || !enCfg || nEj === 0); if(enCfg) popEjNameInputs();} logoEl.style.display = logoEl.classList.contains('hidden') ? 'none' : 'block'; if(timerDispSec){timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); if(st==='initial'){timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} if(cronoActEl) cronoActEl.textContent="00:00"; if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; if(curEjNameDispEl){curEjNameDispEl.textContent=''; curEjNameDispEl.classList.add('hidden');} curPhase=''; rePrep=false; if(ejProgEl)ejProgEl.innerHTML=''; if(serProgEl)serProgEl.innerHTML='';} /* El display de nombre original se gestiona en updUIDisp ahora */ } if(startBtn){startBtn.classList.remove('paused'); const ico=startBtn.querySelector('i.feather'), txt=startBtn.querySelector('.btn-text'); if(st==='initial'){if(txt)txt.textContent="Iniciar"; if(ico)ico.setAttribute('data-feather','play');}else if(st==='running'){if(txt)txt.textContent="Pausar"; if(ico)ico.setAttribute('data-feather','pause');}else if(st==='paused'){if(txt)txt.textContent="Reanudar"; if(ico)ico.setAttribute('data-feather','play-circle'); startBtn.classList.add('paused');}else if(st==='finished'){if(txt)txt.textContent="Nuevo"; if(ico)ico.setAttribute('data-feather','refresh-cw');} if(ico && typeof feather!=='undefined')feather.replace();} if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep); if(restartEjBtn){const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show);} if(st==='finished'){curPhase='finalizado';rePrep=false;} if(progIndEl){const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1);let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide);} 
                 [showExplBtn, manageNamesBtn, saveRoutineBtn, loadRoutineBtn].forEach(btn => { if(btn) btn.classList.toggle('hidden-during-run', st==='running'||st==='paused'||isFs); });
                 
-                // Ocultar/mostrar la info de ejercicios con imágenes
-                if (activeExerciseInfoEl) {
-                    const shouldShowActiveInfo = (st === 'running' || st === 'paused') &&
-                                            (curPhase === 'ejercicio' || curPhase === 'descanso_ejercicio' || rePrep || curPhase === 'preparacion') &&
-                                            !isFs;
-                    activeExerciseInfoEl.classList.toggle('hidden', !shouldShowActiveInfo);
-                }
+                // La visibilidad de activeExerciseInfoEl es principalmente por CSS (.full-screen-mode)
+                // y JS añade/quita .js-visible-by-state según la fase.
+                // No es necesario un toggle aquí si updUIDisp lo maneja.
                 updUIDisp(); 
             }
             function phaseTick() { if (paused && !rePrep) return; if (rePrep) { if (phaseSecs <= RE_PREP_TIME && phaseSecs >= 1 && phaseSecs <= 3) playBeep(beepMidBuf); } else if (curPhase === 'ejercicio' && running) { if (cfg.tiempoEjercicio >= 20 && phaseSecs === Math.ceil(cfg.tiempoEjercicio / 2) && phaseSecs > 5) playBeep(beepMidBuf); if (phaseSecs <= 5 && phaseSecs >= 1) playBeep(beepMidBuf); } phaseSecs--; updUIDisp(); if (phaseSecs < 0) { if (rePrep) { rePrep = false; playBeep(beepStartBuf); startPhase('ejercicio', cfg.tiempoEjercicio); } else { if (running) { if (curPhase === 'ejercicio') { updProgCircles('exercise', curEj, true); if (curEj === cfg.numEjercicios) updProgCircles('series', curSer, true); } playBeep(beepEndBuf); } nextPhase(); } } }
@@ -1030,7 +1064,7 @@
             if (startBtn) startBtn.onclick = () => { if (rePrep) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); }); else { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); } };
             if (finishBtn) finishBtn.onclick = () => { if (rePrep) return; finishWorkout(false); };
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
-            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; if(footerEl)footerEl.style.display=isFS?'none':'flex'; if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs);}; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
+            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; if(footerEl)footerEl.style.display=isFS?'none':'flex'; if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); /* setUI llamará a updUIDisp, que actualizará la visibilidad de los displays de nombre */}; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
             const thIco = themeBtn ? themeBtn.querySelector('i.feather') : null; if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); }; function applyTh(th) { bodyEl.classList.toggle('dark-theme', th === 'dark'); if (thIco) thIco.setAttribute('data-feather', th === 'dark' ? 'sun' : 'moon'); if (themeBtn) themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`; if (typeof feather !== 'undefined') feather.replace(); updPhaseColors(); updUIDisp(); }
             if(uploadLogoBtn)uploadLogoBtn.onclick=()=>logoUploadIn.click(); if(logoUploadIn)logoUploadIn.onchange=handleLogoUpload; if(remLogoBtn)remLogoBtn.onclick=remLogo;
             async function getCurCfgObj(forRoutineSave = false){
