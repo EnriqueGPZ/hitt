@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="manifest" href="icons/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;900&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres, guardar rutinas, cargar rutinas","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado y ejercicios predefinidos con imágenes","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios con imágenes predefinidas y opción de maximizar", "Guardar rutinas personalizadas", "Cargar rutinas guardadas"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
     <style>
@@ -42,13 +42,13 @@
         #userLogo { max-width:150px; max-height:80px; object-fit:contain; margin-bottom:20px; transition:all .3s ease-in-out; background-color:transparent; padding:0; border-radius:var(--brd-rad-sm); }
         
         .container { background-color:transparent; padding:30px 25px; border-radius:var(--brd-rad-main); box-shadow:none; width:100%; max-width:480px; margin-bottom:20px; border:none; transition:all .3s ease-in-out; z-index:1; position:relative; margin-top:0; display: flex; flex-direction: column; align-items: center;}
-        .configuracion-section, .controls-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo { width: 100%; /* Asegurar que los hijos directos ocupen el ancho del contenedor para centrado */ }
+        .configuracion-section, .controls-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo { width: 100%; }
 
         .configuracion-section, .estimated-time-section { margin-bottom:25px; }
         .progress-indicators { margin-bottom: 20px; }
-        #timerDisplaySection { margin-bottom:25px; padding:20px 15px; border-radius:var(--brd-rad-main); margin-top:0; /* Ajustado para nuevo orden HTML */ transition:background-color .4s ease-in-out, width .3s ease-in-out, padding .3s ease-in-out; position:relative; overflow:hidden; }
-        #activeExerciseInfo { margin-bottom: 25px; } /* Espacio si está visible fuera de FS (aunque ahora no debería) */
-        .controls-section { margin-bottom: 0; } /* Último elemento, sin margen inferior */
+        #timerDisplaySection { margin-bottom:25px; padding:20px 15px; border-radius:var(--brd-rad-main); margin-top:0; transition:background-color .4s ease-in-out, width .3s ease-in-out, padding .3s ease-in-out; position:relative; overflow:hidden; }
+        #activeExerciseInfo { margin-bottom: 25px; } 
+        .controls-section { margin-bottom: 0; }
 
 
         .config-item { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--color-prim-acc); transition:border-color .3s ease; }
@@ -143,7 +143,14 @@
         
         #estadoActual:not(body.full-screen-mode #estadoActual) { font-family:var(--font-body); font-size:1.5em; font-weight:700; margin-bottom:8px; min-height:1.5em; text-transform:uppercase; letter-spacing:.5px; color:var(--color-txt-prim); }
         .current-exercise-name:not(body.full-screen-mode #currentExerciseNameDisplay) { font-family:var(--font-body); font-size:1.1em; font-weight:400; color:var(--color-txt-prim); margin-bottom:5px; min-height:1.2em; text-transform:capitalize; transition:color .3s ease, font-size .3s ease; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; width:100%; }
-        #cronometroActual:not(body.full-screen-mode #cronometroActual) { font-family:var(--font-display); font-weight:900; font-size:clamp(5em, 28vw, 12em); margin:0 0 10px 0; line-height:1; color:var(--color-txt-prim); }
+        
+        #cronometroActual { /* Estilo base para el cronómetro */
+            font-family:var(--font-display); font-weight:900; /* Grosor principal */
+            font-size:clamp(5em, 28vw, 12em); 
+            margin:0 0 10px 0; line-height:1; color:var(--color-txt-prim); 
+        }
+        /* #cronometroActual:not(body.full-screen-mode #cronometroActual) { ... } no es necesario si el base ya es correcto */
+
         #cronometroTotalLabel:not(body.full-screen-mode #cronometroTotalLabel) { font-family:var(--font-body); font-size:.9em; text-transform:uppercase; letter-spacing:1px; font-weight:400; margin-top:10px; color:var(--color-txt-sec); }
         #cronometroTotal:not(body.full-screen-mode #cronometroTotal) { font-family:var(--font-display); font-weight:700; font-size:1.4em; color:var(--color-txt-sec); }
         #timerDisplaySection:not([class*="bg-"]):not(body.full-screen-mode #timerDisplaySection) #estadoActual, 
@@ -155,7 +162,7 @@
         /* --- FULLSCREEN LAYOUT --- */
         body.full-screen-mode { padding:0; overflow:hidden; display:flex; flex-direction:column; }
         body.full-screen-mode .page-main-title { display:none; }
-        body.full-screen-mode .app-footer { display:none; }
+        /* body.full-screen-mode .app-footer { display:none; } QUITADO, el footer se mostrará siempre */
         body.full-screen-mode #configuracionSection, 
         body.full-screen-mode #estimatedTimeSection,
         body.full-screen-mode #exerciseNamesContainer { display:none !important; }
@@ -190,7 +197,11 @@
         }
         body.full-screen-mode #currentExerciseNameDisplay { display: none !important; }
         body.full-screen-mode #estadoActual { font-size:clamp(1.8em, 5vh, 3.5em); margin-bottom:1vh; min-height:auto; }
-        body.full-screen-mode #cronometroActual { font-size:clamp(6em, 25vh, 16em); line-height:.85; margin-bottom:1.5vh; }
+        body.full-screen-mode #cronometroActual { 
+            font-family:var(--font-display); font-weight:900; /* Asegurar grosor en FS */
+            font-size:clamp(6em, 25vh, 16em); /* Ajustado vh para que no sea excesivo */
+            line-height:.85; margin-bottom:1.5vh; 
+        }
         body.full-screen-mode #cronometroTotalLabel { font-size:clamp(1em, 2.2vh, 1.8em); }
         body.full-screen-mode #cronometroTotal { font-size:clamp(1.5em, 3.5vh, 2.5em); }
 
@@ -205,14 +216,61 @@
         }
         body.full-screen-mode .controls-section button { padding:1.5vh 2vw; font-size:clamp(.9em, 2.2vh, 1.3em); gap:.8vw; flex-grow:1; }
         
-        .app-footer .footer-controls { display:flex; gap:8px; flex-grow:1; justify-content:flex-start; flex-wrap:wrap; }
-        .app-footer .footer-btn { font-family:var(--font-body); font-weight:400; padding:8px 10px; font-size:.75em; background-color:transparent; border:1px solid var(--color-txt-sec); color:var(--color-txt-sec); border-radius:var(--brd-rad-sm); cursor:pointer; transition:background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-width:unset; }
-        .app-footer .footer-btn i.feather { width:.8em; height:.8em; stroke-width:2; stroke:currentColor; }
-        .app-footer .footer-btn:hover { background-color:var(--btn-head-hover-bg); color:var(--color-txt-prim); border-color:var(--color-txt-prim); }
-        .app-footer .footer-btn:active { transform:scale(.97); }
-        .app-footer .creator-info { margin:0; text-align:right; flex-grow:1; }
-        .app-footer .creator-info .seo-name { font-weight:700; color:var(--color-txt-prim); }
-        .app-footer .creator-info .footer-app-icon { width:36px; height:36px; vertical-align:middle; margin-right:8px; object-fit:cover; border-radius:4px; }
+        /* --- ESTILOS DEL FOOTER MEJORADOS --- */
+        .app-footer {
+            margin-top: auto; /* Empuja el footer hacia abajo */
+            width: 100%;
+            padding: 15px 20px;
+            background-color: transparent;
+            border-top: 1px solid transparent; /* O var(--color-prim-acc) si quieres una línea sutil */
+            color: var(--color-txt-sec);
+            font-size: .85em;
+            display: flex;
+            flex-direction: column; /* Apilar controles y creador */
+            align-items: center; /* Centrar horizontalmente */
+            gap: 15px; /* Espacio entre grupo de controles y creador */
+            transition: all .3s ease-in-out;
+        }
+        /* body.full-screen-mode .app-footer { display: flex; } /* Mostrar footer en FS si es deseado, o none si no */
+
+
+        .app-footer .footer-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center; /* Centrar los botones horizontalmente */
+            flex-wrap: wrap; /* Permitir que los botones pasen a la siguiente línea si no caben */
+            width: 100%; /* Ocupar el ancho para centrar bien */
+            order: 1; /* Controles primero */
+        }
+        .app-footer .footer-btn {
+            font-family: var(--font-body); font-weight: 400;
+            padding: 8px 10px; font-size: .75em;
+            background-color: transparent;
+            border: 1px solid var(--color-txt-sec);
+            color: var(--color-txt-sec);
+            border-radius: var(--brd-rad-sm);
+            cursor: pointer;
+            transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease;
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 5px; min-width: unset;
+        }
+        .app-footer .footer-btn i.feather { width: .8em; height: .8em; stroke-width: 2; stroke: currentColor; }
+        .app-footer .footer-btn:hover { background-color: var(--btn-head-hover-bg); color: var(--color-txt-prim); border-color: var(--color-txt-prim); }
+        .app-footer .footer-btn:active { transform: scale(.97); }
+
+        .app-footer .creator-info {
+            margin: 0;
+            text-align: center; /* Centrar el texto del creador */
+            width: 100%; /* Ocupar todo el ancho */
+            order: 2; /* Información del creador después */
+            display: flex; /* Para centrar el contenido interno si es necesario */
+            justify-content: center;
+            align-items: center;
+        }
+        .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-txt-prim); }
+        .app-footer .creator-info .footer-app-icon { width: 36px; height: 36px; vertical-align: middle; margin-right: 8px; object-fit: cover; border-radius: 4px; }
+        /* --- FIN ESTILOS FOOTER --- */
+
 
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
@@ -255,7 +313,7 @@
         body:not(.full-screen-mode) .footer-controls #manageNamesBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #saveRoutineBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #loadRoutineBtn.hidden-during-run,
-        body.full-screen-mode .footer-controls #showExplanationBtn,
+        body.full-screen-mode .footer-controls #showExplanationBtn, /* Ocultar botones específicos del footer en FS */
         body.full-screen-mode .footer-controls #manageNamesBtn,
         body.full-screen-mode .footer-controls #saveRoutineBtn,
         body.full-screen-mode .footer-controls #loadRoutineBtn { display:none !important; }
@@ -265,13 +323,7 @@
             #explanationScreen:not(.modal-fullscreen-active) .modal-content { max-width: 900px; }
         }
         @media (max-width:768px) {
-            body:not(.full-screen-mode) .app-footer .footer-controls { justify-content:center; gap: 5px; }
-            body:not(.full-screen-mode) .app-footer .footer-btn { padding: 6px 8px; font-size: .7em;}
-            body:not(.full-screen-mode) .app-footer { flex-direction:column; align-items:center; }
-            body:not(.full-screen-mode) .app-footer .creator-info { text-align:left; width:100%; margin-top:15px; display:flex; align-items:center; justify-content:center; }
-            body:not(.full-screen-mode) .top-bar-container { margin-bottom:10px; }
-            body:not(.full-screen-mode).logo-visible .top-bar-container { margin-bottom:25px; }
-            body:not(.full-screen-mode) .page-main-title { font-size:1.8em; }
+            /* body:not(.full-screen-mode) .app-footer .footer-controls ... (ya está dentro de .app-footer) */
             .modal-content { padding:20px; max-height:85vh; max-width: 90%;}
             #explanationScreen .modal-header-buttons #toggleExplanationFSBtn { display: none !important; }
             #explanationScreen.modal-fullscreen-active .modal-content { max-width: 100vw; max-height: 100vh; }
@@ -289,7 +341,7 @@
         }
         @media (max-width:480px) {
             body:not(.full-screen-mode) .controls-section button { padding:10px 12px; font-size:.85em; }
-            body:not(.full-screen-mode) .app-footer { align-items:stretch; }
+            /* body:not(.full-screen-mode) .app-footer { align-items:center; } /* El footer ya es flex-column y align-items center */
             body:not(.full-screen-mode) .explanation-grid { grid-template-columns:1fr; }
             #manageNamesList li, #loadRoutineList li { flex-direction: column; align-items: flex-start; gap: 8px;}
             #manageNamesList .delete-name-btn, #loadRoutineList .routine-actions { margin-left:0; width: 100%;}
@@ -298,21 +350,20 @@
             #explanationScreen.modal-fullscreen-active .explanation-item { min-height:220px; }
             #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:120px; }
             #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:1.2em; }
-            /* FS specific adjustments for small screens, if activeExerciseInfo is still shown */
-             body.full-screen-mode .active-exercise-info { gap: 2vw; /* Reducir gap */ flex-direction: column; /* Apilar tarjetas */ max-width: 90%; /* Ajustar max-width */ margin-top:1vh; margin-bottom:1vh;}
-             body.full-screen-mode .active-exercise-info .exercise-info-card { min-width: 0; max-width:100%; /* Permitir que se estiren */ }
-             body.full-screen-mode .active-exercise-info .exercise-info-card h3 { font-size: clamp(0.8em, 1.8vh, 1.1em); }
-             body.full-screen-mode .active-exercise-info .exercise-info-card .exercise-image-container { height: clamp(60px, 10vh, 120px); }
-             body.full-screen-mode .active-exercise-info .exercise-info-card p { font-size: clamp(0.9em, 2vh, 1.4em); }
-             body.full-screen-mode #estadoActual { font-size:clamp(1.5em, 4vh, 2.5em); }
-             body.full-screen-mode #cronometroActual { font-size:clamp(4em, 20vh, 10em); }
-
+            
+            body.full-screen-mode .active-exercise-info { gap: 2vw; flex-direction: column; max-width: 90%; margin-top:1vh; margin-bottom:1vh;}
+            body.full-screen-mode .active-exercise-info .exercise-info-card { min-width: 0; max-width:100%; }
+            body.full-screen-mode .active-exercise-info .exercise-info-card h3 { font-size: clamp(0.8em, 1.8vh, 1.1em); }
+            body.full-screen-mode .active-exercise-info .exercise-info-card .exercise-image-container { height: clamp(60px, 10vh, 120px); }
+            body.full-screen-mode .active-exercise-info .exercise-info-card p { font-size: clamp(0.9em, 2vh, 1.4em); }
+            body.full-screen-mode #estadoActual { font-size:clamp(1.5em, 4vh, 2.5em); }
+            body.full-screen-mode #cronometroActual { font-size:clamp(4em, 20vh, 10em); font-weight: 900; }
         }
         @media (max-width:420px) {
             body:not(.full-screen-mode) .container { padding:25px 20px; }
             body:not(.full-screen-mode) .controls-section button { padding:12px 18px; font-size:.95em; min-width:120px; gap:6px; }
             body:not(.full-screen-mode) .controls-section button i.feather { width:1em; height:1em; }
-            #cronometroActual:not(body.full-screen-mode #cronometroActual) { font-size:clamp(4.5em, 30vw, 11em); }
+            #cronometroActual:not(body.full-screen-mode #cronometroActual) { font-size:clamp(4.5em, 30vw, 11em); font-weight: 900; }
             #estadoActual:not(body.full-screen-mode #estadoActual) { font-size:1.3em; }
             .current-exercise-name:not(body.full-screen-mode #currentExerciseNameDisplay) { font-size:1em; }
         }
@@ -329,7 +380,7 @@
         }
         @media (max-width:360px) {
             body:not(.full-screen-mode) .container { padding:20px 15px; }
-            #cronometroActual:not(body.full-screen-mode #cronometroActual) { font-size:clamp(4em, 32vw, 10em); }
+            #cronometroActual:not(body.full-screen-mode #cronometroActual) { font-size:clamp(4em, 32vw, 10em); font-weight: 900; }
             #estadoActual:not(body.full-screen-mode #estadoActual) { font-size:1.2em; }
             .current-exercise-name:not(body.full-screen-mode #currentExerciseNameDisplay) { font-size:.9em; }
             body:not(.full-screen-mode) .page-main-title { font-size:1.5em; }
@@ -342,9 +393,9 @@
             body.full-screen-mode .progress-section { gap:5px; }
             body.full-screen-mode .progress-label { font-size:clamp(.6em, 1.5vh, .9em) !important; }
             body.full-screen-mode .progress-circle { width:clamp(10px, 1.8vh, 15px) !important; height:clamp(10px, 1.8vh, 15px) !important; }
-            body.full-screen-mode #timerDisplaySection { padding:0.5vh 0.5vw !important; margin-bottom:0.5vh !important; min-height: auto; /* Permitir que se encoja más */ flex-grow:0; /* No necesita crecer tanto */ }
+            body.full-screen-mode #timerDisplaySection { padding:0.5vh 0.5vw !important; margin-bottom:0.5vh !important; min-height: auto; flex-grow:0; }
             body.full-screen-mode #estadoActual { font-size:clamp(1.2em, 2.8vh, 1.8em) !important; margin-bottom:.3vh !important; }
-            body.full-screen-mode #cronometroActual { font-size:clamp(4em, 18vh, 9em) !important; line-height:.8 !important; margin-bottom:0.5vh !important; }
+            body.full-screen-mode #cronometroActual { font-size:clamp(4em, 18vh, 9em) !important; line-height:.8 !important; margin-bottom:0.5vh !important; font-weight: 900; }
             body.full-screen-mode #cronometroTotalLabel { font-size:clamp(.6em, 1.6vh, .9em) !important; margin-top:0 !important; }
             body.full-screen-mode #cronometroTotal { font-size:clamp(.9em, 2.2vh, 1.3em) !important; }
             body.full-screen-mode .active-exercise-info { gap: 1.5vw; margin-top: 0.5vh; margin-bottom: 0.5vh; flex-direction: row; max-width: 600px; }
@@ -702,7 +753,7 @@
             if (startBtn) startBtn.onclick = () => { if (rePrep) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); }); else { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); } };
             if (finishBtn) finishBtn.onclick = () => { if (rePrep) return; finishWorkout(false); };
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
-            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; if(footerEl)footerEl.style.display=isFS?'none':'flex'; if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); }; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
+            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; /* if(footerEl)footerEl.style.display=isFS?'none':'flex'; */ /* Footer ahora siempre visible */ if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); }; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
             const thIco = themeBtn ? themeBtn.querySelector('i.feather') : null; if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); }; function applyTh(th) { bodyEl.classList.toggle('dark-theme', th === 'dark'); if (thIco) thIco.setAttribute('data-feather', th === 'dark' ? 'sun' : 'moon'); if (themeBtn) themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`; if (typeof feather !== 'undefined') feather.replace(); updPhaseColors(); updUIDisp(); }
             if(uploadLogoBtn)uploadLogoBtn.onclick=()=>logoUploadIn.click(); if(logoUploadIn)logoUploadIn.onchange=handleLogoUpload; if(remLogoBtn)remLogoBtn.onclick=remLogo;
             async function getCurCfgObj(forRoutineSave = false){ const currentConfig = { numEjercicios: parseInt(numEjSel.value), numSeries: parseInt(numSerSel.value), tiempoEjercicio: parseInt(tEjSel.value), descansoEjercicio: parseInt(dEjSel.value), descansoSerie: parseInt(dSerSel.value) }; const exerciseNames = []; const nInps = ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach((inp, i) => { exerciseNames[i] = inp.value.trim() || `Ejercicio ${i + 1}`; }); for (let i = exerciseNames.length; i < currentConfig.numEjercicios; i++) exerciseNames[i] = `Ejercicio ${i + 1}`; if (forRoutineSave) { return { config: currentConfig, exerciseNames: exerciseNames }; } else { return { ...currentConfig, exerciseNames: exerciseNames, theme: localStorage.getItem('theme') || 'light', allExerciseNames: Array.from(allEjNamesSet), userLogoBase64: (logoEl.src && logoEl.src !== '#' && !logoEl.classList.contains('hidden')) ? logoEl.src : null }; } }
