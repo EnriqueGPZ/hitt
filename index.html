@@ -53,12 +53,52 @@
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #fff); color:var(--color-txt-prim); }
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #000); }
         .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); }
-        .exercise-name-item { display:flex; align-items:center; gap:10px; }
+        .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; /* For dropdown positioning context */ }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
         .exercise-name-item input[type="text"] { flex-grow:1; padding:8px 10px; border-radius:var(--brd-rad-sm); border:1px solid var(--sel-brd); background-color:var(--sel-bg); color:var(--color-txt-prim); font-family:var(--font-body); font-size:.9em; }
         .exercise-name-item input[type="text"]:focus { border-color:var(--color-hl); outline:none; box-shadow:0 0 0 2px color-mix(in srgb, var(--color-hl) 20%, transparent); }
         .exercise-name-item input[type="text"]:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; }
         body.full-screen-mode #exerciseNamesContainer { display:none !important; }
+        
+        /* Styles for exercise suggestions dropdown */
+        .exercise-suggestions-dropdown {
+            position: absolute;
+            background-color: var(--color-surf);
+            border: 1px solid var(--sel-brd);
+            border-top: none; /* Assuming it's right below the input */
+            border-radius: 0 0 var(--brd-rad-sm) var(--brd-rad-sm);
+            max-height: 150px; /* Or more, adjust as needed */
+            overflow-y: auto;
+            z-index: 1050; /* Above page content, below modals */
+            box-shadow: var(--box-shdw-subtle);
+            /* Width and position set by JS */
+            box-sizing: border-box;
+        }
+        body.dark-theme .exercise-suggestions-dropdown {
+            background-color: var(--color-surf-d);
+            border-color: var(--sel-brd-d);
+        }
+        .exercise-suggestions-dropdown div { /* Suggestion item */
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: var(--color-txt-prim);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        body.dark-theme .exercise-suggestions-dropdown div {
+            color: var(--color-txt-prim-d);
+        }
+        .exercise-suggestions-dropdown div:hover,
+        .exercise-suggestions-dropdown div.suggestion-active { /* For keyboard nav if added */
+            background-color: color-mix(in srgb, var(--color-hl) 20%, transparent);
+        }
+        body.dark-theme .exercise-suggestions-dropdown div:hover,
+        body.dark-theme .exercise-suggestions-dropdown div.suggestion-active {
+             background-color: color-mix(in srgb, var(--color-hl-d) 20%, transparent);
+        }
+
         .estimated-time-section { padding:12px 18px; background-color:var(--est-time-bg); border-radius:var(--brd-rad-sm); font-size:.95em; color:var(--color-txt-sec); margin-top:10px; transition:background-color .3s ease, color .3s ease; }
         .estimated-time-section p { margin:0; font-weight:400; }
         #estimatedTimeDisplay { font-weight:700; color:var(--color-txt-prim); transition:color .3s ease; }
@@ -132,12 +172,43 @@
         body.dark-theme .modal-fs-btn, body.dark-theme .modal-close-btn { color:var(--color-txt-prim-d); }
         .modal-fs-btn i.feather, .modal-close-btn i.feather { width:1.3em; height:1.3em; }
 
-        #explanationScreen.modal-fullscreen-active .modal-content { max-width:100vw; max-height:100vh; width:100vw; height:100vh; border-radius:0; padding:20px; box-sizing: border-box;}
-        #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; align-content: flex-start;}
-        #explanationScreen.modal-fullscreen-active .explanation-item { min-height:280px; /* Aumentado aun más */ padding:25px; justify-content:center; }
-        #explanationScreen.modal-fullscreen-active .explanation-item-number { font-size:3.5em; margin-bottom:20px; }
-        #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:2em; /* Aumentado */ margin-bottom:25px; }
-        #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:180px; /* Aumentado */ }
+        /* Explanation Modal Fullscreen Adjustments */
+        #explanationScreen.modal-fullscreen-active .modal-content { max-width:100vw; max-height:100vh; width:100vw; height:100vh; border-radius:0; padding:20px; box-sizing: border-box; display:flex; flex-direction:column; }
+        #explanationScreen.modal-fullscreen-active .modal-header {
+            position: sticky; /* Make header sticky */
+            top: 0;
+            z-index: 10; /* Ensure it's above the grid */
+            background-color: var(--color-surf); /* Match modal content bg */
+            margin-bottom: 15px; /* Keep some space below header */
+        }
+        body.dark-theme #explanationScreen.modal-fullscreen-active .modal-header {
+            background-color: var(--color-surf-d);
+        }
+        #explanationScreen.modal-fullscreen-active .explanation-grid {
+            grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+            gap:30px;
+            align-content: flex-start;
+            flex-grow: 1; /* Allow grid to take remaining space and scroll */
+            overflow-y: auto; /* Ensure grid itself can scroll if content overflows */
+            padding-top: 5px; /* Add some padding if header bottom border is too close */
+        }
+        #explanationScreen.modal-fullscreen-active .explanation-item {
+            min-height:300px; /* Increased */
+            padding:20px;
+            justify-content:flex-start; /* Align content to top */
+        }
+        #explanationScreen.modal-fullscreen-active .explanation-item-number {
+            font-size:3.0em; /* Adjusted */
+            margin-bottom:15px; /* Adjusted */
+        }
+        #explanationScreen.modal-fullscreen-active .explanation-item-name {
+            font-size:1.8em; /* Adjusted */
+            margin-bottom:20px; /* Adjusted */
+        }
+        #explanationScreen.modal-fullscreen-active .explanation-item-image-container {
+            height:200px; /* Increased */
+            margin-bottom: 15px; /* Added margin */
+        }
 
         .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:15px; flex-grow:1; }
         .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; min-height:180px; }
@@ -178,14 +249,38 @@
             body.logo-visible .top-bar-container { margin-bottom:25px; }
             .page-main-title { font-size:1.8em; }
             .modal-content { padding:20px; max-height:85vh; max-width: 90%;}
-            #explanationScreen.modal-fullscreen-active .modal-content { max-width: 100vw; max-height: 100vh; }
+            
+            /* Hide maximize button for explanation modal on mobile */
+            #explanationScreen .modal-header-buttons #toggleExplanationFSBtn {
+                display: none !important;
+            }
+            /* When fullscreen-active is on mobile (where button is hidden), adjust items */
+            #explanationScreen.modal-fullscreen-active .modal-content {
+                max-width: 100vw; max-height: 100vh;
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+             #explanationScreen.modal-fullscreen-active .explanation-item {
+                min-height:250px; /* Adjusted for mobile fullscreen */
+                padding:15px;
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-item-number {
+                font-size:2.5em;
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-item-name {
+                font-size:1.5em;
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-item-image-container {
+                height:150px; /* Adjusted for mobile fullscreen */
+            }
+
             .modal-header h2 { font-size:1.5em; }
             .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; }
             .explanation-item { padding:12px; min-height:160px; }
             .explanation-item-number { font-size:1.8em; }
             .explanation-item-name { font-size:1em; margin-bottom: 12px; }
             .explanation-item-image-container { height: 100px; }
-            #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
         }
         @media (max-width:480px) {
             .controls-section:not(.full-screen-mode .controls-section) button { padding:10px 12px; font-size:.85em; }
@@ -202,7 +297,19 @@
             #manageNamesList li, #loadRoutineList li { flex-direction: column; align-items: flex-start; gap: 8px;}
             #manageNamesList .delete-name-btn, #loadRoutineList .routine-actions { margin-left:0; width: 100%;}
             #loadRoutineList .routine-action-btn { flex-grow: 1; text-align: center;}
-            #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            
+            #explanationScreen.modal-fullscreen-active .explanation-grid {
+                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Further adjustment for small screens */
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-item {
+                min-height:220px;
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-item-image-container {
+                height:120px;
+            }
+            #explanationScreen.modal-fullscreen-active .explanation-item-name {
+                font-size:1.2em;
+            }
         }
         @media (max-width:420px) {
             .container:not(.full-screen-mode .container) { padding:25px 20px; }
@@ -348,7 +455,7 @@
             <p id="noRoutinesMessage" class="no-items-message hidden">No hay rutinas guardadas.</p>
         </div>
     </div>
-
+    <!-- Exercise suggestions dropdown will be created here by JS if needed, or appended to body -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const getEl = id => document.getElementById(id);
@@ -365,6 +472,13 @@
 
             const predefinedExercises = {
                 "Abdominales con rueda": { image: "images/abdominales_rueda.png", description: "Ejercicio para fortalecer el core usando la rueda abdominal." },
+                 // Add more predefined exercises here as needed
+                "Flexiones": { image: "images/flexiones.png", description: "Ejercicio clásico para pecho, hombros y tríceps." },
+                "Sentadillas": { image: "images/sentadillas.png", description: "Ejercicio fundamental para piernas y glúteos." },
+                "Burpees": { image: "images/burpees.png", description: "Ejercicio de cuerpo completo y alta intensidad." },
+                "Plancha": { image: "images/plancha.png", description: "Ejercicio isométrico para el core." },
+                "Zancadas": { image: "images/zancadas.png", description: "Ejercicio para fortalecer piernas y glúteos unilateralmente." },
+                "Saltos de tijera": { image: "images/jumping_jacks.png", description: "Ejercicio cardiovascular simple." }
             };
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
@@ -381,6 +495,12 @@
             const USER_SETTINGS_STORE = 'userSettings', SAVED_ROUTINES_STORE = 'savedRoutines';
             const LOGO_K = 'userLogoData', EJ_NAMES_K = 'allExerciseNames';
             let db, allEjNamesSet = new Set();
+
+            // Variables for exercise suggestions dropdown
+            let suggestionsDropdown = null;
+            let activeSuggestionInput = null;
+            let blurTimeout = null;
+
 
             const openDB = () => new Promise((res, rej) => {
                 const req = indexedDB.open(DB_NAME, DB_VER);
@@ -415,28 +535,147 @@
             async function loadLogo() { try { const stored = await dbAction(USER_SETTINGS_STORE, 'readonly', 'get', LOGO_K); logoEl.src = stored || '#'; logoEl.classList.toggle('hidden', !stored); logoEl.style.display = stored ? 'block' : 'none'; remLogoBtn.classList.toggle('hidden', !stored); uploadLogoBtn.classList.toggle('hidden', !!stored); bodyEl.classList.toggle('logo-visible', !!stored); if (typeof feather!=='undefined') feather.replace(); } catch (err) { console.error('Err load logo:', err); logoEl.src='#'; logoEl.classList.add('hidden'); logoEl.style.display='none'; remLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); bodyEl.classList.remove('logo-visible'); if(typeof feather!=='undefined')feather.replace();}}
             function handleLogoUpload(e) { const f = e.target.files[0]; if (f && f.type.startsWith('image/')) { const r = new FileReader(); r.onload = async ev => { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv',LOGO_K, ev.target.result); loadLogo(); } catch (err) { console.error('Err save logo:', err); alert('Err save logo.'); } }; r.readAsDataURL(f); } else if (f) alert('Use PNG/JPG.'); }
             async function remLogo() { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete',LOGO_K); loadLogo(); } catch (err) { console.error('Err rem logo:', err); alert('Err rem logo.'); } }
+            
+            // --- Exercise Suggestions Dropdown Logic ---
+            function getOrCreateSuggestionsDropdown() {
+                if (!suggestionsDropdown) {
+                    suggestionsDropdown = document.createElement('div');
+                    suggestionsDropdown.id = 'exerciseSuggestionsDropdown';
+                    suggestionsDropdown.className = 'exercise-suggestions-dropdown hidden';
+                    document.body.appendChild(suggestionsDropdown);
+
+                    // Hide when clicking outside
+                    document.addEventListener('click', function(event) {
+                        if (activeSuggestionInput && suggestionsDropdown && !suggestionsDropdown.classList.contains('hidden')) {
+                            // Check if the click is outside the active input and the dropdown itself
+                            const isClickInsideInput = activeSuggestionInput.contains(event.target);
+                            const isClickInsideDropdown = suggestionsDropdown.contains(event.target);
+                            if (!isClickInsideInput && !isClickInsideDropdown) {
+                                hideSuggestions();
+                            }
+                        }
+                    });
+                }
+                return suggestionsDropdown;
+            }
+
+            function hideSuggestions() {
+                const dropdown = getOrCreateSuggestionsDropdown();
+                dropdown.classList.add('hidden');
+                activeSuggestionInput = null; // Clear active input when dropdown is hidden
+            }
+
+            function populateAndFilterSuggestions(inputElement, filterText = "") {
+                const dropdown = getOrCreateSuggestionsDropdown();
+                dropdown.innerHTML = ''; // Clear previous suggestions
+
+                const combinedNames = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]);
+                const sortedNames = Array.from(combinedNames).sort((a, b) => a.localeCompare(b));
+                
+                const lowerFilterText = filterText.toLowerCase();
+                const filtered = sortedNames.filter(name => name.toLowerCase().includes(lowerFilterText));
+
+                if (filtered.length === 0 && !filterText) { // If no filter text and still no results (empty list), hide
+                     hideSuggestions();
+                     return;
+                }
+                 if (filtered.length === 0 && filterText) { // If filter text and no results, show "no results" or hide
+                    const noResultItem = document.createElement('div');
+                    noResultItem.textContent = 'No hay sugerencias';
+                    noResultItem.style.fontStyle = 'italic';
+                    noResultItem.style.pointerEvents = 'none'; // Not clickable
+                    dropdown.appendChild(noResultItem);
+                 } else {
+                    filtered.forEach(name => {
+                        const item = document.createElement('div');
+                        item.textContent = name;
+                        // Use mousedown: it fires before blur on the input
+                        item.addEventListener('mousedown', (e) => {
+                            e.preventDefault(); // Prevent input from losing focus immediately
+                            inputElement.value = name;
+                            // Manually trigger blur to save the name if it's new (original onblur logic)
+                            inputElement.dispatchEvent(new Event('blur', { bubbles: true, cancelable: true }));
+                            hideSuggestions();
+                        });
+                        dropdown.appendChild(item);
+                    });
+                 }
+
+
+                // Position dropdown below the input
+                const inputRect = inputElement.getBoundingClientRect();
+                dropdown.style.left = `${inputRect.left + window.scrollX}px`;
+                dropdown.style.top = `${inputRect.bottom + window.scrollY}px`; // Position below the input
+                dropdown.style.width = `${inputRect.width}px`;
+                
+                if ((filtered.length > 0) || (filtered.length === 0 && filterText)) { // Show if there are items or "no results"
+                    dropdown.classList.remove('hidden');
+                } else {
+                    hideSuggestions();
+                }
+            }
+
             function popEjNameInputs() {
                 if (!ejNamesContEl || !numEjSel) return;
                 const numEj = parseInt(numEjSel.value) || 0;
                 ejNamesContEl.innerHTML = '';
-                const dlId = 'ej-names-sugg';
-                let dlEl = getEl(dlId);
-                if (!dlEl) { dlEl = document.createElement('datalist'); dlEl.id = dlId; document.body.appendChild(dlEl); }
-                dlEl.innerHTML = '';
-                const combinedNames = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]);
-                const sortedNames = Array.from(combinedNames).sort((a, b) => a.localeCompare(b));
-                sortedNames.forEach(n => { const opt = document.createElement('option'); opt.value = n; dlEl.appendChild(opt); });
-                if (numEj === 0 || numEjSel.disabled) { ejNamesContEl.classList.add('hidden'); return; }
+
+                const oldDlEl = getEl('ej-names-sugg'); // Remove old datalist if it exists
+                if (oldDlEl) oldDlEl.remove();
+
+                if (numEj === 0 || numEjSel.disabled) {
+                    ejNamesContEl.classList.add('hidden');
+                    if(suggestionsDropdown) hideSuggestions(); // Hide dropdown if inputs are removed
+                    return;
+                }
                 ejNamesContEl.classList.remove('hidden');
+
                 for (let i = 0; i < numEj; i++) {
                     const itmDiv = document.createElement('div'); itmDiv.className = 'exercise-name-item';
                     const lbl = document.createElement('label'); lbl.htmlFor = `ejName${i+1}`; lbl.textContent = `Ejercicio ${i+1}:`;
-                    const inp = document.createElement('input'); inp.type = 'text'; inp.id = `ejName${i+1}`; inp.placeholder = `Nombre Ej. ${i+1}`; inp.dataset.index = i; inp.disabled = numEjSel.disabled; inp.setAttribute('list', dlId);
-                    inp.onblur = async ev => { const name = ev.target.value.trim(); if (name && !name.startsWith('Ejercicio ') && !predefinedExercises[name]) { const alreadyExists = allEjNamesSet.has(name); await addEjNameToGlobal(name); if (!alreadyExists) { const reCombined = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]); const reSorted = Array.from(reCombined).sort((a, b) => a.localeCompare(b)); dlEl.innerHTML = ''; reSorted.forEach(n => { const opt = document.createElement('option'); opt.value = n; dlEl.appendChild(opt); });}}};
+                    const inp = document.createElement('input'); inp.type = 'text'; inp.id = `ejName${i+1}`; inp.placeholder = `Nombre Ej. ${i+1}`; inp.dataset.index = i; inp.disabled = numEjSel.disabled;
+                    inp.autocomplete = "off"; // Prevent browser's own autocomplete
+
+                    inp.addEventListener('focus', (ev) => {
+                        activeSuggestionInput = ev.target;
+                        clearTimeout(blurTimeout);
+                        populateAndFilterSuggestions(ev.target, ev.target.value);
+                    });
+
+                    inp.addEventListener('input', (ev) => { // Using 'input' for real-time filtering
+                        populateAndFilterSuggestions(ev.target, ev.target.value);
+                    });
+                    
+                    inp.addEventListener('blur', async (ev) => {
+                        // Delay hiding to allow mousedown on suggestion to fire
+                        blurTimeout = setTimeout(() => {
+                            if (activeSuggestionInput === ev.target) { // Only hide if this input is still the active one
+                                hideSuggestions();
+                            }
+                        }, 150); // 150ms delay
+
+                        // Original onblur logic to add name to global list
+                        const name = ev.target.value.trim();
+                        if (name && !name.startsWith('Ejercicio ') && !predefinedExercises[name]) {
+                            // This logic is fine, addEjNameToGlobal handles duplicates
+                            await addEjNameToGlobal(name);
+                        }
+                    });
+
+                    inp.addEventListener('keydown', (ev) => {
+                        if (ev.key === 'Escape') {
+                            hideSuggestions();
+                            ev.target.blur(); // Optionally remove focus from input
+                        }
+                        // Add ArrowUp, ArrowDown, Enter key handling here if desired for dropdown navigation
+                    });
+
                     if (cfg && cfg.exerciseNames && cfg.exerciseNames[i]) inp.value = cfg.exerciseNames[i];
                     itmDiv.append(lbl, inp); ejNamesContEl.appendChild(itmDiv);
                 }
             }
+            // --- End of Exercise Suggestions Dropdown Logic ---
+
             function genProgCircles(cont, count) { if (!cont) return; cont.innerHTML = ''; for (let i = 0; i < count; i++) { const circ = document.createElement('div'); circ.className = 'progress-circle'; circ.dataset.index = i; cont.appendChild(circ); } }
             function updProgCircles(type, count, completed = false) { const cont = type === 'exercise' ? ejProgEl : serProgEl; if (!cont) return; const circs = cont.querySelectorAll('.progress-circle'); circs.forEach((c, idx) => { c.classList.remove('completed', 'active'); if (idx < count - 1) c.classList.add('completed'); else if (idx === count - 1) { if (completed) c.classList.add('completed'); else if ((running || rePrep) && curPhase !== 'finalizado' && curPhase !== 'preparacion') { if (type === 'exercise' && (curPhase === 'ejercicio' || rePrep)) c.classList.add('active'); else if (type === 'series' && (curPhase === 'ejercicio' || rePrep || curPhase.startsWith('descanso_'))) c.classList.add('active'); } } }); if (curPhase === 'finalizado' && !running) circs.forEach(c => { c.classList.remove('active'); c.classList.add('completed'); }); }
             const createBeep = (freq, dur, vol = BEEP_VOL) => { if (!audioCtx) return null; const sr = audioCtx.sampleRate, nFrames = dur * sr, buf = audioCtx.createBuffer(1, nFrames, sr), data = buf.getChannelData(0); for (let i = 0; i < nFrames; i++) data[i] = Math.sin(2 * Math.PI * freq * i / sr) * vol; return buf; };
@@ -513,7 +752,7 @@
             if(showExplBtn && explScreenEl && closeExplBtn && toggleExplFSBtn){
                 showExplBtn.onclick = () => {
                     popExplGrid();
-                    explScreenEl.classList.remove('hidden', 'modal-fullscreen-active');
+                    explScreenEl.classList.remove('hidden', 'modal-fullscreen-active'); // Ensure it's not fullscreen initially
                     const icon = toggleExplFSBtn.querySelector('i.feather');
                     if(icon) icon.setAttribute('data-feather', 'maximize-2');
                     toggleExplFSBtn.title = "Maximizar Vista";
@@ -554,7 +793,7 @@
                     deleteBtn.onclick = async () => {
                         if (confirm(`¿Seguro que quieres eliminar el ejercicio "${name}" de tus nombres guardados?`)) {
                             if (await removeEjNameFromGlobal(name)) {
-                                li.remove(); popEjNameInputs();
+                                li.remove(); popEjNameInputs(); // Repopulate inputs to remove deleted name from suggestions
                                 if (manageNamesListEl.children.length === 0) noNamesMsgEl.classList.remove('hidden');
                             } else alert(`Error al eliminar "${name}".`);
                         }
@@ -622,16 +861,27 @@
                 loadRoutineScreenEl.onclick = e => { if (e.target === loadRoutineScreenEl) closeLoadModal(); };
             }
 
+            // --- Initial Setup ---
             openDB().then(async () => {
-                await loadAllEjNames(); loadLogo(); calcEstTime();
+                await loadAllEjNames(); 
+                await loadLogo(); // await to ensure logo is loaded before theme/UI which might depend on logo-visible class
+                calcEstTime();
                 const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                applyTh(savedTh); setUI('initial'); popEjNameInputs();
+                applyTh(savedTh); 
+                setUI('initial'); 
+                popEjNameInputs(); // Call after setUI and other initial loads
                 if (typeof feather !== 'undefined') feather.replace();
             }).catch(async err => {
-                console.error("IDB init failed:", err); alert("Warn: Local storage failed. Features like logo/exercise name saving might be unavailable.");
-                await loadAllEjNames(); calcEstTime();
+                console.error("IDB init failed:", err); 
+                alert("Advertencia: El almacenamiento local falló. Algunas características como guardar el logo o los nombres de ejercicios podrían no estar disponibles o no persistir.");
+                // Fallback logic - try to proceed without DB dependent features or with defaults
+                await loadAllEjNames(); // Still attempt to load from a potentially failed/empty DB (will use defaults)
+                // loadLogo(); // Might not work if DB failed, logoEl will remain hidden
+                calcEstTime();
                 const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                applyTh(savedTh); setUI('initial'); popEjNameInputs();
+                applyTh(savedTh); 
+                setUI('initial'); 
+                popEjNameInputs();
                 if (typeof feather !== 'undefined') feather.replace();
             });
         });
