@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-ARIAL">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chrono HIIT - Cronómetro de Intervalos Avanzado</title>
     <meta name="description" content="Chrono HIIT: Cronómetro personalizable para HIIT/Tabata. Guarda ejercicios, exporta/importa configuraciones y rutinas.">
@@ -52,22 +52,13 @@
         .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); }
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #fff); color:var(--color-txt-prim); }
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #000); }
-        .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); position:relative; /* For suggestions popup positioning */ }
-        .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; /* For suggestions popup positioning */ }
+        .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); }
+        .exercise-name-item { display:flex; align-items:center; gap:10px; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
         .exercise-name-item input[type="text"] { flex-grow:1; padding:8px 10px; border-radius:var(--brd-rad-sm); border:1px solid var(--sel-brd); background-color:var(--sel-bg); color:var(--color-txt-prim); font-family:var(--font-body); font-size:.9em; }
         .exercise-name-item input[type="text"]:focus { border-color:var(--color-hl); outline:none; box-shadow:0 0 0 2px color-mix(in srgb, var(--color-hl) 20%, transparent); }
         .exercise-name-item input[type="text"]:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; }
         body.full-screen-mode #exerciseNamesContainer { display:none !important; }
-        .exercise-suggestions-popup {
-            position: absolute; background-color: var(--color-surf); color: var(--color-txt-prim);
-            border: 1px solid var(--sel-brd); border-radius: var(--brd-rad-sm);
-            max-height: 150px; overflow-y: auto; z-index: 100;
-            width: calc(100% - 95px); /* Adjust based on label width */ left: 95px; /* Adjust based on label width */
-            box-shadow: var(--box-shdw-subtle); margin-top: 2px;
-        }
-        .exercise-suggestion-item { padding: 8px 10px; cursor: pointer; font-size: 0.9em; }
-        .exercise-suggestion-item:hover { background-color: color-mix(in srgb, var(--color-hl) 10%, transparent); }
         .estimated-time-section { padding:12px 18px; background-color:var(--est-time-bg); border-radius:var(--brd-rad-sm); font-size:.95em; color:var(--color-txt-sec); margin-top:10px; transition:background-color .3s ease, color .3s ease; }
         .estimated-time-section p { margin:0; font-weight:400; }
         #estimatedTimeDisplay { font-weight:700; color:var(--color-txt-prim); transition:color .3s ease; }
@@ -132,16 +123,9 @@
 
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
-        .modal-content {
-            background-color:var(--color-surf); color:var(--color-txt-prim);
-            padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle);
-            width:100%; max-width:600px; max-height:90vh;
-            display:flex; flex-direction:column;
-            transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease;
-            /* overflow-y: auto; Removed: individual content areas will scroll */
-        }
+        .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
         body.dark-theme .modal-content { background-color:var(--color-surf-d); color:var(--color-txt-prim-d); }
-        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--color-prim-acc); padding-bottom:15px; flex-shrink: 0; /* Prevent header from shrinking */ }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--color-prim-acc); padding-bottom:15px; }
         .modal-header h2 { font-family:var(--font-display); margin:0; font-size:1.8em; flex-grow: 1; }
         .modal-header-buttons { display:flex; gap: 10px; align-items: center; }
         .modal-fs-btn, .modal-close-btn { background:transparent; border:none; color:var(--color-txt-prim); cursor:pointer; padding:5px; line-height:0; }
@@ -155,7 +139,7 @@
         #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:2em; /* Aumentado */ margin-bottom:25px; }
         #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:180px; /* Aumentado */ }
 
-        .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:15px; flex-grow:1; overflow-y: auto; /* Added for scrolling content */ }
+        .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:15px; flex-grow:1; }
         .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; min-height:180px; }
         body.dark-theme .explanation-item { background-color:var(--color-bg-d); color:var(--color-txt-prim-d); border-color:var(--color-prim-acc-d); }
         .explanation-item-number { font-family:var(--font-display); font-size:2em; font-weight:700; color:var(--color-hl); margin-bottom:8px; }
@@ -163,7 +147,7 @@
         .explanation-item-name { font-family:var(--font-body); font-size:1.1em; font-weight:700; word-break:break-word; margin-bottom:15px; }
         .explanation-item-image-container { width:100%; height:120px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; background-color:transparent; border-radius: var(--brd-rad-sm); overflow: hidden;}
         .explanation-item-image { max-width:100%; max-height:100%; object-fit:contain; }
-        #manageNamesList, #loadRoutineList { list-style:none; padding:0; margin:0; flex-grow:1; overflow-y:auto; } /* Already correct */
+        #manageNamesList, #loadRoutineList { list-style:none; padding:0; margin:0; flex-grow:1; overflow-y:auto; }
         #manageNamesList li, #loadRoutineList li { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-prim-acc); }
         #manageNamesList li:last-child, #loadRoutineList li:last-child { border-bottom:none; }
         #manageNamesList .managed-name-text, #loadRoutineList .routine-name-text { flex-grow:1; text-align:left; word-break:break-all; margin-right: 10px; }
@@ -184,7 +168,6 @@
         @media (min-width: 769px) {
             #explanationScreen:not(.modal-fullscreen-active) .explanation-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
             #explanationScreen:not(.modal-fullscreen-active) .modal-content { max-width: 900px; }
-             .exercise-suggestions-popup { width: calc(100% - (60% + 15px + 5px)); left: calc(60% + 15px + 5px); /* Based on label flex-basis + margin */ }
         }
         @media (max-width:768px) {
             .app-footer .footer-controls { justify-content:center; gap: 5px; }
@@ -203,7 +186,6 @@
             .explanation-item-name { font-size:1em; margin-bottom: 12px; }
             .explanation-item-image-container { height: 100px; }
             #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-            .exercise-suggestions-popup { width: calc(100% - 95px); left: 95px; } /* Default for smaller screens if not overridden by 380px */
         }
         @media (max-width:480px) {
             .controls-section:not(.full-screen-mode .controls-section) button { padding:10px 12px; font-size:.85em; }
@@ -235,12 +217,11 @@
             .config-item:not(.full-screen-mode .config-item) label { margin-bottom:8px; flex-basis:auto; width:100%; margin-right:0; }
             .config-item:not(.full-screen-mode .config-item) select { width:100%; flex-basis:auto; }
             .exercise-name-item:not(body.full-screen-mode .exercise-name-item) { flex-direction:column; align-items:flex-start; }
-            .exercise-name-item:not(body.full-screen-mode .exercise-name-item) label { text-align:left; margin-bottom:5px; min-width: auto; }
+            .exercise-name-item:not(body.full-screen-mode .exercise-name-item) label { text-align:left; margin-bottom:5px; }
             .exercise-name-item:not(body.full-screen-mode .exercise-name-item) input[type="text"] { width:100%; }
             .controls-section:not(.full-screen-mode .controls-section) { flex-direction:column; align-items:stretch; gap:8px; }
             .controls-section:not(.full-screen-mode .controls-section) button { width:100%; }
             .page-main-title { font-size:1.6em; }
-            .exercise-suggestions-popup { width: 100%; left: 0; } /* Full width below input when stacked */
         }
         @media (max-width:360px) {
             .container:not(.full-screen-mode .container) { padding:20px 15px; }
@@ -367,9 +348,6 @@
             <p id="noRoutinesMessage" class="no-items-message hidden">No hay rutinas guardadas.</p>
         </div>
     </div>
-    
-    <!-- Suggestions popup container (shared by all inputs) -->
-    <div id="exerciseSuggestionsPopup" class="exercise-suggestions-popup hidden"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -384,7 +362,6 @@
             const showExplBtn = getEl('showExplanationBtn'), explScreenEl = getEl('explanationScreen'), closeExplBtn = getEl('closeExplanationBtn'), explGridEl = getEl('explanationGrid'), toggleExplFSBtn = getEl('toggleExplanationFSBtn');
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
-            const suggestionsPopup = getEl('exerciseSuggestionsPopup'); // New element for suggestions
 
             const predefinedExercises = {
                 "Abdominales con rueda": { image: "images/abdominales_rueda.png", description: "Ejercicio para fortalecer el core usando la rueda abdominal." },
@@ -404,7 +381,6 @@
             const USER_SETTINGS_STORE = 'userSettings', SAVED_ROUTINES_STORE = 'savedRoutines';
             const LOGO_K = 'userLogoData', EJ_NAMES_K = 'allExerciseNames';
             let db, allEjNamesSet = new Set();
-            let currentSuggestionInput = null; // Keep track of which input is active for suggestions
 
             const openDB = () => new Promise((res, rej) => {
                 const req = indexedDB.open(DB_NAME, DB_VER);
@@ -439,133 +415,28 @@
             async function loadLogo() { try { const stored = await dbAction(USER_SETTINGS_STORE, 'readonly', 'get', LOGO_K); logoEl.src = stored || '#'; logoEl.classList.toggle('hidden', !stored); logoEl.style.display = stored ? 'block' : 'none'; remLogoBtn.classList.toggle('hidden', !stored); uploadLogoBtn.classList.toggle('hidden', !!stored); bodyEl.classList.toggle('logo-visible', !!stored); if (typeof feather!=='undefined') feather.replace(); } catch (err) { console.error('Err load logo:', err); logoEl.src='#'; logoEl.classList.add('hidden'); logoEl.style.display='none'; remLogoBtn.classList.add('hidden'); uploadLogoBtn.classList.remove('hidden'); bodyEl.classList.remove('logo-visible'); if(typeof feather!=='undefined')feather.replace();}}
             function handleLogoUpload(e) { const f = e.target.files[0]; if (f && f.type.startsWith('image/')) { const r = new FileReader(); r.onload = async ev => { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv',LOGO_K, ev.target.result); loadLogo(); } catch (err) { console.error('Err save logo:', err); alert('Err save logo.'); } }; r.readAsDataURL(f); } else if (f) alert('Use PNG/JPG.'); }
             async function remLogo() { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete',LOGO_K); loadLogo(); } catch (err) { console.error('Err rem logo:', err); alert('Err rem logo.'); } }
-            
-            function hideSuggestions() {
-                if (suggestionsPopup) suggestionsPopup.classList.add('hidden');
-                currentSuggestionInput = null;
-            }
-
-            function showSuggestions(inputElement) {
-                currentSuggestionInput = inputElement;
-                const filterText = inputElement.value.toLowerCase();
-                const combinedNames = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]);
-                const sortedNames = Array.from(combinedNames)
-                    .filter(name => name.toLowerCase().includes(filterText))
-                    .sort((a, b) => a.localeCompare(b));
-
-                suggestionsPopup.innerHTML = '';
-                if (sortedNames.length === 0 && filterText === "") { // Show all if input is empty
-                     Array.from(combinedNames).sort((a,b) => a.localeCompare(b)).forEach(name => {
-                        const item = document.createElement('div');
-                        item.className = 'exercise-suggestion-item';
-                        item.textContent = name;
-                        item.onclick = () => {
-                            inputElement.value = name;
-                            hideSuggestions();
-                            inputElement.blur(); // Optionally blur to save name
-                            inputElement.dispatchEvent(new Event('blur')); // Trigger blur event for saving
-                        };
-                        suggestionsPopup.appendChild(item);
-                    });
-                } else {
-                    sortedNames.forEach(name => {
-                        const item = document.createElement('div');
-                        item.className = 'exercise-suggestion-item';
-                        item.textContent = name;
-                        item.onclick = () => {
-                            inputElement.value = name;
-                            hideSuggestions();
-                            inputElement.blur(); 
-                            inputElement.dispatchEvent(new Event('blur'));
-                        };
-                        suggestionsPopup.appendChild(item);
-                    });
-                }
-                
-                if (suggestionsPopup.children.length > 0) {
-                    const inputRect = inputElement.getBoundingClientRect();
-                    const containerRect = ejNamesContEl.getBoundingClientRect();
-
-                    suggestionsPopup.style.top = (inputRect.bottom - containerRect.top) + 'px';
-                    // Dynamic width adjustment based on media query for stacked layout
-                    if (window.matchMedia("(max-width: 380px)").matches) {
-                        suggestionsPopup.style.left = '0px';
-                        suggestionsPopup.style.width = '100%';
-                    } else {
-                         // Get the computed style of the label to find its actual width
-                        const label = inputElement.closest('.exercise-name-item').querySelector('label');
-                        const labelStyle = window.getComputedStyle(label);
-                        const labelWidth = label.offsetWidth + parseFloat(labelStyle.marginRight);
-                        
-                        suggestionsPopup.style.left = labelWidth + 'px';
-                        suggestionsPopup.style.width = `calc(100% - ${labelWidth}px)`;
-                    }
-                    suggestionsPopup.classList.remove('hidden');
-                } else {
-                    hideSuggestions();
-                }
-            }
-            
-            // Close suggestions if clicked outside
-            document.addEventListener('click', function(event) {
-                if (suggestionsPopup && !suggestionsPopup.classList.contains('hidden')) {
-                    if (currentSuggestionInput && !currentSuggestionInput.contains(event.target) && !suggestionsPopup.contains(event.target)) {
-                        hideSuggestions();
-                    }
-                }
-            });
-
-
             function popEjNameInputs() {
                 if (!ejNamesContEl || !numEjSel) return;
                 const numEj = parseInt(numEjSel.value) || 0;
-                ejNamesContEl.innerHTML = ''; // Clear previous inputs
-                hideSuggestions();
-
-                if (numEj === 0 || numEjSel.disabled) {
-                    ejNamesContEl.classList.add('hidden');
-                    return;
-                }
+                ejNamesContEl.innerHTML = '';
+                const dlId = 'ej-names-sugg';
+                let dlEl = getEl(dlId);
+                if (!dlEl) { dlEl = document.createElement('datalist'); dlEl.id = dlId; document.body.appendChild(dlEl); }
+                dlEl.innerHTML = '';
+                const combinedNames = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]);
+                const sortedNames = Array.from(combinedNames).sort((a, b) => a.localeCompare(b));
+                sortedNames.forEach(n => { const opt = document.createElement('option'); opt.value = n; dlEl.appendChild(opt); });
+                if (numEj === 0 || numEjSel.disabled) { ejNamesContEl.classList.add('hidden'); return; }
                 ejNamesContEl.classList.remove('hidden');
-
                 for (let i = 0; i < numEj; i++) {
-                    const itmDiv = document.createElement('div');
-                    itmDiv.className = 'exercise-name-item';
-                    const lbl = document.createElement('label');
-                    lbl.htmlFor = `ejName${i+1}`;
-                    lbl.textContent = `Ejercicio ${i+1}:`;
-                    const inp = document.createElement('input');
-                    inp.type = 'text';
-                    inp.id = `ejName${i+1}`;
-                    inp.placeholder = `Nombre Ej. ${i+1}`;
-                    inp.dataset.index = i;
-                    inp.disabled = numEjSel.disabled;
-                    inp.autocomplete = "off"; // Disable browser autocomplete
-
-                    inp.onfocus = () => showSuggestions(inp);
-                    inp.oninput = () => showSuggestions(inp); // Filter as user types
-                    inp.onblur = async (ev) => {
-                        // Delay hiding to allow click on suggestion
-                        setTimeout(async () => {
-                            if (!suggestionsPopup.contains(document.activeElement)) {
-                                hideSuggestions();
-                            }
-                            const name = ev.target.value.trim();
-                            if (name && !name.startsWith('Ejercicio ') && !predefinedExercises[name]) {
-                                await addEjNameToGlobal(name); 
-                                // No need to rebuild datalist here, suggestions handle it
-                            }
-                        }, 100);
-                    };
-
-                    if (cfg && cfg.exerciseNames && cfg.exerciseNames[i]) {
-                        inp.value = cfg.exerciseNames[i];
-                    }
-                    itmDiv.append(lbl, inp);
-                    ejNamesContEl.appendChild(itmDiv);
+                    const itmDiv = document.createElement('div'); itmDiv.className = 'exercise-name-item';
+                    const lbl = document.createElement('label'); lbl.htmlFor = `ejName${i+1}`; lbl.textContent = `Ejercicio ${i+1}:`;
+                    const inp = document.createElement('input'); inp.type = 'text'; inp.id = `ejName${i+1}`; inp.placeholder = `Nombre Ej. ${i+1}`; inp.dataset.index = i; inp.disabled = numEjSel.disabled; inp.setAttribute('list', dlId);
+                    inp.onblur = async ev => { const name = ev.target.value.trim(); if (name && !name.startsWith('Ejercicio ') && !predefinedExercises[name]) { const alreadyExists = allEjNamesSet.has(name); await addEjNameToGlobal(name); if (!alreadyExists) { const reCombined = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]); const reSorted = Array.from(reCombined).sort((a, b) => a.localeCompare(b)); dlEl.innerHTML = ''; reSorted.forEach(n => { const opt = document.createElement('option'); opt.value = n; dlEl.appendChild(opt); });}}};
+                    if (cfg && cfg.exerciseNames && cfg.exerciseNames[i]) inp.value = cfg.exerciseNames[i];
+                    itmDiv.append(lbl, inp); ejNamesContEl.appendChild(itmDiv);
                 }
             }
-
             function genProgCircles(cont, count) { if (!cont) return; cont.innerHTML = ''; for (let i = 0; i < count; i++) { const circ = document.createElement('div'); circ.className = 'progress-circle'; circ.dataset.index = i; cont.appendChild(circ); } }
             function updProgCircles(type, count, completed = false) { const cont = type === 'exercise' ? ejProgEl : serProgEl; if (!cont) return; const circs = cont.querySelectorAll('.progress-circle'); circs.forEach((c, idx) => { c.classList.remove('completed', 'active'); if (idx < count - 1) c.classList.add('completed'); else if (idx === count - 1) { if (completed) c.classList.add('completed'); else if ((running || rePrep) && curPhase !== 'finalizado' && curPhase !== 'preparacion') { if (type === 'exercise' && (curPhase === 'ejercicio' || rePrep)) c.classList.add('active'); else if (type === 'series' && (curPhase === 'ejercicio' || rePrep || curPhase.startsWith('descanso_'))) c.classList.add('active'); } } }); if (curPhase === 'finalizado' && !running) circs.forEach(c => { c.classList.remove('active'); c.classList.add('completed'); }); }
             const createBeep = (freq, dur, vol = BEEP_VOL) => { if (!audioCtx) return null; const sr = audioCtx.sampleRate, nFrames = dur * sr, buf = audioCtx.createBuffer(1, nFrames, sr), data = buf.getChannelData(0); for (let i = 0; i < nFrames; i++) data[i] = Math.sin(2 * Math.PI * freq * i / sr) * vol; return buf; };
@@ -683,7 +554,7 @@
                     deleteBtn.onclick = async () => {
                         if (confirm(`¿Seguro que quieres eliminar el ejercicio "${name}" de tus nombres guardados?`)) {
                             if (await removeEjNameFromGlobal(name)) {
-                                li.remove(); popEjNameInputs(); // Repopulate to remove from suggestions if open
+                                li.remove(); popEjNameInputs();
                                 if (manageNamesListEl.children.length === 0) noNamesMsgEl.classList.remove('hidden');
                             } else alert(`Error al eliminar "${name}".`);
                         }
@@ -694,7 +565,7 @@
             }
             if (manageNamesBtn && manageNamesScreenEl && closeManageNamesBtn) {
                 manageNamesBtn.onclick = () => { populateManageNamesModal(); manageNamesScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; if (typeof feather !== 'undefined') feather.replace(); };
-                const closeManageModal = () => { manageNamesScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; popEjNameInputs(); }; // Repopulate to update suggestions
+                const closeManageModal = () => { manageNamesScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; popEjNameInputs(); };
                 closeManageNamesBtn.onclick = closeManageModal;
                 window.addEventListener('keydown', e => { if (e.key === 'Escape' && !manageNamesScreenEl.classList.contains('hidden')) closeManageModal(); });
                 manageNamesScreenEl.onclick = e => { if (e.target === manageNamesScreenEl) closeManageModal(); };
