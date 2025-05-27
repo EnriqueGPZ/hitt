@@ -470,7 +470,7 @@
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
 
-                        const predefinedExercises = {
+            const predefinedExercises = {
                 "Abdominales con rueda": { image: "images/abdominales_rueda.webp", description: "Ejercicio para fortalecer el core usando la rueda abdominal." },
                 "Flexiones": { image: "images/flexiones_suelo.webp", description: "Ejercicio clásico para pecho, hombros y tríceps." },
                 "Sentadillas saco": { image: "images/sentadillas_saco.webp", description: "Ejercicio fundamental para piernas y glúteos." },
@@ -485,15 +485,13 @@
                 "Remo de aire": { image: "images/remo.webp", description: "Ejercicio de tracción para fortalecer la espalda media y alta." },
                 "Renegade Row": { image: "images/renegade_row.webp", description: "Ejercicio compuesto que combina plancha con remo unilateral, ideal para el core y espalda." },
                 "Sentadillas con saco": { image: "images/sentadillas_saco.webp", description: "Variación de sentadilla usando un saco de arena o peso similar." },
-                // --- NUEVOS EJERCICIOS AÑADIDOS ---
                 "Burpees": { image: "images/burpees.webp", description: "Ejercicio de cuerpo completo que combina sentadilla, plancha y salto." },
                 "Elevaciones laterales con banda": { image: "images/hombros_banda.webp", description: "Ejercicio para deltoides laterales usando una banda de resistencia." },
                 "Remo con banda": { image: "images/remo_banda.webp", description: "Ejercicio de tracción para la espalda usando una banda de resistencia." },
                 "Escaladores": { image: "images/escaladores.webp", description: "Ejercicio cardiovascular y de core que simula escalar (mountain climbers)." },
                 "Bicicleta de Aire": { image: "images/bici.webp", description: "Ejercicio cardiovascular de alta intensidad en bicicleta de aire (air bike)." },
-                "Hip Thrust con peso": { image: "images/hip_thrust.webp", description: "Ejercicio para glúteos e isquiotibiales, realizado con peso sobre la cadera." }
+                "Hip Thrust con peso": { image: "images/hip_thrust.webp", description: "Ejercicio para glúteos e isquiotibiales, realizado con peso sobre la cadera." },
                 "Remo prono con mancuernas": { image: "images/espalda_mancuernas_boca_abajo.webp", description: "Ejercicio para la espalda (dorsales, romboides) tumbado boca abajo en un banco, usando mancuernas." }
-                
             };
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
