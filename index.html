@@ -457,9 +457,115 @@
     </div>
     <!-- Exercise suggestions dropdown will be created here by JS if needed, or appended to body -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // Variable para los ejercicios predefinidos, se llenará desde el CSV
+        let predefinedExercises = {};
+
+        // FUNCIÓN PARA PARSEAR CSV (simple, maneja comillas y comas dentro de campos)
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split(/\r?\n/); // Maneja saltos de línea \n y \r\n
+            if (lines.length < 2) return {}; // Necesita al menos encabezados y una línea de datos
+
+            const headers = lines[0].split(',').map(header => header.trim());
+            const data = {};
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === "") continue; // Saltar líneas vacías
+
+                const values = [];
+                let currentLine = lines[i];
+                let inQuotes = false;
+                let currentValue = '';
+                let charIndex = 0;
+
+                while(charIndex < currentLine.length) {
+                    let char = currentLine[charIndex];
+
+                    if (char === '"') {
+                        // Si es una comilla de escape "" dentro de un campo entrecomillado
+                        if (inQuotes && charIndex + 1 < currentLine.length && currentLine[charIndex + 1] === '"') {
+                            currentValue += '"';
+                            charIndex++; // Saltar la siguiente comilla
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (char === ',' && !inQuotes) {
+                        values.push(currentValue);
+                        currentValue = '';
+                    } else {
+                        currentValue += char;
+                    }
+                    charIndex++;
+                }
+                values.push(currentValue); // Añadir el último valor
+
+                if (values.length === headers.length) {
+                    const entry = {};
+                    let exerciseNameKey = "";
+                    headers.forEach((header, index) => {
+                        let value = values[index].trim();
+                        // Quitar comillas de inicio/fin SOLO si el campo entero estaba entrecomillado
+                        if (value.startsWith('"') && value.endsWith('"')) {
+                             // Verificar que no sea solo una comilla escapada al inicio/fin
+                            if (!value.startsWith('""') && !value.endsWith('""') || value.length === 2) {
+                               value = value.substring(1, value.length - 1);
+                            }
+                        }
+                        // Reemplazar comillas dobles escapadas ("") por una sola comilla (")
+                        // Esta lógica ya está cubierta por el bucle anterior si se hace bien
+                        // value = value.replace(/""/g, '"');
+
+
+                        if (header === "NombreEjercicio") {
+                            exerciseNameKey = value;
+                        } else if (header === "URLImagen") {
+                            entry.image = value;
+                        } else if (header === "Descripcion") {
+                            entry.description = value;
+                        }
+                    });
+                    if (exerciseNameKey && typeof entry.image !== 'undefined' && typeof entry.description !== 'undefined') {
+                        data[exerciseNameKey] = entry;
+                    } else {
+                        console.warn("Línea de CSV omitida por datos incompletos o mal formateados:", lines[i], entry, exerciseNameKey);
+                    }
+                } else {
+                     console.warn("Línea de CSV omitida por número incorrecto de campos:", lines[i]);
+                }
+            }
+            return data;
+        }
+
+        // FUNCIÓN PARA CARGAR EJERCICIOS DESDE CSV
+        async function loadPredefinedExercisesFromCSV() {
+            try {
+                // Añadir un parámetro anti-caché para asegurar que se carga el archivo más reciente en desarrollo
+                const response = await fetch('predefined_exercises.csv?v=' + new Date().getTime());
+                if (!response.ok) {
+                    throw new Error(`Error al cargar el CSV: ${response.status} ${response.statusText}`);
+                }
+                const csvText = await response.text();
+                predefinedExercises = parseCSV(csvText);
+                console.log("Ejercicios predefinidos cargados desde CSV:", Object.keys(predefinedExercises).length, "ejercicios.");
+                if (Object.keys(predefinedExercises).length === 0 && csvText.trim() !== "") {
+                    console.error("El CSV parece tener contenido pero el parseo resultó en 0 ejercicios. Revisa el formato del CSV y la función parseCSV.");
+                     alert("Advertencia: El archivo CSV de ejercicios se cargó pero no se pudieron parsear ejercicios. Revisa la consola para más detalles.");
+                }
+            } catch (error) {
+                console.error("No se pudieron cargar los ejercicios predefinidos desde el CSV:", error);
+                predefinedExercises = { // Fallback
+                     "Flexiones (Fallback)": { image: "images/flexiones_suelo.webp", description: "Ejercicio clásico para pecho, hombros y tríceps. (Cargado por defecto debido a error con CSV)" },
+                     "Sentadillas (Fallback)": { image: "images/sentadillas_saco.webp", description: "Ejercicio para piernas. (Cargado por defecto debido a error con CSV)" }
+                };
+                alert("Error al cargar la lista de ejercicios predeterminados desde el archivo CSV. Se usarán valores por defecto. Revisa la consola para más detalles.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
             const getEl = id => document.getElementById(id);
             const qS = sel => document.querySelector(sel);
+
+            // --- LLAMADA INICIAL PARA CARGAR EL CSV ---
+            await loadPredefinedExercisesFromCSV();
 
             const numEjSel = getEl('numEjercicios'), numSerSel = getEl('numSeries'), tEjSel = getEl('tiempoEjercicio'), dEjSel = getEl('descansoEjercicio'), dSerSel = getEl('descansoSerie');
             const allSels = [numEjSel, numSerSel, tEjSel, dEjSel, dSerSel];
@@ -469,30 +575,6 @@
             const showExplBtn = getEl('showExplanationBtn'), explScreenEl = getEl('explanationScreen'), closeExplBtn = getEl('closeExplanationBtn'), explGridEl = getEl('explanationGrid'), toggleExplFSBtn = getEl('toggleExplanationFSBtn');
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
-
-            const predefinedExercises = {
-                "Abdominales con rueda": { image: "images/abdominales_rueda.webp", description: "Ejercicio para fortalecer el core usando la rueda abdominal." },
-                "Flexiones": { image: "images/flexiones_suelo.webp", description: "Ejercicio clásico para pecho, hombros y tríceps." },
-                "Sentadillas saco": { image: "images/sentadillas_saco.webp", description: "Ejercicio fundamental para piernas y glúteos." },
-                "Saltos de tijera": { image: "images/jumping_jacks.webp", description: "Ejercicio cardiovascular simple." },
-                "Dominadas en barra": { image: "images/abdominadas_barra.webp", description: "Ejercicio de tracción para espalda y bíceps usando una barra." },
-                "Flexiones de hombros": { image: "images/flexiones_hombros.webp", description: "Ejercicio avanzado para deltoides." },
-                "Flexiones inclinadas": { image: "images/flexiones_inclinadas.webp", description: "Variación de flexiones para enfocar la parte inferior del pecho." },
-                "Peso muerto": { image: "images/peso_muerto.webp", description: "Ejercicio compuesto para la cadena posterior, espalda baja y piernas." },
-                "Press Arnold": { image: "images/press_arnold.webp", description: "Variación de press de hombros para un desarrollo completo del deltoides." },
-                "Press militar": { image: "images/press_militar.webp", description: "Ejercicio de press vertical para hombros y tríceps." },
-                "Remo con TRX": { image: "images/remo_trx.webp", description: "Ejercicio de tracción para la espalda usando suspensión TRX." },
-                "Remo de aire": { image: "images/remo.webp", description: "Ejercicio de tracción para fortalecer la espalda media y alta." },
-                "Renegade Row": { image: "images/renegade_row.webp", description: "Ejercicio compuesto que combina plancha con remo unilateral, ideal para el core y espalda." },
-                "Sentadillas con saco": { image: "images/sentadillas_saco.webp", description: "Variación de sentadilla usando un saco de arena o peso similar." },
-                "Burpees": { image: "images/burpees.webp", description: "Ejercicio de cuerpo completo que combina sentadilla, plancha y salto." },
-                "Elevaciones laterales con banda": { image: "images/hombros_banda.webp", description: "Ejercicio para deltoides laterales usando una banda de resistencia." },
-                "Remo con banda": { image: "images/remo_banda.webp", description: "Ejercicio de tracción para la espalda usando una banda de resistencia." },
-                "Escaladores": { image: "images/escaladores.webp", description: "Ejercicio cardiovascular y de core que simula escalar (mountain climbers)." },
-                "Bicicleta de Aire": { image: "images/bici.webp", description: "Ejercicio cardiovascular de alta intensidad en bicicleta de aire (air bike)." },
-                "Hip Thrust con peso": { image: "images/hip_thrust.webp", description: "Ejercicio para glúteos e isquiotibiales, realizado con peso sobre la cadera." },
-                "Remo prono con mancuernas": { image: "images/espalda_mancuernas_boca_abajo.webp", description: "Ejercicio para la espalda (dorsales, romboides) tumbado boca abajo en un banco, usando mancuernas." }
-            };
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { rootSt = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootSt.getPropertyValue('--phase-prep').trim(), ejercicio: rootSt.getPropertyValue('--phase-ex').trim(), descanso: rootSt.getPropertyValue('--phase-rest').trim(), descanso_ejercicio: rootSt.getPropertyValue('--phase-rest').trim(), descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), finalizado: rootSt.getPropertyValue('--phase-end').trim() }; }
@@ -509,11 +591,9 @@
             const LOGO_K = 'userLogoData', EJ_NAMES_K = 'allExerciseNames';
             let db, allEjNamesSet = new Set();
 
-            // Variables for exercise suggestions dropdown
             let suggestionsDropdown = null;
             let activeSuggestionInput = null;
             let blurTimeout = null;
-
 
             const openDB = () => new Promise((res, rej) => {
                 const req = indexedDB.open(DB_NAME, DB_VER);
@@ -549,18 +629,14 @@
             function handleLogoUpload(e) { const f = e.target.files[0]; if (f && f.type.startsWith('image/')) { const r = new FileReader(); r.onload = async ev => { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv',LOGO_K, ev.target.result); loadLogo(); } catch (err) { console.error('Err save logo:', err); alert('Err save logo.'); } }; r.readAsDataURL(f); } else if (f) alert('Use PNG/JPG.'); }
             async function remLogo() { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete',LOGO_K); loadLogo(); } catch (err) { console.error('Err rem logo:', err); alert('Err rem logo.'); } }
             
-            // --- Exercise Suggestions Dropdown Logic ---
             function getOrCreateSuggestionsDropdown() {
                 if (!suggestionsDropdown) {
                     suggestionsDropdown = document.createElement('div');
                     suggestionsDropdown.id = 'exerciseSuggestionsDropdown';
                     suggestionsDropdown.className = 'exercise-suggestions-dropdown hidden';
                     document.body.appendChild(suggestionsDropdown);
-
-                    // Hide when clicking outside
                     document.addEventListener('click', function(event) {
                         if (activeSuggestionInput && suggestionsDropdown && !suggestionsDropdown.classList.contains('hidden')) {
-                            // Check if the click is outside the active input and the dropdown itself
                             const isClickInsideInput = activeSuggestionInput.contains(event.target);
                             const isClickInsideDropdown = suggestionsDropdown.contains(event.target);
                             if (!isClickInsideInput && !isClickInsideDropdown) {
@@ -571,123 +647,78 @@
                 }
                 return suggestionsDropdown;
             }
-
             function hideSuggestions() {
                 const dropdown = getOrCreateSuggestionsDropdown();
                 dropdown.classList.add('hidden');
-                activeSuggestionInput = null; // Clear active input when dropdown is hidden
+                activeSuggestionInput = null;
             }
-
             function populateAndFilterSuggestions(inputElement, filterText = "") {
                 const dropdown = getOrCreateSuggestionsDropdown();
-                dropdown.innerHTML = ''; // Clear previous suggestions
-
+                dropdown.innerHTML = '';
                 const combinedNames = new Set([...Object.keys(predefinedExercises), ...Array.from(allEjNamesSet)]);
                 const sortedNames = Array.from(combinedNames).sort((a, b) => a.localeCompare(b));
-                
                 const lowerFilterText = filterText.toLowerCase();
                 const filtered = sortedNames.filter(name => name.toLowerCase().includes(lowerFilterText));
 
-                if (filtered.length === 0 && !filterText) { // If no filter text and still no results (empty list), hide
-                     hideSuggestions();
-                     return;
-                }
-                 if (filtered.length === 0 && filterText) { // If filter text and no results, show "no results" or hide
+                if (filtered.length === 0 && !filterText) { hideSuggestions(); return; }
+                if (filtered.length === 0 && filterText) {
                     const noResultItem = document.createElement('div');
                     noResultItem.textContent = 'No hay sugerencias';
                     noResultItem.style.fontStyle = 'italic';
-                    noResultItem.style.pointerEvents = 'none'; // Not clickable
+                    noResultItem.style.pointerEvents = 'none';
                     dropdown.appendChild(noResultItem);
-                 } else {
+                } else {
                     filtered.forEach(name => {
                         const item = document.createElement('div');
                         item.textContent = name;
-                        // Use mousedown: it fires before blur on the input
                         item.addEventListener('mousedown', (e) => {
-                            e.preventDefault(); // Prevent input from losing focus immediately
+                            e.preventDefault();
                             inputElement.value = name;
-                            // Manually trigger blur to save the name if it's new (original onblur logic)
                             inputElement.dispatchEvent(new Event('blur', { bubbles: true, cancelable: true }));
                             hideSuggestions();
                         });
                         dropdown.appendChild(item);
                     });
-                 }
-
-
-                // Position dropdown below the input
+                }
                 const inputRect = inputElement.getBoundingClientRect();
                 dropdown.style.left = `${inputRect.left + window.scrollX}px`;
-                dropdown.style.top = `${inputRect.bottom + window.scrollY}px`; // Position below the input
+                dropdown.style.top = `${inputRect.bottom + window.scrollY}px`;
                 dropdown.style.width = `${inputRect.width}px`;
-                
-                if ((filtered.length > 0) || (filtered.length === 0 && filterText)) { // Show if there are items or "no results"
+                if ((filtered.length > 0) || (filtered.length === 0 && filterText)) {
                     dropdown.classList.remove('hidden');
                 } else {
                     hideSuggestions();
                 }
             }
-
             function popEjNameInputs() {
                 if (!ejNamesContEl || !numEjSel) return;
                 const numEj = parseInt(numEjSel.value) || 0;
                 ejNamesContEl.innerHTML = '';
-
-                const oldDlEl = getEl('ej-names-sugg'); // Remove old datalist if it exists
+                const oldDlEl = getEl('ej-names-sugg');
                 if (oldDlEl) oldDlEl.remove();
-
                 if (numEj === 0 || numEjSel.disabled) {
                     ejNamesContEl.classList.add('hidden');
-                    if(suggestionsDropdown) hideSuggestions(); // Hide dropdown if inputs are removed
+                    if(suggestionsDropdown) hideSuggestions();
                     return;
                 }
                 ejNamesContEl.classList.remove('hidden');
-
                 for (let i = 0; i < numEj; i++) {
                     const itmDiv = document.createElement('div'); itmDiv.className = 'exercise-name-item';
                     const lbl = document.createElement('label'); lbl.htmlFor = `ejName${i+1}`; lbl.textContent = `Ejercicio ${i+1}:`;
                     const inp = document.createElement('input'); inp.type = 'text'; inp.id = `ejName${i+1}`; inp.placeholder = `Nombre Ej. ${i+1}`; inp.dataset.index = i; inp.disabled = numEjSel.disabled;
-                    inp.autocomplete = "off"; // Prevent browser's own autocomplete
-
-                    inp.addEventListener('focus', (ev) => {
-                        activeSuggestionInput = ev.target;
-                        clearTimeout(blurTimeout);
-                        populateAndFilterSuggestions(ev.target, ev.target.value);
-                    });
-
-                    inp.addEventListener('input', (ev) => { // Using 'input' for real-time filtering
-                        populateAndFilterSuggestions(ev.target, ev.target.value);
-                    });
-                    
+                    inp.autocomplete = "off";
+                    inp.addEventListener('focus', (ev) => { activeSuggestionInput = ev.target; clearTimeout(blurTimeout); populateAndFilterSuggestions(ev.target, ev.target.value); });
+                    inp.addEventListener('input', (ev) => { populateAndFilterSuggestions(ev.target, ev.target.value); });
                     inp.addEventListener('blur', async (ev) => {
-                        // Delay hiding to allow mousedown on suggestion to fire
-                        blurTimeout = setTimeout(() => {
-                            if (activeSuggestionInput === ev.target) { // Only hide if this input is still the active one
-                                hideSuggestions();
-                            }
-                        }, 150); // 150ms delay
-
-                        // Original onblur logic to add name to global list
+                        blurTimeout = setTimeout(() => { if (activeSuggestionInput === ev.target) { hideSuggestions(); }}, 150);
                         const name = ev.target.value.trim();
-                        if (name && !name.startsWith('Ejercicio ') && !predefinedExercises[name]) {
-                            // This logic is fine, addEjNameToGlobal handles duplicates
-                            await addEjNameToGlobal(name);
-                        }
+                        if (name && !name.startsWith('Ejercicio ') && !predefinedExercises[name]) { await addEjNameToGlobal(name); }
                     });
-
-                    inp.addEventListener('keydown', (ev) => {
-                        if (ev.key === 'Escape') {
-                            hideSuggestions();
-                            ev.target.blur(); // Optionally remove focus from input
-                        }
-                        // Add ArrowUp, ArrowDown, Enter key handling here if desired for dropdown navigation
-                    });
-
+                    inp.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { hideSuggestions(); ev.target.blur(); }});
                     if (cfg && cfg.exerciseNames && cfg.exerciseNames[i]) inp.value = cfg.exerciseNames[i];
                     itmDiv.append(lbl, inp); ejNamesContEl.appendChild(itmDiv);
                 }
             }
-            // --- End of Exercise Suggestions Dropdown Logic ---
 
             function genProgCircles(cont, count) { if (!cont) return; cont.innerHTML = ''; for (let i = 0; i < count; i++) { const circ = document.createElement('div'); circ.className = 'progress-circle'; circ.dataset.index = i; cont.appendChild(circ); } }
             function updProgCircles(type, count, completed = false) { const cont = type === 'exercise' ? ejProgEl : serProgEl; if (!cont) return; const circs = cont.querySelectorAll('.progress-circle'); circs.forEach((c, idx) => { c.classList.remove('completed', 'active'); if (idx < count - 1) c.classList.add('completed'); else if (idx === count - 1) { if (completed) c.classList.add('completed'); else if ((running || rePrep) && curPhase !== 'finalizado' && curPhase !== 'preparacion') { if (type === 'exercise' && (curPhase === 'ejercicio' || rePrep)) c.classList.add('active'); else if (type === 'series' && (curPhase === 'ejercicio' || rePrep || curPhase.startsWith('descanso_'))) c.classList.add('active'); } } }); if (curPhase === 'finalizado' && !running) circs.forEach(c => { c.classList.remove('active'); c.classList.add('completed'); }); }
@@ -765,7 +796,7 @@
             if(showExplBtn && explScreenEl && closeExplBtn && toggleExplFSBtn){
                 showExplBtn.onclick = () => {
                     popExplGrid();
-                    explScreenEl.classList.remove('hidden', 'modal-fullscreen-active'); // Ensure it's not fullscreen initially
+                    explScreenEl.classList.remove('hidden', 'modal-fullscreen-active');
                     const icon = toggleExplFSBtn.querySelector('i.feather');
                     if(icon) icon.setAttribute('data-feather', 'maximize-2');
                     toggleExplFSBtn.title = "Maximizar Vista";
@@ -806,7 +837,7 @@
                     deleteBtn.onclick = async () => {
                         if (confirm(`¿Seguro que quieres eliminar el ejercicio "${name}" de tus nombres guardados?`)) {
                             if (await removeEjNameFromGlobal(name)) {
-                                li.remove(); popEjNameInputs(); // Repopulate inputs to remove deleted name from suggestions
+                                li.remove(); popEjNameInputs();
                                 if (manageNamesListEl.children.length === 0) noNamesMsgEl.classList.remove('hidden');
                             } else alert(`Error al eliminar "${name}".`);
                         }
@@ -875,28 +906,27 @@
             }
 
             // --- Initial Setup ---
-            openDB().then(async () => {
+            try {
+                await openDB();
                 await loadAllEjNames(); 
-                await loadLogo(); // await to ensure logo is loaded before theme/UI which might depend on logo-visible class
-                calcEstTime();
-                const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                applyTh(savedTh); 
-                setUI('initial'); 
-                popEjNameInputs(); // Call after setUI and other initial loads
-                if (typeof feather !== 'undefined') feather.replace();
-            }).catch(async err => {
-                console.error("IDB init failed:", err); 
-                alert("Advertencia: El almacenamiento local falló. Algunas características como guardar el logo o los nombres de ejercicios podrían no estar disponibles o no persistir.");
-                // Fallback logic - try to proceed without DB dependent features or with defaults
-                await loadAllEjNames(); // Still attempt to load from a potentially failed/empty DB (will use defaults)
-                // loadLogo(); // Might not work if DB failed, logoEl will remain hidden
+                await loadLogo();
                 calcEstTime();
                 const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                 applyTh(savedTh); 
                 setUI('initial'); 
                 popEjNameInputs();
                 if (typeof feather !== 'undefined') feather.replace();
-            });
+            } catch (err) {
+                console.error("IDB init o configuración inicial falló:", err); 
+                alert("Advertencia: El almacenamiento local o la configuración inicial falló. Algunas características como guardar el logo o los nombres de ejercicios podrían no estar disponibles o no persistir.");
+                // Fallback si es necesario para la UI básica, asumiendo que predefinedExercises ya tiene el fallback
+                calcEstTime();
+                const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                applyTh(savedTh); 
+                setUI('initial'); 
+                popEjNameInputs();
+                if (typeof feather !== 'undefined') feather.replace();
+            }
         });
     </script>
 </body>
