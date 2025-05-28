@@ -105,7 +105,7 @@
         .exercise-info-card {
             background-color: transparent; 
             padding: 1vh 0.5vw; 
-            border-radius: var(--brd-rad-sm); /* Mismo radio que otros elementos */
+            border-radius: var(--brd-rad-sm);
             flex: 1; 
             display: flex;
             flex-direction: column;
@@ -125,14 +125,10 @@
             width: 100%; height: clamp(70px, 12vh, 150px); 
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 0.8vh; background-color: transparent; 
-            border-radius: var(--brd-rad-sm); /* Redondear esquinas del contenedor de imagen */
-            overflow: hidden;  /* Asegura que la imagen se recorte si es necesario */
+            border-radius: var(--brd-rad-sm); 
+            overflow: hidden;  
         }
-        .exercise-info-card img { 
-            max-width: 100%; max-height: 100%; 
-            object-fit: contain; 
-            /* border-radius: var(--brd-rad-sm); Si se quiere redondear la imagen misma, pero el contenedor con overflow:hidden es mejor */
-        }
+        .exercise-info-card img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .exercise-info-card p {
             font-family: var(--font-body); font-size: clamp(1em, 2.2vh, 1.6em); 
             font-weight: 700; color: var(--color-txt-prim);
@@ -172,33 +168,32 @@
         
         body.full-screen-mode .container { 
             max-width:100%; width:100%; height:100%; margin:0; border-radius:0; border:none; 
-            padding: 0.5vh 2vw; /* Menor padding vertical */
+            padding: 1vh 2vw; 
+            padding-top: 2vh; /* Aumentar padding superior para bajar todo un poco */
             box-sizing:border-box; 
             display:flex; flex-direction:column; 
-            justify-content: space-between; /* Ajustar si es necesario, o center y gap */
+            justify-content: space-between; 
             align-items:center; 
             box-shadow:none; flex-grow:1; 
         }
         body.full-screen-mode #userLogo { 
-            position:fixed; top:1vh; left:1vw; /* Un poco más pegado al borde */
-            max-width:80px; max-height: calc(var(--logo-h-fs) - 10px); /* Ligeramente más pequeño si es necesario */
+            position:fixed; top:1vh; left:1vw; 
+            max-width:80px; max-height: calc(var(--logo-h-fs) - 10px);
             width:auto; height:auto; margin:0; z-index:1001; 
             background-color:transparent; padding:0; box-shadow:none; border:none; 
         }
+        body.full-screen-mode.logo-visible .container {
+            padding-top: calc(var(--logo-h-fs, 50px) + 2vh); /* Aumentar padding si el logo es visible */
+        }
+
         body.full-screen-mode .progress-indicators { 
             width: 80%; max-width: 500px;
-            gap: 0.5vh; /* Menor gap */
-            margin-bottom: 0.5vh; /* Reducir margen inferior */
-            margin-top: 0.5vh; /* Reducir margen superior */
+            gap: 0.5vh; 
+            margin-bottom: 1vh; /* Más espacio debajo de los indicadores */
+            margin-top: 0; /* Sin margen superior extra, ya controlado por padding del container */
+            order: -1; /* Asegurar que esté arriba en el flujo del container si es necesario */
         }
-        /* Si el logo es fixed y visible, el .container podría necesitar un padding-top para no solaparse
-           con los primeros elementos del flujo (.progress-indicators) */
-        body.full-screen-mode.logo-visible .container {
-            padding-top: calc(var(--logo-h-fs) + 1vh); /* Espacio para el logo fixed */
-        }
-
-
-        body.full-screen-mode .progress-label { font-size:clamp(.7em, 1.6vh, 1em); } /* Ligeramente más pequeño */
+        body.full-screen-mode .progress-label { font-size:clamp(.7em, 1.6vh, 1em); }
         body.full-screen-mode .progress-circle { width:clamp(10px, 1.8vh, 22px); height:clamp(10px, 1.8vh, 22px); }
         body.full-screen-mode .progress-circles { gap:clamp(5px, 0.8vh, 10px); }
 
@@ -213,7 +208,7 @@
         body.full-screen-mode #estadoActual { font-size:clamp(1.6em, 4.5vh, 3em); margin-bottom:0.8vh; min-height:auto; }
         body.full-screen-mode #cronometroActual { 
             font-family:var(--font-display); font-weight:900; 
-            font-size:clamp(5.5em, 24vh, 15em); /* Ajustado ligeramente */
+            font-size:clamp(5.5em, 24vh, 15em); 
             line-height:.85; margin-bottom:1.2vh; 
         }
         body.full-screen-mode #cronometroTotalLabel { font-size:clamp(0.9em, 2vh, 1.6em); }
@@ -221,32 +216,104 @@
 
         body.full-screen-mode .active-exercise-info.js-visible-by-state {
              display: flex !important; 
-             margin-top: 1vh; margin-bottom: 1vh; /* Ajustar márgenes */
+             margin-top: 1vh; margin-bottom: 1vh; 
         }
         
         body.full-screen-mode .controls-section { 
             width:90%; max-width:600px; 
-            margin-top:1vh; margin-bottom:0.5vh; /* Ajustar márgenes */
+            margin-top:1vh; margin-bottom:0.5vh; 
             gap:10px; flex-shrink: 0; 
         }
         body.full-screen-mode .controls-section button { padding:1.2vh 1.8vw; font-size:clamp(.8em, 2vh, 1.2em); gap:.8vw; flex-grow:1; }
         
-        /* Footer styles (ya definidos para ser flex column y centrado) */
-        .app-footer { margin-top: auto; width: 100%; padding: 15px 20px; background-color: transparent; border-top: 1px solid transparent; color: var(--color-txt-sec); font-size: .85em; display: flex; flex-direction: column; align-items: center; gap: 15px; transition: all .3s ease-in-out; }
-        body.full-screen-mode .app-footer { /* Ajustes específicos para el footer en FS si son necesarios */ padding: 10px 20px; gap:10px; }
-        .app-footer .footer-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; order: 1; }
-        .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 10px; font-size: .75em; background-color: transparent; border: 1px solid var(--color-txt-sec); color: var(--color-txt-sec); border-radius: var(--brd-rad-sm); cursor: pointer; transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
+        /* --- ESTILOS DEL FOOTER MEJORADOS --- */
+        .app-footer {
+            margin-top: auto; 
+            width: 100%;
+            padding: 20px; /* Aumentar padding para más aire */
+            background-color: transparent;
+            border-top: 1px solid transparent; 
+            color: var(--color-txt-sec);
+            font-size: .85em;
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            gap: 20px; /* Mayor espacio entre controles y creador */
+            transition: all .3s ease-in-out;
+        }
+        body.full-screen-mode .app-footer { 
+            padding: 15px 20px; /* Mantener un padding decente en FS */
+            gap:15px; 
+        }
+        .app-footer .footer-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center; 
+            flex-wrap: wrap; 
+            width: 100%; 
+            order: 1; 
+        }
+        .app-footer .footer-btn {
+            font-family: var(--font-body); font-weight: 400;
+            padding: 8px 10px; font-size: .75em;
+            background-color: transparent;
+            border: 1px solid var(--color-txt-sec);
+            color: var(--color-txt-sec);
+            border-radius: var(--brd-rad-sm);
+            cursor: pointer;
+            transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease;
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 5px; min-width: unset;
+        }
         .app-footer .footer-btn i.feather { width: .8em; height: .8em; stroke-width: 2; stroke: currentColor; }
         .app-footer .footer-btn:hover { background-color: var(--btn-head-hover-bg); color: var(--color-txt-prim); border-color: var(--color-txt-prim); }
         .app-footer .footer-btn:active { transform: scale(.97); }
-        .app-footer .creator-info { margin: 0; text-align: center; width: 100%; order: 2; display: flex; justify-content: center; align-items: center; }
-        .app-footer .creator-info .seo-name { font-weight: 700; color: var(--color-txt-prim); }
-        .app-footer .creator-info .footer-app-icon { width: 36px; height: 36px; vertical-align: middle; margin-right: 8px; object-fit: cover; border-radius: 4px; }
-        body.full-screen-mode .footer-controls #showExplanationBtn, body.full-screen-mode .footer-controls #manageNamesBtn, body.full-screen-mode .footer-controls #saveRoutineBtn, body.full-screen-mode .footer-controls #loadRoutineBtn { display:none !important; }
+
+        .app-footer .creator-info {
+            margin: 0;
+            text-align: center; 
+            width: 100%; 
+            order: 2; 
+            display: flex; 
+            flex-direction: column; /* Para apilar icono, HIIT.ES y creador */
+            justify-content: center;
+            align-items: center;
+            gap: 5px; /* Espacio entre los elementos del creador */
+        }
+        .app-footer .creator-info .footer-app-icon { 
+            width: 32px; /* Ajustar tamaño del icono si es necesario */
+            height: 32px; 
+            object-fit: cover; 
+            border-radius: 4px; 
+        }
+        .app-footer .creator-info .footer-brand-name {
+            font-family: var(--font-display); /* Usar fuente display para HIIT.ES */
+            font-size: 1.1em; /* Tamaño un poco mayor */
+            font-weight: 700;
+            color: var(--color-txt-prim);
+            letter-spacing: 0.5px;
+        }
+        .app-footer .creator-info .footer-author-name { /* Para "Creado por Enrique Gil" */
+            font-size: 0.9em; /* Ligeramente más pequeño */
+            color: var(--color-txt-sec);
+        }
+        .app-footer .creator-info .footer-author-name .seo-name { font-weight: 700; color: var(--color-txt-prim); }
+        /* --- FIN ESTILOS FOOTER --- */
+
+        body:not(.full-screen-mode) .footer-controls #showExplanationBtn.hidden-during-run,
+        body:not(.full-screen-mode) .footer-controls #manageNamesBtn.hidden-during-run,
+        body:not(.full-screen-mode) .footer-controls #saveRoutineBtn.hidden-during-run,
+        body:not(.full-screen-mode) .footer-controls #loadRoutineBtn.hidden-during-run { display:none !important; }
+        /* Ocultar botones de gestión del footer en FS, pero dejar visibles los de logo/tema/export/import */
+        body.full-screen-mode .footer-controls #showExplanationBtn, 
+        body.full-screen-mode .footer-controls #manageNamesBtn,
+        body.full-screen-mode .footer-controls #saveRoutineBtn,
+        body.full-screen-mode .footer-controls #loadRoutineBtn { 
+            display:none !important; 
+        }
 
 
         /* Modales y resto de estilos responsivos no FS */
-        /* ... (El resto de tu CSS para modales y @media queries no FS permanece igual que en la última versión completa) ... */
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
         .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
@@ -287,11 +354,11 @@
         body:not(.full-screen-mode) .footer-controls #saveRoutineBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #loadRoutineBtn.hidden-during-run { display:none !important; }
 
-        @media (min-width: 769px) { /* Estilos para tablet/desktop no FS */
+        @media (min-width: 769px) { 
             #explanationScreen:not(.modal-fullscreen-active) .explanation-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
             #explanationScreen:not(.modal-fullscreen-active) .modal-content { max-width: 900px; }
         }
-        @media (max-width:768px) { /* Estilos para móvil y tablet pequeña no FS */
+        @media (max-width:768px) { 
             .modal-content { padding:20px; max-height:85vh; max-width: 90%;}
             #explanationScreen .modal-header-buttons #toggleExplanationFSBtn { display: none !important; }
             #explanationScreen.modal-fullscreen-active .modal-content { max-width: 100vw; max-height: 100vh; }
@@ -307,7 +374,7 @@
             .explanation-item-name { font-size:1em; margin-bottom: 12px; }
             .explanation-item-image-container { height: 100px; }
         }
-        @media (max-width:480px) { /* Estilos para móvil pequeño no FS, y ajustes para FS en pantallas pequeñas */
+        @media (max-width:480px) { 
             body:not(.full-screen-mode) .controls-section button { padding:10px 12px; font-size:.85em; }
             #manageNamesList li, #loadRoutineList li { flex-direction: column; align-items: flex-start; gap: 8px;}
             #manageNamesList .delete-name-btn, #loadRoutineList .routine-actions { margin-left:0; width: 100%;}
@@ -325,7 +392,7 @@
             body.full-screen-mode #estadoActual { font-size:clamp(1.5em, 4vh, 2.5em); }
             body.full-screen-mode #cronometroActual { font-size:clamp(4em, 20vh, 10em); font-weight: 900; }
         }
-        @media (max-width:420px) { /* Móvil muy pequeño no FS */
+        @media (max-width:420px) { 
             body:not(.full-screen-mode) .container { padding:25px 20px; }
             body:not(.full-screen-mode) .controls-section button { padding:12px 18px; font-size:.95em; min-width:120px; gap:6px; }
             body:not(.full-screen-mode) .controls-section button i.feather { width:1em; height:1em; }
@@ -333,7 +400,7 @@
             #estadoActual:not(body.full-screen-mode #estadoActual) { font-size:1.3em; }
             .current-exercise-name:not(body.full-screen-mode #currentExerciseNameDisplay) { font-size:1em; }
         }
-        @media (max-width:380px) { /* Móvil aún más pequeño no FS */
+        @media (max-width:380px) { 
             body:not(.full-screen-mode) .config-item { flex-direction:column; align-items:flex-start; }
             body:not(.full-screen-mode) .config-item label { margin-bottom:8px; flex-basis:auto; width:100%; margin-right:0; }
             body:not(.full-screen-mode) .config-item select { width:100%; flex-basis:auto; }
@@ -344,7 +411,7 @@
             body:not(.full-screen-mode) .controls-section button { width:100%; }
             body:not(.full-screen-mode) .page-main-title { font-size:1.6em; }
         }
-        @media (max-width:360px) { /* Móvil diminuto no FS */
+        @media (max-width:360px) { 
             body:not(.full-screen-mode) .container { padding:20px 15px; }
             #cronometroActual:not(body.full-screen-mode #cronometroActual) { font-size:clamp(4em, 32vw, 10em); font-weight: 900; }
             #estadoActual:not(body.full-screen-mode #estadoActual) { font-size:1.2em; }
@@ -352,15 +419,15 @@
             body:not(.full-screen-mode) .page-main-title { font-size:1.5em; }
         }
 
-        @media (orientation:landscape) and (max-height:550px) and (min-width:568px) { /* FS Landscape */
-            body.full-screen-mode .container { padding: 0.5vh 1vw; justify-content: space-around; gap: 0.2vh; } /* Más espacio entre elementos */
-            body.full-screen-mode.logo-visible .container { padding-top: calc(var(--logo-h-fs, 40px) + 0.5vh); } /* Ajustar --logo-h-fs si es diferente */
+        @media (orientation:landscape) and (max-height:550px) and (min-width:568px) { 
+            body.full-screen-mode .container { padding: 0.5vh 1vw; justify-content: space-around; gap: 0.2vh; } 
+            body.full-screen-mode.logo-visible .container { padding-top: calc(var(--logo-h-fs, 40px) + 0.5vh); } 
             body.full-screen-mode #userLogo { max-width:70px !important; --logo-h-fs:35px !important; top:0.5vh !important; left:0.5vw !important; }
             body.full-screen-mode .progress-indicators { flex-direction:row; justify-content:center; align-items:center; gap:10px; margin-bottom:0.3vh !important; margin-top: 0.3vh !important; width: 95%; max-width: none; }
             body.full-screen-mode .progress-section { gap:4px; }
             body.full-screen-mode .progress-label { font-size:clamp(.5em, 1.3vh, .8em) !important; }
             body.full-screen-mode .progress-circle { width:clamp(8px, 1.5vh, 13px) !important; height:clamp(8px, 1.5vh, 13px) !important; }
-            body.full-screen-mode #timerDisplaySection { padding:0.3vh 0.3vw !important; margin-bottom:0.3vh !important; min-height: auto; flex-grow:1; /* Que el timer ocupe más espacio */ }
+            body.full-screen-mode #timerDisplaySection { padding:0.3vh 0.3vw !important; margin-bottom:0.3vh !important; min-height: auto; flex-grow:1; }
             body.full-screen-mode #estadoActual { font-size:clamp(1.1em, 2.5vh, 1.7em) !important; margin-bottom:.2vh !important; }
             body.full-screen-mode #cronometroActual { font-size:clamp(3.5em, 16vh, 8em) !important; line-height:.8 !important; margin-bottom:0.3vh !important; font-weight: 900; }
             body.full-screen-mode #cronometroTotalLabel { font-size:clamp(.5em, 1.4vh, .8em) !important; margin-top:0 !important; }
@@ -450,7 +517,11 @@
             <button id="manageNamesBtn" class="footer-btn" title="Gestionar Nombres Guardados"><i data-feather="edit-3"></i><span class="btn-text">Nombres</span></button>
             <button id="showExplanationBtn" class="footer-btn" title="Mostrar Explicación de Ejercicios"><i data-feather="layout"></i><span class="btn-text">Ver Ej.</span></button>
         </div>
-        <p class="creator-info"><img src="icons/image.webp" alt="Icono del Creador" class="footer-app-icon">Creado por <span class="seo-name">Enrique Gil</span></p>
+        <div class="creator-info">
+            <img src="icons/image.webp" alt="Icono de HIIT.ES" class="footer-app-icon">
+            <p class="footer-brand-name">HIIT.ES</p>
+            <p class="footer-author-name">Creado por <span class="seo-name">Enrique Gil</span></p>
+        </div>
     </footer>
 
     <div id="explanationScreen" class="modal-screen hidden">
@@ -720,7 +791,7 @@
             if (startBtn) startBtn.onclick = () => { if (rePrep) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); }); else { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); } };
             if (finishBtn) finishBtn.onclick = () => { if (rePrep) return; finishWorkout(false); };
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
-            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; /* footerEl.style.display = isFS ? 'none' : 'flex'; */ if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); }; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
+            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); }; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
             const thIco = themeBtn ? themeBtn.querySelector('i.feather') : null; if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); }; function applyTh(th) { bodyEl.classList.toggle('dark-theme', th === 'dark'); if (thIco) thIco.setAttribute('data-feather', th === 'dark' ? 'sun' : 'moon'); if (themeBtn) themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`; if (typeof feather !== 'undefined') feather.replace(); updPhaseColors(); updUIDisp(); }
             if(uploadLogoBtn)uploadLogoBtn.onclick=()=>logoUploadIn.click(); if(logoUploadIn)logoUploadIn.onchange=handleLogoUpload; if(remLogoBtn)remLogoBtn.onclick=remLogo;
             async function getCurCfgObj(forRoutineSave = false){ const currentConfig = { numEjercicios: parseInt(numEjSel.value), numSeries: parseInt(numSerSel.value), tiempoEjercicio: parseInt(tEjSel.value), descansoEjercicio: parseInt(dEjSel.value), descansoSerie: parseInt(dSerSel.value) }; const exerciseNames = []; const nInps = ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach((inp, i) => { exerciseNames[i] = inp.value.trim() || `Ejercicio ${i + 1}`; }); for (let i = exerciseNames.length; i < currentConfig.numEjercicios; i++) exerciseNames[i] = `Ejercicio ${i + 1}`; if (forRoutineSave) { return { config: currentConfig, exerciseNames: exerciseNames }; } else { return { ...currentConfig, exerciseNames: exerciseNames, theme: localStorage.getItem('theme') || 'light', allExerciseNames: Array.from(allEjNamesSet), userLogoBase64: (logoEl.src && logoEl.src !== '#' && !logoEl.classList.contains('hidden')) ? logoEl.src : null }; } }
