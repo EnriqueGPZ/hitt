@@ -18,7 +18,6 @@
         :root {
             --font-display: 'Oswald', sans-serif; --font-body: 'Roboto Condensed', sans-serif;
 
-            /* --- TEMA CLARO --- */
             --color-bg-l: #A0A0A0;
             --color-surf-l: #A8A8A8;
             --color-prim-acc-l: #333333;
@@ -34,11 +33,9 @@
             --prog-circ-comp-bg-l: #121212;
             --prog-circ-act-brd-l: #000000;
 
-            /* --- TEMA OSCURO --- */
             --color-bg-d: #2D2D2D;
             --color-surf-d: #3C3C3C;
 
-            /* Variables que se asignan según el tema activo */
             --color-bg: var(--color-bg-l); --color-surf: var(--color-surf-l);
             --color-prim-acc: var(--color-prim-acc-l); --color-txt-prim: var(--color-txt-prim-l);
             --color-txt-sec: var(--color-txt-sec-l); --color-hl: var(--color-hl-l);
@@ -47,7 +44,7 @@
             --sel-brd: var(--sel-brd-l); --prog-circ-brd: var(--prog-circ-brd-l);
             --prog-circ-comp-bg: var(--prog-circ-comp-bg-l); --prog-circ-act-brd: var(--prog-circ-act-brd-l);
 
-            --box-shdw-subtle: 0 4px 12px rgba(0,0,0,0.1);
+            --box-shdw-subtle: none; /* Eliminado efecto de sombra globalmente para cajas */
             --phase-paused-overlay: rgba(28,28,43,0.85);
             --btn-head-hover-bg: rgba(0,0,0,0.05);
             --sel-bg: transparent;
@@ -72,7 +69,7 @@
             --prog-circ-brd: #E0E0E0;
             --prog-circ-comp-bg: #F5F5F5;
             --prog-circ-act-brd: #FFFFFF;
-            --box-shdw-subtle: 0 4px 15px rgba(0,0,0,0.3);
+            --box-shdw-subtle: none; /* Eliminado efecto de sombra globalmente para cajas en dark theme */
             --phase-paused-overlay: rgba(0,0,0,0.85);
             --btn-head-hover-bg: rgba(255,255,255,0.1);
             --sel-dis-clr: rgba(255,255,255,0.5);
@@ -94,14 +91,17 @@
         .container {
             background-color:transparent;
             padding:30px 25px; border-radius:var(--brd-rad-main);
-            box-shadow:none;
+            box-shadow:none; /* Asegurar que el contenedor principal no tenga sombra */
             width:100%; max-width:480px;
             margin-bottom: 20px;
             transition:all .3s ease-in-out; z-index:1; position:relative; margin-top:0;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        .configuracion-section, .controls-section, .action-buttons-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo { width: 100%; }
+        .configuracion-section, .controls-section, .action-buttons-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo {
+            width: 100%;
+            box-shadow: none; /* Aplicar no-sombra a estas secciones también si es necesario */
+        }
 
         .configuracion-section, .estimated-time-section { margin-bottom:25px; }
         .progress-indicators { margin-bottom: 20px; }
@@ -546,11 +546,9 @@
         </div>
     </div>
     <script>
-        // Variable para los ejercicios predefinidos, se llenará desde el CSV
         let predefinedExercises = {};
-        const DEFAULT_APP_LOGO_PATH = 'icons/android-icon-192x192.png'; // RUTA A TU LOGO POR DEFECTO
+        const DEFAULT_APP_LOGO_PATH = 'icons/android-icon-192x192.png';
 
-        // FUNCIÓN PARA PARSEAR CSV (simple, maneja comillas y comas dentro de campos)
         function parseCSV(csvText) {
             const lines = csvText.trim().split(/\r?\n/);
             if (lines.length < 2) return {};
