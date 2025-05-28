@@ -19,7 +19,7 @@
             --font-display: 'Oswald', sans-serif; --font-body: 'Roboto Condensed', sans-serif;
             /* Colores originales para el tema "letras blancas / fondo gris" (tema claro por defecto) */
             --color-bg-l: #A0A0A0;
-            --color-surf-l: #A8A8A8; 
+            --color-surf-l: #A8A8A8; /* Usado por modales, etc. */
             --color-prim-acc-l: #fff; --color-txt-prim-l: #fff; --color-txt-sec-l: #fff; 
             --color-hl-l: #fff; 
             --txt-phase-bg-l: #fff; --txt-phase-end-bg-l: #fff; 
@@ -41,6 +41,7 @@
             --prog-circ-comp-bg-d: #000; 
             --prog-circ-act-brd-d: #000;
             
+            /* Variables que se asignan según el tema activo */
             --color-bg: var(--color-bg-l); --color-surf: var(--color-surf-l); 
             --color-prim-acc: var(--color-prim-acc-l); --color-txt-prim: var(--color-txt-prim-l); 
             --color-txt-sec: var(--color-txt-sec-l); --color-hl: var(--color-hl-l); 
@@ -85,17 +86,20 @@
         #userLogo { max-width:150px; max-height:80px; object-fit:contain; margin-bottom:20px; transition:all .3s ease-in-out; background-color:transparent; padding:0; border-radius:var(--brd-rad-sm); }
         
         .container { 
-            background-color:transparent; 
+            background-color:transparent; /* Asegurar que sea transparente por defecto */
             padding:30px 25px; border-radius:var(--brd-rad-main); 
-            box-shadow:none; 
+            box-shadow:none; /* Sin sombra por defecto, se puede añadir si se quiere un look "card" */
             width:100%; max-width:480px; margin-bottom:20px; 
             transition:all .3s ease-in-out; z-index:1; position:relative; margin-top:0; 
             display: flex; flex-direction: column; align-items: center;
         }
-        body:not(.full-screen-mode) .container { /* Estilos para el container cuando NO es pantalla completa */
-            background-color: var(--color-surf); /* Fondo de superficie */
-            box-shadow: var(--box-shdw-subtle); /* Sombra sutil */
+        /* Si quieres que el .container tenga un fondo de superficie y sombra siempre (excepto en FS donde el body cambia) */
+        /*
+        body:not(.full-screen-mode) .container {
+            background-color: var(--color-surf);
+            box-shadow: var(--box-shdw-subtle);
         }
+        */
 
         .configuracion-section, .controls-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo { width: 100%; }
 
@@ -104,6 +108,10 @@
         #timerDisplaySection { margin-bottom:25px; padding:20px 15px; border-radius:var(--brd-rad-main); margin-top:0; transition:background-color .4s ease-in-out, width .3s ease-in-out, padding .3s ease-in-out; position:relative; overflow:hidden; }
         #activeExerciseInfo { margin-bottom: 25px; } 
         .controls-section { margin-bottom: 0; }
+
+        /* ... (Resto del CSS sin cambios en las definiciones de color base) ... */
+        /* Es importante que el CSS restante no fuerce un background-color en .container
+           a menos que sea condicional (ej. body.dark-theme .container o dentro de @media queries) */
 
         .config-item { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--color-prim-acc); transition:border-color .3s ease; }
         .config-item:last-child { border-bottom:none; margin-bottom:0; }
@@ -182,7 +190,7 @@
             padding: 1vh 2vw; 
             box-sizing:border-box; 
             display:flex; flex-direction:column; 
-            justify-content: flex-start; 
+            justify-content: flex-start; /* Alinea al inicio, controlamos espacio con márgenes */
             align-items:center; 
             box-shadow:none; flex-grow:1; 
         }
@@ -192,22 +200,18 @@
             width:auto; height:auto; margin:0; z-index:1001; 
             background-color:transparent; padding:0; box-shadow:none; border:none; 
         }
-        
-        body.full-screen-mode.logo-visible[data-user-logo-present="true"] .container {
-            padding-top: calc(var(--logo-h-fs) + 2.5vh); 
+        body.full-screen-mode.logo-visible .container {
+            padding-top: calc(var(--logo-h-fs) + 2vh); /* Espacio para el logo fijo */
         }
-        body.full-screen-mode.logo-visible:not([data-user-logo-present="true"]) .container { 
-            padding-top: calc(var(--logo-h-fs) + 1.5vh); 
-        }
-        body.full-screen-mode:not(.logo-visible) .container { 
-            padding-top: 3vh;
+         body.full-screen-mode:not(.logo-visible) .container {
+            padding-top: 3vh; /* Mayor padding superior si no hay logo para bajar todo */
         }
 
         body.full-screen-mode .progress-indicators { 
             width: 80%; max-width: 500px;
             gap: 1vh; 
-            margin-top: 3vh; /* Ajustado para bajarlo */
-            margin-bottom: 2vh; 
+            margin-top: 2vh; /* Aumentar margen superior para bajarlo más */
+            margin-bottom: 2vh; /* Más espacio debajo de los indicadores */
         }
         body.full-screen-mode .progress-label { font-size:clamp(.7em, 1.6vh, 1em); }
         body.full-screen-mode .progress-circle { width:clamp(10px, 1.8vh, 22px); height:clamp(10px, 1.8vh, 22px); }
@@ -247,16 +251,16 @@
             margin-top: auto; width: 100%; padding: 15px 20px; 
             background-color: transparent; border-top: 1px solid transparent; 
             color: var(--color-txt-sec); font-size: .85em;
-            display: flex; flex-direction: column; align-items: stretch; 
-            gap: 0; 
+            display: flex; flex-direction: column; align-items: center; 
+            gap: 10px; /* Espacio reducido entre controles y creator-info */
             transition: all .3s ease-in-out;
         }
-        body.full-screen-mode .app-footer { padding: 10px 20px; gap:10px; }
+        body.full-screen-mode .app-footer { padding: 10px 20px; gap:8px; } /* Ajustar gap en FS si es necesario */
 
         .app-footer .footer-controls { 
             display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; 
             width: 100%; order: 1; 
-            margin-bottom: 20px; /* Mayor separación */
+            margin-bottom: 12px; /* Aumentar separación entre controles y creator-info */
         }
         .app-footer .footer-btn { font-family: var(--font-body); font-weight: 400; padding: 8px 10px; font-size: .75em; background-color: transparent; border: 1px solid var(--color-txt-sec); color: var(--color-txt-sec); border-radius: var(--brd-rad-sm); cursor: pointer; transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: unset; }
         .app-footer .footer-btn i.feather { width: .8em; height: .8em; stroke-width: 2; stroke: currentColor; }
@@ -264,12 +268,9 @@
         .app-footer .footer-btn:active { transform: scale(.97); }
 
         .app-footer .creator-info { 
-            margin: 0; width: auto; order: 2; 
-            display: flex; flex-direction: column; 
-            align-items: flex-end; /* Alinea contenido interno a la derecha */
-            align-self: flex-end; /* Alinea el bloque a la derecha del footer */
-            gap: 4px; 
-            text-align: right; 
+            margin: 0; text-align: center; width: 100%; order: 2; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            gap: 3px; /* Espacio pequeño entre icono, marca y autor */
         }
         .app-footer .creator-info .footer-app-icon { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
         .app-footer .creator-info .footer-brand-name { font-family: var(--font-display); font-size: 1em; font-weight: 700; color: var(--color-txt-prim); letter-spacing: 0.5px; margin: 0; }
@@ -281,6 +282,7 @@
         body:not(.full-screen-mode) .footer-controls #saveRoutineBtn.hidden-during-run,
         body:not(.full-screen-mode) .footer-controls #loadRoutineBtn.hidden-during-run { display:none !important; }
         body.full-screen-mode .footer-controls #showExplanationBtn, body.full-screen-mode .footer-controls #manageNamesBtn, body.full-screen-mode .footer-controls #saveRoutineBtn, body.full-screen-mode .footer-controls #loadRoutineBtn { display:none !important; }
+
 
         /* Modales y resto de estilos responsivos no FS */
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
@@ -390,10 +392,9 @@
 
         @media (orientation:landscape) and (max-height:550px) and (min-width:568px) { 
             body.full-screen-mode .container { padding: 0.5vh 1vw; justify-content: space-around; gap: 0.2vh; } 
-            body.full-screen-mode.logo-visible[data-user-logo-present="true"] .container { padding-top: calc(var(--logo-h-fs) + 1vh); } 
-            body.full-screen-mode.logo-visible:not([data-user-logo-present="true"]) .container { padding-top: calc(var(--logo-h-fs) + 0.5vh); }
+            body.full-screen-mode.logo-visible .container { padding-top: calc(var(--logo-h-fs, 40px) + 0.5vh); } 
             body.full-screen-mode #userLogo { max-width:70px !important; --logo-h-fs:35px !important; top:0.5vh !important; left:0.5vw !important; }
-            body.full-screen-mode .progress-indicators { flex-direction:row; justify-content:center; align-items:center; gap:10px; margin-bottom:0.3vh !important; margin-top: 1vh !important; width: 95%; max-width: none; }
+            body.full-screen-mode .progress-indicators { flex-direction:row; justify-content:center; align-items:center; gap:10px; margin-bottom:0.3vh !important; margin-top: 0.8vh !important; width: 95%; max-width: none; }
             body.full-screen-mode .progress-section { gap:4px; }
             body.full-screen-mode .progress-label { font-size:clamp(.5em, 1.3vh, .8em) !important; }
             body.full-screen-mode .progress-circle { width:clamp(8px, 1.5vh, 13px) !important; height:clamp(8px, 1.5vh, 13px) !important; }
@@ -646,32 +647,28 @@
                         logoEl.alt = "Logo de usuario";
                         remLogoBtn.classList.remove('hidden');
                         uploadLogoBtn.classList.add('hidden');
-                        bodyEl.setAttribute('data-user-logo-present', 'true');
                     } else {
                         logoEl.src = DEFAULT_APP_LOGO_PATH; 
                         logoEl.alt = "Logo Chrono HIIT";
                         remLogoBtn.classList.add('hidden');
                         uploadLogoBtn.classList.remove('hidden');
-                        bodyEl.removeAttribute('data-user-logo-present');
                     }
                     logoEl.classList.remove('hidden');
                     logoEl.style.display = 'block';
-                    bodyEl.classList.add('logo-visible'); // Siempre habrá un logo, sea de usuario o por defecto
+                    bodyEl.classList.add('logo-visible');
                     if (typeof feather !== 'undefined') feather.replace();
                 } catch (err) {
                     console.error('Err load logo:', err);
-                    logoEl.src = DEFAULT_APP_LOGO_PATH; // Fallback si DB falla
+                    logoEl.src = DEFAULT_APP_LOGO_PATH;
                     logoEl.alt = "Logo Chrono HIIT";
                     logoEl.classList.remove('hidden');
                     logoEl.style.display = 'block';
                     remLogoBtn.classList.add('hidden');
                     uploadLogoBtn.classList.remove('hidden');
                     bodyEl.classList.add('logo-visible');
-                    bodyEl.removeAttribute('data-user-logo-present');
                     if (typeof feather !== 'undefined') feather.replace();
                 }
             }
-
             function handleLogoUpload(e) { const f = e.target.files[0]; if (f && f.type.startsWith('image/')) { const r = new FileReader(); r.onload = async ev => { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv',LOGO_K, ev.target.result); loadLogo(); } catch (err) { console.error('Err save logo:', err); alert('Err save logo.'); } }; r.readAsDataURL(f); } else if (f) alert('Use PNG/JPG.'); }
             async function remLogo() { try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete',LOGO_K); loadLogo(); } catch (err) { console.error('Err rem logo:', err); alert('Error al quitar el logo.'); } }
 
