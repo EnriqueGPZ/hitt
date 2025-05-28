@@ -90,18 +90,18 @@
             padding:30px 25px; border-radius:var(--brd-rad-main);
             box-shadow:none;
             width:100%; max-width:480px;
-            margin-bottom: 20px; /* MODIFICADO: Reducido ya que el footer es más pequeño */
+            margin-bottom: 20px;
             transition:all .3s ease-in-out; z-index:1; position:relative; margin-top:0;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        .configuracion-section, .controls-section, .action-buttons-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo { width: 100%; } /* AÑADIDO: .action-buttons-section */
+        .configuracion-section, .controls-section, .action-buttons-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo { width: 100%; }
 
         .configuracion-section, .estimated-time-section { margin-bottom:25px; }
         .progress-indicators { margin-bottom: 20px; }
         #timerDisplaySection { margin-bottom:25px; padding:20px 15px; border-radius:var(--brd-rad-main); margin-top:0; transition:background-color .4s ease-in-out, width .3s ease-in-out, padding .3s ease-in-out; position:relative; overflow:hidden; }
         #activeExerciseInfo { margin-bottom: 25px; }
-        .controls-section { margin-bottom: 0; } /* MODIFICADO: Se mantiene sin margen inferior */
+        .controls-section { margin-bottom: 0; }
 
         .config-item { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--color-prim-acc); transition:border-color .3s ease; }
         .config-item:last-child { border-bottom:none; margin-bottom:0; }
@@ -144,17 +144,16 @@
         .controls-section button:active { transform:translateY(0px) scale(.98); box-shadow:0 1px 3px color-mix(in srgb, var(--color-txt-prim) 5%, transparent); }
         .controls-section #startPauseResumeBtn.paused { border-color:var(--color-txt-prim); color:var(--color-txt-prim); background-color:transparent; }
 
-        /* AÑADIDO: Estilos para la nueva sección de botones de acción */
         .action-buttons-section {
             display: flex;
             gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
             width: 100%;
-            margin-top: 25px; /* Separación de los controles del cronómetro */
-            margin-bottom: 0; /* No necesita margen inferior aquí, el .container lo maneja */
+            margin-top: 25px;
+            margin-bottom: 0;
         }
-        .action-buttons-section .action-btn { /* Renombrado de .footer-btn a .action-btn */
+        .action-buttons-section .action-btn {
             font-family: var(--font-body); font-weight: 400; padding: 8px 10px; font-size: .75em;
             background-color: transparent; border: 1px solid var(--color-txt-sec);
             color: var(--color-txt-sec); border-radius: var(--brd-rad-sm); cursor: pointer;
@@ -169,7 +168,6 @@
         .action-buttons-section .action-btn:active { transform: scale(.97); }
 
 
-        /* ESTILOS PARA INFO DE EJERCICIOS (SOLO EN FULLSCREEN) */
         .active-exercise-info { display: none; justify-content: space-around; gap: 2vw; width: 100%; max-width: 700px; margin-top: 1.5vh; margin-bottom: 1.5vh; }
         .exercise-info-card { background-color: transparent; padding: 1vh 0.5vw; border-radius: var(--brd-rad-sm); flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 140px; max-width: 300px; }
         .exercise-info-card h3 { font-family: var(--font-body); font-size: clamp(0.9em, 2vh, 1.3em); font-weight: 700; color: var(--color-txt-prim); margin-top: 0; margin-bottom: 0.8vh; text-transform: uppercase; transition: color .3s ease; text-shadow: 0 0 4px rgba(0,0,0,0.25); }
@@ -193,13 +191,12 @@
         #timerDisplaySection:not([class*="bg-"]):not(body.full-screen-mode #timerDisplaySection) #cronometroTotal { color:var(--color-txt-sec); }
         .hidden { display:none !important; }
 
-        /* --- FULLSCREEN LAYOUT --- */
         body.full-screen-mode { padding:0; overflow:hidden; display:flex; flex-direction:column; }
         body.full-screen-mode .page-main-title { display:none; }
         body.full-screen-mode #configuracionSection,
         body.full-screen-mode #estimatedTimeSection,
         body.full-screen-mode #exerciseNamesContainer,
-        body.full-screen-mode .action-buttons-section { display:none !important; } /* AÑADIDO: Ocultar nueva sección en FS */
+        body.full-screen-mode .action-buttons-section { display:none !important; }
 
         body.full-screen-mode .container {
             max-width:100%; width:100%; height:100%; margin:0; border-radius:0; border:none;
@@ -263,15 +260,14 @@
         }
         body.full-screen-mode .controls-section button { padding:1.2vh 1.8vw; font-size:clamp(.8em, 2vh, 1.2em); gap:.8vw; flex-grow:1; }
 
-        /* --- ESTILOS DEL FOOTER MEJORADOS --- */
         .app-footer {
             margin-top: auto; width: 100%;
-            padding: 15px 20px; /* MODIFICADO: Padding más simple */
+            padding: 15px 20px;
             background-color: transparent;
             border-top: 1px solid var(--color-prim-acc);
             color: var(--color-txt-sec); font-size: .85em;
             display: flex; flex-direction: column; align-items: center;
-            gap: 5px; /* MODIFICADO: Espacio solo para info del creador */
+            gap: 5px;
             transition: all .3s ease-in-out;
         }
         body.full-screen-mode .app-footer {
@@ -279,23 +275,16 @@
             gap:5px;
         }
 
-        /* ELIMINADO: .app-footer .footer-controls y sus estilos ya que se movió */
-
         .app-footer .creator-info {
-            margin: 0; text-align: center; width: 100%; /* order: 2; Ya no es necesario */
+            margin: 0; text-align: center; width: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             gap: 3px;
         }
-        .app-footer .creator-info .footer-app-icon { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
+        /* ELIMINADO: .app-footer .creator-info .footer-app-icon */
         .app-footer .creator-info .footer-brand-name { font-family: var(--font-display); font-size: 1em; font-weight: 700; color: var(--color-txt-prim); letter-spacing: 0.5px; margin: 0; }
         .app-footer .creator-info .footer-author-name { font-size: 0.85em; color: var(--color-txt-sec); margin: 0; }
         .app-footer .creator-info .footer-author-name .seo-name { font-weight: 700; color: var(--color-txt-prim); }
 
-        /* MODIFICADO/ELIMINADO: Reglas de ocultación de botones del footer ya no aplican de la misma manera */
-        /* Si se quiere ocultar .action-buttons-section durante el run, se necesitaría una nueva lógica similar a hidden-during-run */
-
-
-        /* Modales y resto de estilos responsivos no FS */
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
         .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
@@ -389,7 +378,7 @@
             body:not(.full-screen-mode) .controls-section { flex-direction:column; align-items:stretch; gap:8px; }
             body:not(.full-screen-mode) .controls-section button { width:100%; }
             body:not(.full-screen-mode) .page-main-title { font-size:1.6em; }
-            .action-buttons-section .action-btn { /* MODIFICADO: Aplicar a .action-btn */
+            .action-buttons-section .action-btn {
                 flex-basis: calc(50% - 4px);
             }
         }
@@ -486,7 +475,6 @@
             <button id="finishBtn" class="hidden"><i data-feather="x-circle"></i><span class="btn-text">Finalizar</span></button>
         </div>
 
-        <!-- ========== INICIO: BOTONERA DE ACCIONES MOVIDA AQUÍ ========== -->
         <div class="action-buttons-section">
             <input type="file" id="logoUploadInput" accept="image/png, image/jpeg" class="hidden">
             <button id="uploadLogoBtn" class="action-btn" title="Subir Logo"><i data-feather="upload"></i><span class="btn-text">Subir Logo</span></button>
@@ -499,14 +487,12 @@
             <button id="manageNamesBtn" class="action-btn" title="Gestionar Nombres Guardados"><i data-feather="edit-3"></i><span class="btn-text">Nombres</span></button>
             <button id="showExplanationBtn" class="action-btn" title="Mostrar Explicación de Ejercicios"><i data-feather="layout"></i><span class="btn-text">Ver Ej.</span></button>
         </div>
-        <!-- ========== FIN: BOTONERA DE ACCIONES MOVIDA AQUÍ ========== -->
 
-    </div> <!-- Fin de .container -->
+    </div>
 
     <footer class="app-footer">
-        <!-- ELIMINADO: <div class="footer-controls">...</div> -->
         <div class="creator-info">
-            <img src="icons/image.webp" alt="Icono HIIT.ES" class="footer-app-icon">
+            <!-- ELIMINADO: <img src="icons/image.webp" alt="Icono HIIT.ES" class="footer-app-icon"> -->
             <p class="footer-brand-name">HIIT.ES</p>
             <p class="footer-author-name">Creado por <span class="seo-name">Enrique Gil</span></p>
         </div>
@@ -629,12 +615,12 @@
 
             const numEjSel = getEl('numEjercicios'), numSerSel = getEl('numSeries'), tEjSel = getEl('tiempoEjercicio'), dEjSel = getEl('descansoEjercicio'), dSerSel = getEl('descansoSerie');
             const allSels = [numEjSel, numSerSel, tEjSel, dEjSel, dSerSel];
-            const startBtn = getEl('startPauseResumeBtn'), finishBtn = getEl('finishBtn'), restartEjBtn = getEl('restartExerciseBtn'), fsBtn = getEl('toggleFullScreenBtn'), themeBtn = getEl('toggleThemeBtn'), cfgSec = getEl('configuracionSection'), estTimeEl = getEl('estimatedTimeSection'), estTimeDispEl = getEl('estimatedTimeDisplay'), timerDispSec = getEl('timerDisplaySection'), estadoEl = getEl('estadoActual'), cronoActEl = getEl('cronometroActual'), cronoTotalEl = getEl('cronometroTotal'), ejProgEl = getEl('exerciseProgress'), serProgEl = getEl('seriesProgress'), bodyEl = document.body, contEl = qS('.container'), /* footerEl = qS('.app-footer'), */ ejNamesContEl = getEl('exerciseNamesContainer'), curEjNameDispEl = getEl('currentExerciseNameDisplay'), logoEl = getEl('userLogo'), logoUploadIn = getEl('logoUploadInput'), uploadLogoBtn = getEl('uploadLogoBtn'), remLogoBtn = getEl('removeLogoBtn'), exportBtn = getEl('exportSettingsBtn'), importIn = getEl('importSettingsInput'), importBtn = getEl('importSettingsBtn'), progIndEl = qS('.progress-indicators');
+            const startBtn = getEl('startPauseResumeBtn'), finishBtn = getEl('finishBtn'), restartEjBtn = getEl('restartExerciseBtn'), fsBtn = getEl('toggleFullScreenBtn'), themeBtn = getEl('toggleThemeBtn'), cfgSec = getEl('configuracionSection'), estTimeEl = getEl('estimatedTimeSection'), estTimeDispEl = getEl('estimatedTimeDisplay'), timerDispSec = getEl('timerDisplaySection'), estadoEl = getEl('estadoActual'), cronoActEl = getEl('cronometroActual'), cronoTotalEl = getEl('cronometroTotal'), ejProgEl = getEl('exerciseProgress'), serProgEl = getEl('seriesProgress'), bodyEl = document.body, contEl = qS('.container'), ejNamesContEl = getEl('exerciseNamesContainer'), curEjNameDispEl = getEl('currentExerciseNameDisplay'), logoEl = getEl('userLogo'), logoUploadIn = getEl('logoUploadInput'), uploadLogoBtn = getEl('uploadLogoBtn'), remLogoBtn = getEl('removeLogoBtn'), exportBtn = getEl('exportSettingsBtn'), importIn = getEl('importSettingsInput'), importBtn = getEl('importSettingsBtn'), progIndEl = qS('.progress-indicators');
             const showExplBtn = getEl('showExplanationBtn'), explScreenEl = getEl('explanationScreen'), closeExplBtn = getEl('closeExplanationBtn'), explGridEl = getEl('explanationGrid'), toggleExplFSBtn = getEl('toggleExplanationFSBtn');
             const manageNamesBtn = getEl('manageNamesBtn'), manageNamesScreenEl = getEl('manageNamesScreen'), closeManageNamesBtn = getEl('closeManageNamesBtn'), manageNamesListEl = getEl('manageNamesList'), noNamesMsgEl = getEl('noNamesMessage');
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
             const activeExerciseInfoEl = getEl('activeExerciseInfo'), currentExerciseImageEl = getEl('currentExerciseImage'), currentExerciseCardNameEl = getEl('currentExerciseCardName'), currentExerciseCardTitleEl = getEl('currentExerciseCardTitle'), nextExerciseImageEl = getEl('nextExerciseImage'), nextExerciseCardNameEl = getEl('nextExerciseCardName'), nextExerciseCardEl = activeExerciseInfoEl ? activeExerciseInfoEl.querySelector('.next-exercise-card') : null;
-            const actionButtonsSection = qS('.action-buttons-section'); // AÑADIDO: Referencia a la nueva sección
+            const actionButtonsSection = qS('.action-buttons-section');
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { rootSt = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootSt.getPropertyValue('--phase-prep').trim(), ejercicio: rootSt.getPropertyValue('--phase-ex').trim(), descanso: rootSt.getPropertyValue('--phase-rest').trim(), descanso_ejercicio: rootSt.getPropertyValue('--phase-rest').trim(), descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), finalizado: rootSt.getPropertyValue('--phase-end').trim() }; }
@@ -793,8 +779,7 @@
                 if(restartEjBtn){ const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show); }
                 if(st==='finished'){curPhase='finalizado';rePrep=false;}
                 if(progIndEl){ const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1); let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide); }
-                // AÑADIDO: Controlar visibilidad de la nueva sección de botones
-                if(actionButtonsSection) actionButtonsSection.classList.toggle('hidden', isFs || (st === 'running' || st === 'paused')); // Ocultar si está en FS o durante el crono
+                if(actionButtonsSection) actionButtonsSection.classList.toggle('hidden', isFs || (st === 'running' || st === 'paused'));
                 updUIDisp();
             }
             function phaseTick() { if (paused && !rePrep) return; if (rePrep) { if (phaseSecs <= RE_PREP_TIME && phaseSecs >= 1 && phaseSecs <= 3) playBeep(beepMidBuf); } else if (curPhase === 'ejercicio' && running) { if (cfg.tiempoEjercicio >= 20 && phaseSecs === Math.ceil(cfg.tiempoEjercicio / 2) && phaseSecs > 5) playBeep(beepMidBuf); if (phaseSecs <= 5 && phaseSecs >= 1) playBeep(beepMidBuf); } phaseSecs--; updUIDisp(); if (phaseSecs < 0) { if (rePrep) { rePrep = false; playBeep(beepStartBuf); startPhase('ejercicio', cfg.tiempoEjercicio); } else { if (running) { if (curPhase === 'ejercicio') { updProgCircles('exercise', curEj, true); if (curEj === cfg.numEjercicios) updProgCircles('series', curSer, true); } playBeep(beepEndBuf); } nextPhase(); } } }
