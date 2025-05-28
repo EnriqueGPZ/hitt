@@ -29,17 +29,10 @@
             --prog-circ-comp-bg-l: #fff;
             --prog-circ-act-brd-l: #fff;
 
-            /* Colores para el tema oscuro (letras negras / fondo gris claro) */
-            --color-bg-d: #BDBDBD;
-            --color-surf-d: #C5C5C5;
-            --color-prim-acc-d: #000; --color-txt-prim-d: #000; --color-txt-sec-d: #000;
-            --color-hl-d: #000;
-            --txt-phase-bg-d: #000; --txt-phase-end-bg-d: #000;
-            --btn-head-brd-d: #000; --btn-head-clr-d: #000;
-            --sel-brd-d: #000;
-            --prog-circ-brd-d: #000;
-            --prog-circ-comp-bg-d: #000;
-            --prog-circ-act-brd-d: #000;
+            /* Colores para el tema oscuro */
+            --color-bg-d: #2D2D2D;
+            --color-surf-d: #3C3C3C;
+            /* Las siguientes variables de texto para dark theme se definen en body.dark-theme */
 
             /* Variables que se asignan según el tema activo */
             --color-bg: var(--color-bg-l); --color-surf: var(--color-surf-l);
@@ -59,17 +52,24 @@
             --brd-rad-main: 10px; --brd-rad-sm: 6px; --logo-h-fs: 50px;
         }
         body.dark-theme {
-            --color-bg: var(--color-bg-d); --color-surf: var(--color-surf-d);
-            --color-prim-acc: var(--color-prim-acc-d); --color-txt-prim: var(--color-txt-prim-d);
-            --color-txt-sec: var(--color-txt-sec-d); --color-hl: var(--color-hl-d);
-            --txt-phase-bg: var(--txt-phase-bg-d); --txt-phase-end-bg: var(--txt-phase-end-bg-d);
-            --btn-head-brd: var(--btn-head-brd-d); --btn-head-clr: var(--btn-head-clr-d);
-            --sel-brd: var(--sel-brd-d); --prog-circ-brd: var(--prog-circ-brd-d);
-            --prog-circ-comp-bg: var(--prog-circ-comp-bg-d); --prog-circ-act-brd: var(--prog-circ-act-brd-d);
+            --color-bg: var(--color-bg-d);
+            --color-surf: var(--color-surf-d);
+            --color-prim-acc: #E0E0E0;
+            --color-txt-prim: #F5F5F5;
+            --color-txt-sec: #B0B0B0;
+            --color-hl: #FFFFFF;
+            --txt-phase-bg: #F5F5F5;
+            --txt-phase-end-bg: #F5F5F5;
+            --btn-head-brd: #E0E0E0;
+            --btn-head-clr: #F5F5F5;
+            --sel-brd: #E0E0E0;
+            --prog-circ-brd: #E0E0E0;
+            --prog-circ-comp-bg: #F5F5F5;
+            --prog-circ-act-brd: #FFFFFF;
             --box-shdw-subtle: 0 4px 15px rgba(0,0,0,0.3);
             --phase-paused-overlay: rgba(0,0,0,0.85);
-            --btn-head-hover-bg: rgba(0,0,0,0.1);
-            --sel-dis-clr: rgba(0,0,0,0.5);
+            --btn-head-hover-bg: rgba(255,255,255,0.1);
+            --sel-dis-clr: rgba(255,255,255,0.5);
         }
         html, body { height:100%; margin:0; }
         body { font-family:var(--font-body); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100%; background-color:var(--color-bg); color:var(--color-txt-prim); padding:20px; box-sizing:border-box; text-align:center; transition:background-color .4s ease-in-out, padding .3s ease-in-out, color .3s ease; position:relative; }
@@ -110,7 +110,9 @@
         .config-item select:focus { border-color:var(--color-hl); outline:none; box-shadow:0 0 0 2px color-mix(in srgb, var(--color-hl) 20%, transparent); }
         .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); }
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #fff); color:var(--color-txt-prim); }
-        body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #000); }
+        body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
+
+
         .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); }
         .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
@@ -119,11 +121,9 @@
         .exercise-name-item input[type="text"]:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; }
 
         .exercise-suggestions-dropdown { position: absolute; background-color: var(--color-surf); border: 1px solid var(--sel-brd); border-top: none; border-radius: 0 0 var(--brd-rad-sm) var(--brd-rad-sm); max-height: 150px; overflow-y: auto; z-index: 1050; box-shadow: var(--box-shdw-subtle); box-sizing: border-box; }
-        body.dark-theme .exercise-suggestions-dropdown { background-color: var(--color-surf-d); border-color: var(--sel-brd-d); }
         .exercise-suggestions-dropdown div { padding: 8px 10px; cursor: pointer; font-size: 0.9em; color: var(--color-txt-prim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        body.dark-theme .exercise-suggestions-dropdown div { color: var(--color-txt-prim-d); }
         .exercise-suggestions-dropdown div:hover, .exercise-suggestions-dropdown div.suggestion-active { background-color: color-mix(in srgb, var(--color-hl) 20%, transparent); }
-        body.dark-theme .exercise-suggestions-dropdown div:hover, body.dark-theme .exercise-suggestions-dropdown div.suggestion-active { background-color: color-mix(in srgb, var(--color-hl-d) 20%, transparent); }
+
 
         .estimated-time-section { padding:12px 18px; background-color:var(--est-time-bg); border-radius:var(--brd-rad-sm); font-size:.95em; color:var(--color-txt-sec); margin-top:10px; transition:background-color .3s ease, color .3s ease; }
         .estimated-time-section p { margin:0; font-weight:400; }
@@ -280,7 +280,6 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             gap: 3px;
         }
-        /* ELIMINADO: .app-footer .creator-info .footer-app-icon */
         .app-footer .creator-info .footer-brand-name { font-family: var(--font-display); font-size: 1em; font-weight: 700; color: var(--color-txt-prim); letter-spacing: 0.5px; margin: 0; }
         .app-footer .creator-info .footer-author-name { font-size: 0.85em; color: var(--color-txt-sec); margin: 0; }
         .app-footer .creator-info .footer-author-name .seo-name { font-weight: 700; color: var(--color-txt-prim); }
@@ -288,16 +287,13 @@
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
         .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
-        body.dark-theme .modal-content { background-color:var(--color-surf-d); color:var(--color-txt-prim-d); }
         .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--color-prim-acc); padding-bottom:15px; }
         .modal-header h2 { font-family:var(--font-display); margin:0; font-size:1.8em; flex-grow: 1; }
         .modal-header-buttons { display:flex; gap: 10px; align-items: center; }
         .modal-fs-btn, .modal-close-btn { background:transparent; border:none; color:var(--color-txt-prim); cursor:pointer; padding:5px; line-height:0; }
-        body.dark-theme .modal-fs-btn, body.dark-theme .modal-close-btn { color:var(--color-txt-prim-d); }
         .modal-fs-btn i.feather, .modal-close-btn i.feather { width:1.3em; height:1.3em; }
         #explanationScreen.modal-fullscreen-active .modal-content { max-width:100vw; max-height:100vh; width:100vw; height:100vh; border-radius:0; padding:20px; box-sizing: border-box; display:flex; flex-direction:column; }
         #explanationScreen.modal-fullscreen-active .modal-header { position: sticky; top: 0; z-index: 10; background-color: var(--color-surf); margin-bottom: 15px; }
-        body.dark-theme #explanationScreen.modal-fullscreen-active .modal-header { background-color: var(--color-surf-d); }
         #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; align-content: flex-start; flex-grow: 1; overflow-y: auto; padding-top: 5px; }
         #explanationScreen.modal-fullscreen-active .explanation-item { min-height:300px; padding:20px; justify-content:flex-start; }
         #explanationScreen.modal-fullscreen-active .explanation-item-number { font-size:3.0em; margin-bottom:15px; }
@@ -305,9 +301,7 @@
         #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:200px; margin-bottom: 15px; }
         .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:15px; flex-grow:1; }
         .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; min-height:180px; }
-        body.dark-theme .explanation-item { background-color:var(--color-bg-d); color:var(--color-txt-prim-d); border-color:var(--color-prim-acc-d); }
         .explanation-item-number { font-family:var(--font-display); font-size:2em; font-weight:700; color:var(--color-hl); margin-bottom:8px; }
-        body.dark-theme .explanation-item-number { color:var(--color-hl-d); }
         .explanation-item-name { font-family:var(--font-body); font-size:1.1em; font-weight:700; word-break:break-word; margin-bottom:15px; }
         .explanation-item-image-container { width:100%; height:120px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; background-color:transparent; border-radius: var(--brd-rad-sm); overflow: hidden;}
         .explanation-item-image { max-width:100%; max-height:100%; object-fit:contain; }
@@ -492,7 +486,6 @@
 
     <footer class="app-footer">
         <div class="creator-info">
-            <!-- ELIMINADO: <img src="icons/image.webp" alt="Icono HIIT.ES" class="footer-app-icon"> -->
             <p class="footer-brand-name">HIIT.ES</p>
             <p class="footer-author-name">Creado por <span class="seo-name">Enrique Gil</span></p>
         </div>
