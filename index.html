@@ -17,22 +17,26 @@
     <style>
         :root {
             --font-display: 'Oswald', sans-serif; --font-body: 'Roboto Condensed', sans-serif;
-            /* Colores originales para el tema "letras blancas / fondo gris" (tema claro por defecto) */
-            --color-bg-l: #A0A0A0;
-            --color-surf-l: #A8A8A8; /* Usado por modales, etc. */
-            --color-prim-acc-l: #fff; --color-txt-prim-l: #fff; --color-txt-sec-l: #fff;
-            --color-hl-l: #fff;
-            --txt-phase-bg-l: #fff; --txt-phase-end-bg-l: #fff;
-            --btn-head-brd-l: #fff; --btn-head-clr-l: #fff;
-            --sel-brd-l: #fff;
-            --prog-circ-brd-l: #fff;
-            --prog-circ-comp-bg-l: #fff;
-            --prog-circ-act-brd-l: #fff;
 
-            /* Colores para el tema oscuro */
+            /* --- TEMA CLARO --- */
+            --color-bg-l: #A0A0A0;
+            --color-surf-l: #A8A8A8;
+            --color-prim-acc-l: #333333;
+            --color-txt-prim-l: #121212;
+            --color-txt-sec-l: #555555;
+            --color-hl-l: #000000;
+            --txt-phase-bg-l: #121212;
+            --txt-phase-end-bg-l: #121212;
+            --btn-head-brd-l: #333333;
+            --btn-head-clr-l: #121212;
+            --sel-brd-l: #333333;
+            --prog-circ-brd-l: #333333;
+            --prog-circ-comp-bg-l: #121212;
+            --prog-circ-act-brd-l: #000000;
+
+            /* --- TEMA OSCURO --- */
             --color-bg-d: #2D2D2D;
             --color-surf-d: #3C3C3C;
-            /* Las siguientes variables de texto para dark theme se definen en body.dark-theme */
 
             /* Variables que se asignan según el tema activo */
             --color-bg: var(--color-bg-l); --color-surf: var(--color-surf-l);
@@ -45,8 +49,10 @@
 
             --box-shdw-subtle: 0 4px 12px rgba(0,0,0,0.1);
             --phase-paused-overlay: rgba(28,28,43,0.85);
-            --btn-head-hover-bg: rgba(255,255,255,0.1);
-            --sel-bg: transparent; --sel-dis-bg: transparent; --sel-dis-clr: rgba(255,255,255,0.5);
+            --btn-head-hover-bg: rgba(0,0,0,0.05);
+            --sel-bg: transparent;
+            --sel-dis-bg: transparent;
+            --sel-dis-clr: rgba(0,0,0,0.4);
             --est-time-bg: transparent;
             --phase-prep: #00a8ff; --phase-ex: #2ed573; --phase-rest: #ffa502; --phase-end: #575fcf;
             --brd-rad-main: 10px; --brd-rad-sm: 6px; --logo-h-fs: 50px;
@@ -107,9 +113,14 @@
         .config-item:last-child { border-bottom:none; margin-bottom:0; }
         .config-item label { font-weight:400; margin-right:15px; flex-basis:60%; text-align:left; color:var(--color-txt-sec); font-size:1em; word-break:break-word; transition:color .3s ease; }
         .config-item select { font-family:var(--font-body); padding:10px 12px; border-radius:var(--brd-rad-sm); border:1px solid var(--sel-brd); background-color:var(--sel-bg); color:var(--color-txt-prim); flex-basis:35%; font-size:1em; transition:border-color .2s ease, background-color .3s ease, color .3s ease; }
-        .config-item select:focus { border-color:var(--color-hl); outline:none; box-shadow:0 0 0 2px color-mix(in srgb, var(--color-hl) 20%, transparent); }
+        .config-item select:focus {
+            border-color:var(--color-hl);
+            outline:none;
+            border-width: 2px;
+            padding: 9px 11px;
+        }
         .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); }
-        .config-item select option { background-color:color-mix(in srgb, var(--color-bg) 80%, #fff); color:var(--color-txt-prim); }
+        .config-item select option { background-color:color-mix(in srgb, var(--color-bg-l) 80%, #fff); color:var(--color-txt-prim-l); }
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
 
 
@@ -117,7 +128,12 @@
         .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
         .exercise-name-item input[type="text"] { flex-grow:1; padding:8px 10px; border-radius:var(--brd-rad-sm); border:1px solid var(--sel-brd); background-color:var(--sel-bg); color:var(--color-txt-prim); font-family:var(--font-body); font-size:.9em; }
-        .exercise-name-item input[type="text"]:focus { border-color:var(--color-hl); outline:none; box-shadow:0 0 0 2px color-mix(in srgb, var(--color-hl) 20%, transparent); }
+        .exercise-name-item input[type="text"]:focus {
+            border-color:var(--color-hl);
+            outline:none;
+            border-width: 2px;
+            padding: 7px 9px;
+        }
         .exercise-name-item input[type="text"]:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; }
 
         .exercise-suggestions-dropdown { position: absolute; background-color: var(--color-surf); border: 1px solid var(--sel-brd); border-top: none; border-radius: 0 0 var(--brd-rad-sm) var(--brd-rad-sm); max-height: 150px; overflow-y: auto; z-index: 1050; box-shadow: var(--box-shdw-subtle); box-sizing: border-box; }
