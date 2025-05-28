@@ -112,14 +112,43 @@
         .config-item { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--color-prim-acc); transition:border-color .3s ease; }
         .config-item:last-child { border-bottom:none; margin-bottom:0; }
         .config-item label { font-weight:400; margin-right:15px; flex-basis:60%; text-align:left; color:var(--color-txt-sec); font-size:1em; word-break:break-word; transition:color .3s ease; }
-        .config-item select { font-family:var(--font-body); padding:10px 12px; border-radius:var(--brd-rad-sm); border:1px solid var(--sel-brd); background-color:var(--sel-bg); color:var(--color-txt-prim); flex-basis:35%; font-size:1em; transition:border-color .2s ease, background-color .3s ease, color .3s ease; }
+        
+        /* ESTILOS MODIFICADOS PARA SELECT */
+        .config-item select {
+            font-family:var(--font-body);
+            padding:8px 10px; /* Ajustado para coincidir con input de ejercicio */
+            border-radius:var(--brd-rad-sm);
+            border:1px solid var(--sel-brd);
+            background-color:var(--sel-bg); /* Fondo transparente */
+            color:var(--color-txt-prim);
+            flex-basis:35%;
+            font-size:1em; /* El input de ejercicio es 0.9em, esto se puede unificar si se desea */
+            transition:border-color .2s ease, background-color .3s ease, color .3s ease;
+            appearance: none; /* Elimina estilo nativo del navegador */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            /* Para añadir una flecha personalizada (opcional, pero recomendado para usabilidad) */
+            /* Si se añade flecha, ajustar padding-right */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22%23333%22%3E%3Cpath%20d%3D%22M215.39%2C92.61l-80%2C80a8%2C8%2C0%2C0%2C1-11.32%2C0l-80-80A8%2C8%2C0%2C1%2C1%2C55.39%2C81.39L128%2C154.06l72.61-72.67a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32Z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 16px 16px;
+            padding-right: 30px; /* Espacio para la flecha */
+        }
+        body.dark-theme .config-item select {
+             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22%23E0E0E0%22%3E%3Cpath%20d%3D%22M215.39%2C92.61l-80%2C80a8%2C8%2C0%2C0%2C1-11.32%2C0l-80-80A8%2C8%2C0%2C1%2C1%2C55.39%2C81.39L128%2C154.06l72.61-72.67a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32Z%22%2F%3E%3C%2Fsvg%3E');
+        }
+
         .config-item select:focus {
             border-color:var(--color-hl);
             outline:none;
             border-width: 2px;
-            padding: 9px 11px;
+            padding: 7px 9px; /* Ajustado para compensar el borde más grueso */
+            padding-right: 29px; /* Ajustar padding-right también en focus si hay flecha */
         }
-        .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); }
+        /* FIN DE ESTILOS MODIFICADOS PARA SELECT */
+
+        .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); background-image: none; }
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg-l) 80%, #fff); color:var(--color-txt-prim-l); }
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
 
@@ -127,7 +156,16 @@
         .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); }
         .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
-        .exercise-name-item input[type="text"] { flex-grow:1; padding:8px 10px; border-radius:var(--brd-rad-sm); border:1px solid var(--sel-brd); background-color:var(--sel-bg); color:var(--color-txt-prim); font-family:var(--font-body); font-size:.9em; }
+        .exercise-name-item input[type="text"] {
+            flex-grow:1;
+            padding:8px 10px;
+            border-radius:var(--brd-rad-sm);
+            border:1px solid var(--sel-brd);
+            background-color:var(--sel-bg);
+            color:var(--color-txt-prim);
+            font-family:var(--font-body);
+            font-size:.9em;
+        }
         .exercise-name-item input[type="text"]:focus {
             border-color:var(--color-hl);
             outline:none;
