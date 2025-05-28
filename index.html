@@ -113,27 +113,24 @@
         .config-item:last-child { border-bottom:none; margin-bottom:0; }
         .config-item label { font-weight:400; margin-right:15px; flex-basis:60%; text-align:left; color:var(--color-txt-sec); font-size:1em; word-break:break-word; transition:color .3s ease; }
         
-        /* ESTILOS MODIFICADOS PARA SELECT */
         .config-item select {
             font-family:var(--font-body);
-            padding:8px 10px; /* Ajustado para coincidir con input de ejercicio */
+            padding:8px 10px; 
             border-radius:var(--brd-rad-sm);
             border:1px solid var(--sel-brd);
-            background-color:var(--sel-bg); /* Fondo transparente */
+            background-color:var(--sel-bg); 
             color:var(--color-txt-prim);
             flex-basis:35%;
-            font-size:1em; /* El input de ejercicio es 0.9em, esto se puede unificar si se desea */
+            font-size:1em; 
             transition:border-color .2s ease, background-color .3s ease, color .3s ease;
-            appearance: none; /* Elimina estilo nativo del navegador */
+            appearance: none; 
             -webkit-appearance: none;
             -moz-appearance: none;
-            /* Para añadir una flecha personalizada (opcional, pero recomendado para usabilidad) */
-            /* Si se añade flecha, ajustar padding-right */
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22%23333%22%3E%3Cpath%20d%3D%22M215.39%2C92.61l-80%2C80a8%2C8%2C0%2C0%2C1-11.32%2C0l-80-80A8%2C8%2C0%2C1%2C1%2C55.39%2C81.39L128%2C154.06l72.61-72.67a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32Z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
             background-position: right 8px center;
             background-size: 16px 16px;
-            padding-right: 30px; /* Espacio para la flecha */
+            padding-right: 30px; 
         }
         body.dark-theme .config-item select {
              background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22%23E0E0E0%22%3E%3Cpath%20d%3D%22M215.39%2C92.61l-80%2C80a8%2C8%2C0%2C0%2C1-11.32%2C0l-80-80A8%2C8%2C0%2C1%2C1%2C55.39%2C81.39L128%2C154.06l72.61-72.67a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32Z%22%2F%3E%3C%2Fsvg%3E');
@@ -143,10 +140,9 @@
             border-color:var(--color-hl);
             outline:none;
             border-width: 2px;
-            padding: 7px 9px; /* Ajustado para compensar el borde más grueso */
-            padding-right: 29px; /* Ajustar padding-right también en focus si hay flecha */
+            padding: 7px 9px; 
+            padding-right: 29px; 
         }
-        /* FIN DE ESTILOS MODIFICADOS PARA SELECT */
 
         .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); background-image: none; }
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg-l) 80%, #fff); color:var(--color-txt-prim-l); }
@@ -173,6 +169,18 @@
             padding: 7px 9px;
         }
         .exercise-name-item input[type="text"]:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; }
+        
+        /* ESTILOS PARA EL PLACEHOLDER DEL INPUT DE NOMBRE DE EJERCICIO */
+        .exercise-name-item input[type="text"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: var(--color-txt-sec);
+            opacity: 1; /* Firefox requiere esto para que el color se aplique completamente */
+        }
+        .exercise-name-item input[type="text"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: var(--color-txt-sec);
+        }
+        .exercise-name-item input[type="text"]::-ms-input-placeholder { /* Microsoft Edge */
+            color: var(--color-txt-sec);
+        }
 
         .exercise-suggestions-dropdown { position: absolute; background-color: var(--color-surf); border: 1px solid var(--sel-brd); border-top: none; border-radius: 0 0 var(--brd-rad-sm) var(--brd-rad-sm); max-height: 150px; overflow-y: auto; z-index: 1050; box-shadow: var(--box-shdw-subtle); box-sizing: border-box; }
         .exercise-suggestions-dropdown div { padding: 8px 10px; cursor: pointer; font-size: 0.9em; color: var(--color-txt-prim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
