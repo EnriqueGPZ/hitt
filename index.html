@@ -798,7 +798,6 @@
             const activeExerciseInfoEl = getEl('activeExerciseInfo'), currentExerciseImageEl = getEl('currentExerciseImage'), currentExerciseCardNameEl = getEl('currentExerciseCardName'), currentExerciseCardTitleEl = getEl('currentExerciseCardTitle'), nextExerciseImageEl = getEl('nextExerciseImage'), nextExerciseCardNameEl = getEl('nextExerciseCardName'), nextExerciseCardEl = activeExerciseInfoEl ? activeExerciseInfoEl.querySelector('.next-exercise-card') : null;
             const actionButtonsSection = qS('.action-buttons-section');
             
-            // Elementos del Modal de Ayuda
             const openHelpModalBtn = getEl('openHelpModalBtn'), 
                   helpModalScreenEl = getEl('helpModalScreen'), 
                   closeHelpModalBtn = getEl('closeHelpModalBtn');
@@ -956,7 +955,29 @@
                 if(ejNamesContEl){ const nInps=ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach(i=>i.disabled=!enCfg); const nEj = numEjSel ? parseInt(numEjSel.value) : 0; ejNamesContEl.classList.toggle('hidden', isFs || !enCfg || nEj === 0); if(enCfg) popEjNameInputs(); }
                 logoEl.style.display = logoEl.classList.contains('hidden') ? 'none' : 'block';
                 if(timerDispSec){ timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); if(st==='initial'){ timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} if(cronoActEl) cronoActEl.textContent="00:00"; if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; if(curEjNameDispEl){curEjNameDispEl.textContent=''; curEjNameDispEl.classList.add('hidden');} curPhase=''; rePrep=false; if(ejProgEl)ejProgEl.innerHTML=''; if(serProgEl)serProgEl.innerHTML=''; if(activeExerciseInfoEl) activeExerciseInfoEl.classList.remove('js-visible-by-state'); } }
-                if(startBtn){ startBtn.classList.remove('paused'); const ico=startBtn.querySelector('i.feather'), txt=startBtn.querySelector('.btn-text'); if(st==='initial'){if(txt)txt.textContent="Iniciar"; if(ico)ico.setAttribute('data-feather','play');} else if(st==='running'){if(txt)txt.textContent="Pausar"; if(ico)ico.setAttribute('data-feather','pause');} else if(st==='paused'){if(txt)txt.textContent="Reanudar"; if(ico)ico.setAttribute('data-feather','play-circle'); startBtn.classList.add('paused');} else if(st==='finished'){if(txt)txt.textContent="Nuevo"; if(ico)ico.setAttribute('data-feather','refresh-cw');} if(ico && typeof feather!=='undefined')feather.replace(); }
+                
+                if(startBtn){
+                    startBtn.classList.remove('paused');
+                    let iconName = 'play';
+                    let buttonText = "Iniciar";
+
+                    if(st==='initial'){
+                        // iconName and buttonText are already correct
+                    } else if(st==='running'){
+                        iconName = 'pause';
+                        buttonText = "Pausar";
+                    } else if(st==='paused'){
+                        iconName = 'play-circle';
+                        buttonText = "Reanudar";
+                        startBtn.classList.add('paused');
+                    } else if(st==='finished'){
+                        iconName = 'refresh-cw';
+                        buttonText = "Nuevo";
+                    }
+                    startBtn.innerHTML = `<i data-feather="${iconName}"></i><span class="btn-text">${buttonText}</span>`;
+                    if(typeof feather!=='undefined') feather.replace();
+                }
+
                 if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep);
                 if(restartEjBtn){ const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show); }
                 if(st==='finished'){curPhase='finalizado';rePrep=false;}
@@ -978,8 +999,52 @@
             if (startBtn) startBtn.onclick = () => { if (rePrep) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); }); else { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); } };
             if (finishBtn) finishBtn.onclick = () => { if (rePrep) return; finishWorkout(false); };
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
-            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); }; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
-            const thIco = themeBtn ? themeBtn.querySelector('i.feather') : null; if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); }; function applyTh(th) { bodyEl.classList.toggle('dark-theme', th === 'dark'); if (thIco) thIco.setAttribute('data-feather', th === 'dark' ? 'sun' : 'moon'); if (themeBtn) themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`; if (typeof feather !== 'undefined') feather.replace(); updPhaseColors(); updUIDisp(); }
+            
+            const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+            const hFSC = () => {
+                const isFS = isFSE();
+                bodyEl.classList.toggle('full-screen-mode', isFS);
+                if (fsBtn) {
+                    const newIconName = isFS ? 'minimize' : 'maximize';
+                    fsBtn.title = isFS ? "Salir Pantalla Completa" : "Modo Pantalla Completa";
+                    fsBtn.innerHTML = `<i data-feather="${newIconName}"></i>`;
+                    if (typeof feather !== 'undefined') feather.replace();
+                }
+                let cs;
+                if (!running && !paused && curPhase === '') cs = 'initial';
+                else if (curPhase === 'finalizado') cs = 'finished';
+                else if (paused) cs = 'paused';
+                else cs = 'running';
+                setUI(cs);
+            };
+            if (fsBtn) {
+                 fsBtn.onclick = () => {
+                    if (!isFSE()) {
+                        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(e => { console.warn(`FS Err: ${e.message}`) });
+                        else if (document.documentElement.webkitRequestFullscreen) document.documentElement.webkitRequestFullscreen();
+                        else if (document.documentElement.msRequestFullscreen) document.documentElement.msRequestFullscreen();
+                    } else {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                        else if (document.msExitFullscreen) document.msExitFullscreen();
+                    }
+                };
+                ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(ev => document.addEventListener(ev, hFSC));
+            }
+
+            function applyTh(th) {
+                bodyEl.classList.toggle('dark-theme', th === 'dark');
+                if (themeBtn) {
+                    const newIconName = th === 'dark' ? 'sun' : 'moon';
+                    themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`;
+                    themeBtn.innerHTML = `<i data-feather="${newIconName}"></i>`;
+                    if (typeof feather !== 'undefined') feather.replace();
+                }
+                updPhaseColors();
+                updUIDisp();
+            }
+            if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); };
+            
             if(uploadLogoBtn)uploadLogoBtn.onclick=()=>logoUploadIn.click(); if(logoUploadIn)logoUploadIn.onchange=handleLogoUpload; if(remLogoBtn)remLogoBtn.onclick=remLogo;
             async function getCurCfgObj(forRoutineSave = false){ const currentConfig = { numEjercicios: parseInt(numEjSel.value), numSeries: parseInt(numSerSel.value), tiempoEjercicio: parseInt(tEjSel.value), descansoEjercicio: parseInt(dEjSel.value), descansoSerie: parseInt(dSerSel.value) }; const exerciseNames = []; const nInps = ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach((inp, i) => { exerciseNames[i] = inp.value.trim() || `Ejercicio ${i + 1}`; }); for (let i = exerciseNames.length; i < currentConfig.numEjercicios; i++) exerciseNames[i] = `Ejercicio ${i + 1}`; if (forRoutineSave) { return { config: currentConfig, exerciseNames: exerciseNames }; } else { return { ...currentConfig, exerciseNames: exerciseNames, theme: localStorage.getItem('theme') || 'light', allExerciseNames: Array.from(allEjNamesSet), userLogoBase64: (logoEl.src && logoEl.src !== '#' && !logoEl.classList.contains('hidden') && logoEl.src !== DEFAULT_APP_LOGO_PATH) ? logoEl.src : null }; } }
             if(exportBtn)exportBtn.onclick=async()=>{const s=await getCurCfgObj(false),j=JSON.stringify(s,null,2),b=new Blob([j],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='chrono_hiit_settings.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);if(typeof feather!=='undefined')feather.replace()};
@@ -995,7 +1060,6 @@
             if (saveRoutineBtn) saveRoutineBtn.onclick = saveCurrentRoutine;
             if (loadRoutineBtn && loadRoutineScreenEl && closeLoadRoutineBtn) { loadRoutineBtn.onclick = () => { populateLoadRoutineModal(); loadRoutineScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; if (typeof feather !== 'undefined') feather.replace();}; const closeLoadModal = () => { loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = '';}; closeLoadRoutineBtn.onclick = closeLoadModal; window.addEventListener('keydown', e => { if (e.key === 'Escape' && !loadRoutineScreenEl.classList.contains('hidden')) closeLoadModal(); }); loadRoutineScreenEl.onclick = e => { if (e.target === loadRoutineScreenEl) closeLoadModal(); }; }
 
-            // --- Modal de Ayuda ---
             if (openHelpModalBtn && helpModalScreenEl && closeHelpModalBtn) {
                 openHelpModalBtn.onclick = () => {
                     helpModalScreenEl.classList.remove('hidden');
@@ -1024,9 +1088,10 @@
                 popSel(numEjSel, 1, 20, 1, 4); popSel(numSerSel, 1, 10, 1, 3); popSel(tEjSel, 30, 90, 5, 45); popSel(dEjSel, 15, 30, 5, 15); popSel(dSerSel, 30, 120, 15, 60);
                 calcEstTime();
                 const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                applyTh(savedTh);
-                setUI('initial');
+                applyTh(savedTh); // Esto ya llamará a feather.replace()
+                setUI('initial'); // Esto también puede llamar a feather.replace() para sus iconos
                 popEjNameInputs();
+                // La llamada global a feather.replace() aquí al final es una buena práctica para asegurar todo.
                 if (typeof feather !== 'undefined') feather.replace();
             } catch (err) {
                 console.error("IDB init o config inicial falló:", err);
