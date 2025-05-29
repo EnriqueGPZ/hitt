@@ -149,7 +149,14 @@
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
 
 
-        .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); }
+        .exercise-names-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0; /* Mantiene el margen vertical */
+            padding-top: 0; /* Eliminado, ya que no hay border-top */
+            /* border-top: 1px solid var(--color-prim-acc); */ /* LÍNEA ELIMINADA */
+        }
         .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
         .exercise-name-item input[type="text"] {
@@ -470,10 +477,8 @@
             #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:150px; }
             .modal-header h2 { font-size:1.5em; }
             .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; }
-            /* .explanation-item { padding:12px; min-height:160px; } */ /* Comentado para usar el min-height global */
             .explanation-item-number { font-size:1.8em; }
             .explanation-item-name { font-size:1em; margin-bottom: 5px; }
-            /* .explanation-item-image-container { height: 100px; } */ /* Comentado para usar el global */
         }
         @media (max-width:480px) {
             body:not(.full-screen-mode) .controls-section button { padding:10px 12px; font-size:.85em; }
@@ -1088,10 +1093,6 @@
                     descP.className = 'explanation-item-description';
                     if (predefinedExercises[curEjName] && predefinedExercises[curEjName].description) {
                         descP.textContent = predefinedExercises[curEjName].description;
-                    } else {
-                        // No añadir descripción si no existe o es un placeholder
-                        // descP.textContent = "Descripción no disponible."; 
-                        // descP.style.fontStyle = 'italic';
                     }
 
                     const imgCont=document.createElement('div');
