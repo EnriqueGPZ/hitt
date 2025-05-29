@@ -331,6 +331,7 @@
             display: flex; flex-direction: column; align-items: center;
             gap: 5px;
             transition: all .3s ease-in-out;
+            position: relative; /* Para el botón de ayuda */
         }
         body.full-screen-mode .app-footer {
             padding: 10px 20px;
@@ -345,6 +346,67 @@
         .app-footer .creator-info .footer-brand-name { font-family: var(--font-display); font-size: 1em; font-weight: 700; color: var(--color-txt-prim); letter-spacing: 0.5px; margin: 0; }
         .app-footer .creator-info .footer-author-name { font-size: 0.85em; color: var(--color-txt-sec); margin: 0; }
         .app-footer .creator-info .footer-author-name .seo-name { font-weight: 700; color: var(--color-txt-prim); }
+
+        /* ESTILOS MODAL AYUDA */
+        .footer-help-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--color-txt-sec);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            line-height: 0;
+            transition: color .2s ease, background-color .2s ease;
+        }
+        .footer-help-btn:hover {
+            color: var(--color-txt-prim);
+            background-color: var(--btn-head-hover-bg);
+        }
+        .footer-help-btn i.feather {
+            width: 1.3em;
+            height: 1.3em;
+            stroke: currentColor;
+        }
+        body.full-screen-mode .app-footer .footer-help-btn {
+            display: none;
+        }
+        .help-modal-body {
+            line-height: 1.6;
+            font-size: 0.95em;
+            padding: 0 5px;
+        }
+        .help-modal-body h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--color-hl);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.15em;
+            border-bottom: 1px solid var(--color-prim-acc);
+            padding-bottom: 8px;
+        }
+        .help-modal-body ul {
+            list-style-position: outside;
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        .help-modal-body li {
+            margin-bottom: 8px;
+        }
+        .help-modal-body p {
+            margin-bottom: 15px;
+        }
+        .help-modal-body strong {
+            font-weight: 700;
+            color: var(--color-txt-prim);
+        }
+        /* FIN ESTILOS MODAL AYUDA */
+
 
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
@@ -551,6 +613,9 @@
             <p class="footer-brand-name">HIIT.ES</p>
             <p class="footer-author-name">Creado por <span class="seo-name">Enrique Gil</span></p>
         </div>
+        <button id="openHelpModalBtn" class="footer-help-btn" title="Ayuda e Información del Programa">
+            <i data-feather="help-circle"></i>
+        </button>
     </footer>
 
     <div id="explanationScreen" class="modal-screen hidden">
@@ -591,6 +656,64 @@
             <p id="noRoutinesMessage" class="no-items-message hidden">No hay rutinas guardadas.</p>
         </div>
     </div>
+
+    <!-- MODAL DE AYUDA -->
+    <div id="helpModalScreen" class="modal-screen hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ayuda Chrono HIIT</h2>
+                <div class="modal-header-buttons">
+                    <button id="closeHelpModalBtn" class="modal-close-btn" title="Cerrar">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="help-modal-body">
+                <p><strong>Bienvenido a Chrono HIIT</strong><br>
+                Un cronómetro de intervalos avanzado para tus entrenamientos. Estas son sus funciones principales:</p>
+
+                <h4>Configuración Principal:</h4>
+                <ul>
+                    <li><strong>Ejercicios / Serie:</strong> Define cuántos ejercicios diferentes componen una serie.</li>
+                    <li><strong>Series Totales:</strong> Establece el número total de series para tu rutina.</li>
+                    <li><strong>T. Ejercicio (s):</strong> Duración en segundos de cada fase de ejercicio.</li>
+                    <li><strong>T. Desc. Ej. (s):</strong> Duración del descanso entre ejercicios dentro de una misma serie.</li>
+                    <li><strong>T. Desc. Serie (s):</strong> Duración del descanso al finalizar una serie completa.</li>
+                </ul>
+
+                <h4>Nombres de Ejercicios:</h4>
+                <p>Puedes asignar nombres personalizados a tus ejercicios. El sistema ofrece sugerencias de ejercicios predefinidos (con imágenes) o nombres que hayas usado antes. Estos nombres se mostrarán durante el entrenamiento.</p>
+
+                <h4>Controles del Cronómetro:</h4>
+                <ul>
+                    <li><strong>Iniciar/Pausar/Reanudar:</strong> Controla el flujo del entrenamiento.</li>
+                    <li><strong>Reiniciar Ej.:</strong> (Aparece durante un ejercicio) Vuelve a empezar el ejercicio actual con una breve preparación.</li>
+                    <li><strong>Finalizar:</strong> Detiene el entrenamiento y resetea la configuración.</li>
+                </ul>
+
+                <h4>Funciones Adicionales:</h4>
+                <ul>
+                    <li><strong>Tema (Sol/Luna):</strong> Cambia entre tema claro y oscuro.</li>
+                    <li><strong>Pantalla Completa:</strong> Visualización sin distracciones durante el ejercicio.</li>
+                    <li><strong>Subir/Quitar Logo:</strong> Personaliza la interfaz con tu propio logo (se guarda localmente).</li>
+                    <li><strong>Exportar/Importar:</strong> Guarda tu configuración actual (tiempos, nombres, tema, logo) en un archivo JSON, o carga una configuración previamente guardada.</li>
+                    <li><strong>Guardar/Cargar Rutina:</strong> Guarda la configuración actual como una rutina con nombre para acceder rápidamente a ella más tarde.</li>
+                    <li><strong>Nombres:</strong> Gestiona la lista de nombres de ejercicios personalizados que has guardado.</li>
+                    <li><strong>Ver Ej.:</strong> Muestra una vista con imágenes (si están disponibles) de los ejercicios configurados para la rutina actual.</li>
+                </ul>
+
+                <h4>Durante el Entrenamiento:</h4>
+                <ul>
+                    <li><strong>Indicadores de Progreso:</strong> Círculos visuales te muestran el ejercicio y la serie actual.</li>
+                    <li><strong>Pantalla de Tiempo:</strong> Muestra la fase actual (Preparación, Ejercicio, Descanso), el tiempo restante de la fase y el tiempo total acumulado.</li>
+                    <li><strong>Información de Ejercicio (Pantalla Completa):</strong> En modo pantalla completa, verás el ejercicio actual y el siguiente, junto con sus imágenes si están disponibles.</li>
+                    <li><strong>Alertas Sonoras:</strong> Sonidos te avisarán de los cambios de fase y puntos intermedios.</li>
+                </ul>
+                 <p>¡Disfruta de tus entrenamientos con Chrono HIIT!</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         let predefinedExercises = {};
         const DEFAULT_APP_LOGO_PATH = 'icons/android-icon-192x192.png';
@@ -674,6 +797,12 @@
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
             const activeExerciseInfoEl = getEl('activeExerciseInfo'), currentExerciseImageEl = getEl('currentExerciseImage'), currentExerciseCardNameEl = getEl('currentExerciseCardName'), currentExerciseCardTitleEl = getEl('currentExerciseCardTitle'), nextExerciseImageEl = getEl('nextExerciseImage'), nextExerciseCardNameEl = getEl('nextExerciseCardName'), nextExerciseCardEl = activeExerciseInfoEl ? activeExerciseInfoEl.querySelector('.next-exercise-card') : null;
             const actionButtonsSection = qS('.action-buttons-section');
+            
+            // Elementos del Modal de Ayuda
+            const openHelpModalBtn = getEl('openHelpModalBtn'), 
+                  helpModalScreenEl = getEl('helpModalScreen'), 
+                  closeHelpModalBtn = getEl('closeHelpModalBtn');
+
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { rootSt = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootSt.getPropertyValue('--phase-prep').trim(), ejercicio: rootSt.getPropertyValue('--phase-ex').trim(), descanso: rootSt.getPropertyValue('--phase-rest').trim(), descanso_ejercicio: rootSt.getPropertyValue('--phase-rest').trim(), descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), finalizado: rootSt.getPropertyValue('--phase-end').trim() }; }
@@ -865,6 +994,29 @@
             async function populateLoadRoutineModal() { if (!loadRoutineListEl || !noRoutinesMsgEl) return; loadRoutineListEl.innerHTML = ''; try { const routines = await dbAction(SAVED_ROUTINES_STORE, 'readonly', 'getAll') || []; noRoutinesMsgEl.classList.toggle('hidden', routines.length > 0); if (routines.length > 0) { routines.sort((a,b) => a.nombreRutina.localeCompare(b.nombreRutina)).forEach(r => { const li = document.createElement('li'); const nameSpan = document.createElement('span'); nameSpan.className = 'routine-name-text'; nameSpan.textContent = r.nombreRutina; const actionsDiv = document.createElement('div'); actionsDiv.className = 'routine-actions'; const loadBtn = document.createElement('button'); loadBtn.className = 'routine-action-btn'; loadBtn.innerHTML = '<i data-feather="download-cloud"></i> Cargar'; loadBtn.onclick = () => { numEjSel.value = r.config.numEjercicios; numSerSel.value = r.config.numSeries; tEjSel.value = r.config.tiempoEjercicio; dEjSel.value = r.config.descansoEjercicio; dSerSel.value = r.config.descansoSerie; cfg.exerciseNames = r.exerciseNames || []; allSels.forEach(sel => sel.dispatchEvent(new Event('change'))); popEjNameInputs(); calcEstTime(); if (running) finishWorkout(false); else setUI('initial'); loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; alert(`Rutina "${r.nombreRutina}" cargada.`); }; const deleteBtn = document.createElement('button'); deleteBtn.className = 'routine-action-btn'; deleteBtn.innerHTML = '<i data-feather="trash-2"></i> Eliminar'; deleteBtn.onclick = async () => { if (confirm(`¿Eliminar rutina "${r.nombreRutina}"?`)) { try { await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'delete', r.nombreRutina); populateLoadRoutineModal(); } catch (err) { console.error("Error eliminando rutina:", err); alert("Error al eliminar rutina."); } } }; actionsDiv.append(loadBtn, deleteBtn); li.append(nameSpan, actionsDiv); loadRoutineListEl.appendChild(li); }); } } catch (err) { console.error("Error cargando rutinas:", err); noRoutinesMsgEl.classList.remove('hidden'); } if (typeof feather !== 'undefined') feather.replace(); }
             if (saveRoutineBtn) saveRoutineBtn.onclick = saveCurrentRoutine;
             if (loadRoutineBtn && loadRoutineScreenEl && closeLoadRoutineBtn) { loadRoutineBtn.onclick = () => { populateLoadRoutineModal(); loadRoutineScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; if (typeof feather !== 'undefined') feather.replace();}; const closeLoadModal = () => { loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = '';}; closeLoadRoutineBtn.onclick = closeLoadModal; window.addEventListener('keydown', e => { if (e.key === 'Escape' && !loadRoutineScreenEl.classList.contains('hidden')) closeLoadModal(); }); loadRoutineScreenEl.onclick = e => { if (e.target === loadRoutineScreenEl) closeLoadModal(); }; }
+
+            // --- Modal de Ayuda ---
+            if (openHelpModalBtn && helpModalScreenEl && closeHelpModalBtn) {
+                openHelpModalBtn.onclick = () => {
+                    helpModalScreenEl.classList.remove('hidden');
+                    bodyEl.style.overflow = 'hidden';
+                };
+                const closeHelpModal = () => {
+                    helpModalScreenEl.classList.add('hidden');
+                    bodyEl.style.overflow = '';
+                };
+                closeHelpModalBtn.onclick = closeHelpModal;
+                window.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && !helpModalScreenEl.classList.contains('hidden')) {
+                        closeHelpModal();
+                    }
+                });
+                helpModalScreenEl.onclick = e => {
+                    if (e.target === helpModalScreenEl) {
+                        closeHelpModal();
+                    }
+                };
+            }
 
             // --- Initial Setup ---
             try {
