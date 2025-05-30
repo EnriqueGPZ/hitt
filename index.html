@@ -155,7 +155,6 @@
             gap: 10px;
             margin: 15px 0; /* Mantiene el margen vertical */
             padding-top: 0; /* Eliminado, ya que no hay border-top */
-            /* border-top: 1px solid var(--color-prim-acc); */ /* LÍNEA ELIMINADA */
         }
         .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
@@ -353,11 +352,19 @@
         .app-footer .creator-info .footer-author-name { font-size: 0.85em; color: var(--color-txt-sec); margin: 0; }
         .app-footer .creator-info .footer-author-name .seo-name { font-weight: 700; color: var(--color-txt-prim); }
 
-        .footer-help-btn {
+        /* Estilos para los botones de acción del footer */
+        .app-footer {
+            position: relative; /* Necesario para el posicionamiento absoluto de .footer-actions */
+        }
+        .footer-actions {
             position: absolute;
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
+            display: flex;
+            gap: 8px; /* Espacio entre botones */
+        }
+        .footer-action-btn { /* Estilo común para los botones del footer */
             background: transparent;
             border: none;
             color: var(--color-txt-sec);
@@ -367,18 +374,19 @@
             line-height: 0;
             transition: color .2s ease, background-color .2s ease;
         }
-        .footer-help-btn:hover {
+        .footer-action-btn:hover {
             color: var(--color-txt-prim);
             background-color: var(--btn-head-hover-bg);
         }
-        .footer-help-btn i.feather {
+        .footer-action-btn i.feather {
             width: 1.3em;
             height: 1.3em;
             stroke: currentColor;
         }
-        body.full-screen-mode .app-footer .footer-help-btn {
+        body.full-screen-mode .app-footer .footer-actions { /* Ocultar en pantalla completa */
             display: none;
         }
+        
         .help-modal-body {
             line-height: 1.6;
             font-size: 0.95em;
@@ -457,6 +465,37 @@
         #loadRoutineList .routine-actions { display: flex; gap: 5px; flex-shrink: 0; }
         .no-items-message { margin-top: 20px; color: var(--color-txt-sec); }
 
+        /* Estilo para la lista de guía de ejercicios */
+        #exerciseGuideList {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            flex-grow: 1; /* Para ocupar el espacio y permitir scroll */
+            overflow-y: auto; /* Scroll vertical si el contenido es mucho */
+            padding: 10px 5px 5px 5px; /* Padding alrededor del grid */
+        }
+
+        /* Usaremos las clases .explanation-item y sus subclases para los elementos de la guía.
+           Añadimos unos pequeños ajustes para el contexto de la guía. */
+        #exerciseGuideList .explanation-item {
+            /* min-height se hereda de .explanation-item, se ajusta con media queries más abajo si es necesario */
+        }
+
+        #exerciseGuideList .explanation-item-image-container {
+            margin-top: 0; /* Asegura que la imagen esté en la parte superior del item */
+            margin-bottom: 10px; /* Espacio entre la imagen y el nombre del ejercicio */
+            /* height se hereda y se ajusta en media queries */
+        }
+        
+        #exerciseGuideList .explanation-item-name {
+            /* margin-bottom se hereda */
+        }
+
+        #exerciseGuideList .explanation-item-description {
+            margin-bottom: 0; /* Sin margen inferior extra si es el último elemento */
+            /* max-height y overflow-y ya están en la clase base .explanation-item-description */
+        }
+
 
         @media (min-width: 769px) {
             #explanationScreen:not(.modal-fullscreen-active) .explanation-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -464,6 +503,15 @@
              .explanation-item { min-height:250px; } /* Más altura en pantallas grandes */
              .explanation-item-image-container { height:120px; }
              .explanation-item-description { max-height: 4.5em; }
+
+            /* Media queries para el modal de guía de ejercicios (adaptado de explanationScreen) */
+            #exerciseGuideScreen .modal-content {
+                max-width: 900px; /* Igual que explanationScreen para consistencia */
+            }
+            #exerciseGuideList {
+                 grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Ajustar tamaño de items */
+                 gap: 20px;
+            }
         }
         @media (max-width:768px) {
             .modal-content { padding:20px; max-height:85vh; max-width: 90%;}
@@ -498,6 +546,10 @@
             body.full-screen-mode .active-exercise-info .exercise-info-card p { font-size: clamp(0.9em, 2vh, 1.4em); }
             body.full-screen-mode #estadoActual { font-size:clamp(1.5em, 4vh, 2.5em); }
             body.full-screen-mode #cronometroActual { font-size:clamp(4em, 20vh, 10em); font-weight: 900; }
+
+            #exerciseGuideList {
+                 grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
         }
         @media (max-width:420px) {
             body:not(.full-screen-mode) .container { padding:25px 20px; }
@@ -636,9 +688,14 @@
             <p class="footer-brand-name">HIIT.ES</p>
             <p class="footer-author-name">Creado por <span class="seo-name">Enrique Gil</span></p>
         </div>
-        <button id="openHelpModalBtn" class="footer-help-btn" title="Ayuda e Información del Programa">
-            <i data-feather="help-circle"></i>
-        </button>
+        <div class="footer-actions">
+            <button id="openExerciseGuideBtn" class="footer-action-btn" title="Guía de Ejercicios Disponibles">
+                <i data-feather="book-open"></i>
+            </button>
+            <button id="openHelpModalBtn" class="footer-action-btn" title="Ayuda e Información del Programa">
+                <i data-feather="help-circle"></i>
+            </button>
+        </div>
     </footer>
 
     <div id="explanationScreen" class="modal-screen hidden">
@@ -737,6 +794,26 @@
         </div>
     </div>
 
+    <!-- MODAL GUÍA DE EJERCICIOS -->
+    <div id="exerciseGuideScreen" class="modal-screen hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Guía de Ejercicios</h2>
+                <div class="modal-header-buttons">
+                    <button id="closeExerciseGuideBtn" class="modal-close-btn" title="Cerrar">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="exerciseGuideList" class="exercise-guide-list">
+                <!-- Los ejercicios predefinidos se cargarán aquí por JavaScript -->
+            </div>
+            <p id="noPredefinedExercisesMessage" class="no-items-message hidden">
+                No hay ejercicios predefinidos cargados.
+            </p>
+        </div>
+    </div>
+
     <script>
         let predefinedExercises = {};
         const DEFAULT_APP_LOGO_PATH = 'icons/android-icon-192x192.png';
@@ -824,6 +901,13 @@
             const openHelpModalBtn = getEl('openHelpModalBtn'), 
                   helpModalScreenEl = getEl('helpModalScreen'), 
                   closeHelpModalBtn = getEl('closeHelpModalBtn');
+
+            // Nuevas constantes para la Guía de Ejercicios
+            const openExerciseGuideBtn = getEl('openExerciseGuideBtn'),
+                  exerciseGuideScreenEl = getEl('exerciseGuideScreen'),
+                  closeExerciseGuideBtn = getEl('closeExerciseGuideBtn'),
+                  exerciseGuideListEl = getEl('exerciseGuideList'),
+                  noPredefinedExercisesMessageEl = getEl('noPredefinedExercisesMessage');
 
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
@@ -1143,6 +1227,82 @@
                     }
                 };
             }
+
+            function populateExerciseGuideModal() {
+                if (!exerciseGuideListEl || !noPredefinedExercisesMessageEl || !predefinedExercises) return;
+                
+                exerciseGuideListEl.innerHTML = ''; // Limpiar contenido previo
+
+                const exerciseKeys = Object.keys(predefinedExercises);
+
+                if (exerciseKeys.length === 0) {
+                    noPredefinedExercisesMessageEl.classList.remove('hidden');
+                    return;
+                }
+                noPredefinedExercisesMessageEl.classList.add('hidden');
+
+                // Ordenar los ejercicios alfabéticamente por nombre
+                exerciseKeys.sort((a, b) => a.localeCompare(b));
+
+                exerciseKeys.forEach(exerciseName => {
+                    const exerciseData = predefinedExercises[exerciseName];
+
+                    const itemDiv = document.createElement('div');
+                    // Reutilizamos la clase .explanation-item para mantener un estilo consistente
+                    itemDiv.className = 'explanation-item'; 
+
+                    const imgCont = document.createElement('div');
+                    imgCont.className = 'explanation-item-image-container';
+                    const imgEl = document.createElement('img');
+                    imgEl.className = 'explanation-item-image';
+                    imgEl.src = exerciseData.image || 'images/generic.webp'; // Imagen genérica si no se especifica
+                    imgEl.alt = exerciseName;
+                    imgCont.appendChild(imgEl);
+
+                    const nameSpan = document.createElement('span'); // Usamos span como en .explanation-item-name
+                    nameSpan.className = 'explanation-item-name';
+                    nameSpan.textContent = exerciseName;
+
+                    const descP = document.createElement('p');
+                    descP.className = 'explanation-item-description';
+                    descP.textContent = exerciseData.description || 'No hay descripción disponible.';
+                    
+                    // Orden de los elementos: Imagen, Nombre, Descripción
+                    itemDiv.appendChild(imgCont);
+                    itemDiv.appendChild(nameSpan);
+                    itemDiv.appendChild(descP);    
+                    
+                    exerciseGuideListEl.appendChild(itemDiv);
+                });
+            }
+
+            if (openExerciseGuideBtn && exerciseGuideScreenEl && closeExerciseGuideBtn) {
+                openExerciseGuideBtn.onclick = () => {
+                    populateExerciseGuideModal();
+                    exerciseGuideScreenEl.classList.remove('hidden');
+                    bodyEl.style.overflow = 'hidden'; // Evitar scroll del body detrás del modal
+                };
+
+                const closeGuideModal = () => {
+                    exerciseGuideScreenEl.classList.add('hidden');
+                    bodyEl.style.overflow = ''; // Restaurar scroll del body
+                };
+
+                closeExerciseGuideBtn.onclick = closeGuideModal;
+                
+                window.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && !exerciseGuideScreenEl.classList.contains('hidden')) {
+                        closeGuideModal();
+                    }
+                });
+
+                exerciseGuideScreenEl.onclick = e => {
+                    if (e.target === exerciseGuideScreenEl) {
+                        closeGuideModal();
+                    }
+                };
+            }
+
 
             // --- Initial Setup ---
             try {
