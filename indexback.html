@@ -44,7 +44,7 @@
             --sel-brd: var(--sel-brd-l); --prog-circ-brd: var(--prog-circ-brd-l);
             --prog-circ-comp-bg: var(--prog-circ-comp-bg-l); --prog-circ-act-brd: var(--prog-circ-act-brd-l);
 
-            --box-shdw-subtle: none; /* Eliminado efecto de sombra globalmente para cajas */
+            --box-shdw-subtle: none; 
             --phase-paused-overlay: rgba(28,28,43,0.85);
             --btn-head-hover-bg: rgba(0,0,0,0.05);
             --sel-bg: transparent;
@@ -69,7 +69,7 @@
             --prog-circ-brd: #E0E0E0;
             --prog-circ-comp-bg: #F5F5F5;
             --prog-circ-act-brd: #FFFFFF;
-            --box-shdw-subtle: none; /* Eliminado efecto de sombra globalmente para cajas en dark theme */
+            --box-shdw-subtle: none; 
             --phase-paused-overlay: rgba(0,0,0,0.85);
             --btn-head-hover-bg: rgba(255,255,255,0.1);
             --sel-dis-clr: rgba(255,255,255,0.5);
@@ -91,7 +91,7 @@
         .container {
             background-color:transparent;
             padding:30px 25px; border-radius:var(--brd-rad-main);
-            box-shadow:none; /* Asegurar que el contenedor principal no tenga sombra */
+            box-shadow:none; 
             width:100%; max-width:480px;
             margin-bottom: 20px;
             transition:all .3s ease-in-out; z-index:1; position:relative; margin-top:0;
@@ -100,7 +100,7 @@
 
         .configuracion-section, .controls-section, .action-buttons-section, .estimated-time-section, .progress-indicators, #timerDisplaySection, #activeExerciseInfo {
             width: 100%;
-            box-shadow: none; /* Aplicar no-sombra a estas secciones también si es necesario */
+            box-shadow: none; 
         }
 
         .configuracion-section, .estimated-time-section { margin-bottom:25px; }
@@ -149,7 +149,14 @@
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
 
 
-        .exercise-names-section { display:flex; flex-direction:column; gap:10px; margin:15px 0; padding-top:10px; border-top:1px solid var(--color-prim-acc); }
+        .exercise-names-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0; /* Mantiene el margen vertical */
+            padding-top: 0; /* Eliminado, ya que no hay border-top */
+            /* border-top: 1px solid var(--color-prim-acc); */ /* LÍNEA ELIMINADA */
+        }
         .exercise-name-item { display:flex; align-items:center; gap:10px; position:relative; }
         .exercise-name-item label { font-size:.9em; color:var(--color-txt-sec); min-width:80px; text-align:right; flex-basis:auto; margin-right:5px; }
         .exercise-name-item input[type="text"] {
@@ -170,15 +177,14 @@
         }
         .exercise-name-item input[type="text"]:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; }
         
-        /* ESTILOS PARA EL PLACEHOLDER DEL INPUT DE NOMBRE DE EJERCICIO */
-        .exercise-name-item input[type="text"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        .exercise-name-item input[type="text"]::placeholder { 
             color: var(--color-txt-sec);
-            opacity: 1; /* Firefox requiere esto para que el color se aplique completamente */
+            opacity: 1; 
         }
-        .exercise-name-item input[type="text"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        .exercise-name-item input[type="text"]:-ms-input-placeholder { 
             color: var(--color-txt-sec);
         }
-        .exercise-name-item input[type="text"]::-ms-input-placeholder { /* Microsoft Edge */
+        .exercise-name-item input[type="text"]::-ms-input-placeholder { 
             color: var(--color-txt-sec);
         }
 
@@ -331,6 +337,7 @@
             display: flex; flex-direction: column; align-items: center;
             gap: 5px;
             transition: all .3s ease-in-out;
+            position: relative; 
         }
         body.full-screen-mode .app-footer {
             padding: 10px 20px;
@@ -346,6 +353,64 @@
         .app-footer .creator-info .footer-author-name { font-size: 0.85em; color: var(--color-txt-sec); margin: 0; }
         .app-footer .creator-info .footer-author-name .seo-name { font-weight: 700; color: var(--color-txt-prim); }
 
+        .footer-help-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--color-txt-sec);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            line-height: 0;
+            transition: color .2s ease, background-color .2s ease;
+        }
+        .footer-help-btn:hover {
+            color: var(--color-txt-prim);
+            background-color: var(--btn-head-hover-bg);
+        }
+        .footer-help-btn i.feather {
+            width: 1.3em;
+            height: 1.3em;
+            stroke: currentColor;
+        }
+        body.full-screen-mode .app-footer .footer-help-btn {
+            display: none;
+        }
+        .help-modal-body {
+            line-height: 1.6;
+            font-size: 0.95em;
+            padding: 0 5px;
+        }
+        .help-modal-body h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--color-hl);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.15em;
+            border-bottom: 1px solid var(--color-prim-acc);
+            padding-bottom: 8px;
+        }
+        .help-modal-body ul {
+            list-style-position: outside;
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        .help-modal-body li {
+            margin-bottom: 8px;
+        }
+        .help-modal-body p {
+            margin-bottom: 15px;
+        }
+        .help-modal-body strong {
+            font-weight: 700;
+            color: var(--color-txt-prim);
+        }
+
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
         .modal-content { background-color:var(--color-surf); color:var(--color-txt-prim); padding:25px; border-radius:var(--brd-rad-main); box-shadow:var(--box-shdw-subtle); width:100%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; transition: max-width 0.3s ease, max-height 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
@@ -359,14 +424,29 @@
         #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; align-content: flex-start; flex-grow: 1; overflow-y: auto; padding-top: 5px; }
         #explanationScreen.modal-fullscreen-active .explanation-item { min-height:300px; padding:20px; justify-content:flex-start; }
         #explanationScreen.modal-fullscreen-active .explanation-item-number { font-size:3.0em; margin-bottom:15px; }
-        #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:1.8em; margin-bottom:20px; }
+        #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:1.8em; margin-bottom:10px; }
+        #explanationScreen.modal-fullscreen-active .explanation-item-description { font-size:1em; margin-bottom:15px; max-height: 100px; }
         #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:200px; margin-bottom: 15px; }
+        
         .explanation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:15px; flex-grow:1; }
-        .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; min-height:180px; }
+        .explanation-item { background-color:var(--color-bg); color:var(--color-txt-prim); padding:15px; border-radius:var(--brd-rad-sm); border:1px solid var(--color-prim-acc); display:flex; flex-direction:column; align-items:center; /* justify-content:space-between; */ text-align:center; min-height:220px; /* Aumentar un poco para la descripción */ }
         .explanation-item-number { font-family:var(--font-display); font-size:2em; font-weight:700; color:var(--color-hl); margin-bottom:8px; }
-        .explanation-item-name { font-family:var(--font-body); font-size:1.1em; font-weight:700; word-break:break-word; margin-bottom:15px; }
-        .explanation-item-image-container { width:100%; height:120px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; background-color:transparent; border-radius: var(--brd-rad-sm); overflow: hidden;}
+        .explanation-item-name { font-family:var(--font-body); font-size:1.1em; font-weight:700; word-break:break-word; margin-bottom:5px; /* Reducir margen inferior para acercar descripción */ }
+        .explanation-item-description {
+            font-size: 0.85em;
+            color: var(--color-txt-sec);
+            line-height: 1.3;
+            margin-top: 0;
+            margin-bottom: 10px; /* Espacio antes de la imagen */
+            text-align: center; 
+            max-height: 4.0em; /* Limitar altura (aprox 3 líneas) */
+            overflow-y: auto; 
+            word-break: break-word;
+            width: 100%; /* Asegurar que ocupe el ancho para el scroll si es necesario */
+        }
+        .explanation-item-image-container { width:100%; height:100px; /* Reducir un poco si es necesario por la descripción */ display:flex; align-items:center; justify-content:center; margin-bottom:8px; background-color:transparent; border-radius: var(--brd-rad-sm); overflow: hidden; margin-top: auto; /* Empujar imagen hacia abajo si el contenido es corto */}
         .explanation-item-image { max-width:100%; max-height:100%; object-fit:contain; }
+
         #manageNamesList, #loadRoutineList { list-style:none; padding:0; margin:0; flex-grow:1; overflow-y:auto; }
         #manageNamesList li, #loadRoutineList li { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-prim-acc); }
         #manageNamesList li:last-child, #loadRoutineList li:last-child { border-bottom:none; }
@@ -381,6 +461,9 @@
         @media (min-width: 769px) {
             #explanationScreen:not(.modal-fullscreen-active) .explanation-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
             #explanationScreen:not(.modal-fullscreen-active) .modal-content { max-width: 900px; }
+             .explanation-item { min-height:250px; } /* Más altura en pantallas grandes */
+             .explanation-item-image-container { height:120px; }
+             .explanation-item-description { max-height: 4.5em; }
         }
         @media (max-width:768px) {
             .modal-content { padding:20px; max-height:85vh; max-width: 90%;}
@@ -390,13 +473,12 @@
             #explanationScreen.modal-fullscreen-active .explanation-item { min-height:250px; padding:15px; }
             #explanationScreen.modal-fullscreen-active .explanation-item-number { font-size:2.5em; }
             #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:1.5em; }
+            #explanationScreen.modal-fullscreen-active .explanation-item-description { font-size:0.9em; max-height: 5em; }
             #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:150px; }
             .modal-header h2 { font-size:1.5em; }
             .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; }
-            .explanation-item { padding:12px; min-height:160px; }
             .explanation-item-number { font-size:1.8em; }
-            .explanation-item-name { font-size:1em; margin-bottom: 12px; }
-            .explanation-item-image-container { height: 100px; }
+            .explanation-item-name { font-size:1em; margin-bottom: 5px; }
         }
         @media (max-width:480px) {
             body:not(.full-screen-mode) .controls-section button { padding:10px 12px; font-size:.85em; }
@@ -405,6 +487,7 @@
             #loadRoutineList .routine-action-btn { flex-grow: 1; text-align: center;}
             #explanationScreen.modal-fullscreen-active .explanation-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
             #explanationScreen.modal-fullscreen-active .explanation-item { min-height:220px; }
+            #explanationScreen.modal-fullscreen-active .explanation-item-description { font-size:0.85em; max-height: 4em; }
             #explanationScreen.modal-fullscreen-active .explanation-item-image-container { height:120px; }
             #explanationScreen.modal-fullscreen-active .explanation-item-name { font-size:1.2em; }
 
@@ -437,6 +520,8 @@
             .action-buttons-section .action-btn {
                 flex-basis: calc(50% - 4px);
             }
+            .explanation-item { min-height:200px; }
+            .explanation-item-image-container { height:80px; }
         }
         @media (max-width:360px) {
             body:not(.full-screen-mode) .container { padding:20px 15px; }
@@ -551,6 +636,9 @@
             <p class="footer-brand-name">HIIT.ES</p>
             <p class="footer-author-name">Creado por <span class="seo-name">Enrique Gil</span></p>
         </div>
+        <button id="openHelpModalBtn" class="footer-help-btn" title="Ayuda e Información del Programa">
+            <i data-feather="help-circle"></i>
+        </button>
     </footer>
 
     <div id="explanationScreen" class="modal-screen hidden">
@@ -591,6 +679,64 @@
             <p id="noRoutinesMessage" class="no-items-message hidden">No hay rutinas guardadas.</p>
         </div>
     </div>
+
+    <!-- MODAL DE AYUDA -->
+    <div id="helpModalScreen" class="modal-screen hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ayuda Chrono HIIT</h2>
+                <div class="modal-header-buttons">
+                    <button id="closeHelpModalBtn" class="modal-close-btn" title="Cerrar">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="help-modal-body">
+                <p><strong>Bienvenido a Chrono HIIT</strong><br>
+                Un cronómetro de intervalos avanzado para tus entrenamientos. Estas son sus funciones principales:</p>
+
+                <h4>Configuración Principal:</h4>
+                <ul>
+                    <li><strong>Ejercicios / Serie:</strong> Define cuántos ejercicios diferentes componen una serie.</li>
+                    <li><strong>Series Totales:</strong> Establece el número total de series para tu rutina.</li>
+                    <li><strong>T. Ejercicio (s):</strong> Duración en segundos de cada fase de ejercicio.</li>
+                    <li><strong>T. Desc. Ej. (s):</strong> Duración del descanso entre ejercicios dentro de una misma serie.</li>
+                    <li><strong>T. Desc. Serie (s):</strong> Duración del descanso al finalizar una serie completa.</li>
+                </ul>
+
+                <h4>Nombres de Ejercicios:</h4>
+                <p>Puedes asignar nombres personalizados a tus ejercicios. El sistema ofrece sugerencias de ejercicios predefinidos (con imágenes) o nombres que hayas usado antes. Estos nombres se mostrarán durante el entrenamiento.</p>
+
+                <h4>Controles del Cronómetro:</h4>
+                <ul>
+                    <li><strong>Iniciar/Pausar/Reanudar:</strong> Controla el flujo del entrenamiento.</li>
+                    <li><strong>Reiniciar Ej.:</strong> (Aparece durante un ejercicio) Vuelve a empezar el ejercicio actual con una breve preparación.</li>
+                    <li><strong>Finalizar:</strong> Detiene el entrenamiento y resetea la configuración.</li>
+                </ul>
+
+                <h4>Funciones Adicionales:</h4>
+                <ul>
+                    <li><strong>Tema (Sol/Luna):</strong> Cambia entre tema claro y oscuro.</li>
+                    <li><strong>Pantalla Completa:</strong> Visualización sin distracciones durante el ejercicio.</li>
+                    <li><strong>Subir/Quitar Logo:</strong> Personaliza la interfaz con tu propio logo (se guarda localmente).</li>
+                    <li><strong>Exportar/Importar:</strong> Guarda tu configuración actual (tiempos, nombres, tema, logo) en un archivo JSON, o carga una configuración previamente guardada.</li>
+                    <li><strong>Guardar/Cargar Rutina:</strong> Guarda la configuración actual como una rutina con nombre para acceder rápidamente a ella más tarde.</li>
+                    <li><strong>Nombres:</strong> Gestiona la lista de nombres de ejercicios personalizados que has guardado.</li>
+                    <li><strong>Ver Ej.:</strong> Muestra una vista con imágenes y descripciones (si están disponibles) de los ejercicios configurados para la rutina actual.</li>
+                </ul>
+
+                <h4>Durante el Entrenamiento:</h4>
+                <ul>
+                    <li><strong>Indicadores de Progreso:</strong> Círculos visuales te muestran el ejercicio y la serie actual.</li>
+                    <li><strong>Pantalla de Tiempo:</strong> Muestra la fase actual (Preparación, Ejercicio, Descanso), el tiempo restante de la fase y el tiempo total acumulado.</li>
+                    <li><strong>Información de Ejercicio (Pantalla Completa):</strong> En modo pantalla completa, verás el ejercicio actual y el siguiente, junto con sus imágenes si están disponibles.</li>
+                    <li><strong>Alertas Sonoras:</strong> Sonidos te avisarán de los cambios de fase y puntos intermedios.</li>
+                </ul>
+                 <p>¡Disfruta de tus entrenamientos con Chrono HIIT!</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         let predefinedExercises = {};
         const DEFAULT_APP_LOGO_PATH = 'icons/android-icon-192x192.png';
@@ -674,6 +820,11 @@
             const saveRoutineBtn = getEl('saveRoutineBtn'), loadRoutineBtn = getEl('loadRoutineBtn'), loadRoutineScreenEl = getEl('loadRoutineScreen'), closeLoadRoutineBtn = getEl('closeLoadRoutineBtn'), loadRoutineListEl = getEl('loadRoutineList'), noRoutinesMsgEl = getEl('noRoutinesMessage');
             const activeExerciseInfoEl = getEl('activeExerciseInfo'), currentExerciseImageEl = getEl('currentExerciseImage'), currentExerciseCardNameEl = getEl('currentExerciseCardName'), currentExerciseCardTitleEl = getEl('currentExerciseCardTitle'), nextExerciseImageEl = getEl('nextExerciseImage'), nextExerciseCardNameEl = getEl('nextExerciseCardName'), nextExerciseCardEl = activeExerciseInfoEl ? activeExerciseInfoEl.querySelector('.next-exercise-card') : null;
             const actionButtonsSection = qS('.action-buttons-section');
+            
+            const openHelpModalBtn = getEl('openHelpModalBtn'), 
+                  helpModalScreenEl = getEl('helpModalScreen'), 
+                  closeHelpModalBtn = getEl('closeHelpModalBtn');
+
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { rootSt = getComputedStyle(document.documentElement); phaseColors = { preparacion: rootSt.getPropertyValue('--phase-prep').trim(), ejercicio: rootSt.getPropertyValue('--phase-ex').trim(), descanso: rootSt.getPropertyValue('--phase-rest').trim(), descanso_ejercicio: rootSt.getPropertyValue('--phase-rest').trim(), descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), finalizado: rootSt.getPropertyValue('--phase-end').trim() }; }
@@ -827,12 +978,27 @@
                 if(ejNamesContEl){ const nInps=ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach(i=>i.disabled=!enCfg); const nEj = numEjSel ? parseInt(numEjSel.value) : 0; ejNamesContEl.classList.toggle('hidden', isFs || !enCfg || nEj === 0); if(enCfg) popEjNameInputs(); }
                 logoEl.style.display = logoEl.classList.contains('hidden') ? 'none' : 'block';
                 if(timerDispSec){ timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); if(st==='initial'){ timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} if(cronoActEl) cronoActEl.textContent="00:00"; if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; if(curEjNameDispEl){curEjNameDispEl.textContent=''; curEjNameDispEl.classList.add('hidden');} curPhase=''; rePrep=false; if(ejProgEl)ejProgEl.innerHTML=''; if(serProgEl)serProgEl.innerHTML=''; if(activeExerciseInfoEl) activeExerciseInfoEl.classList.remove('js-visible-by-state'); } }
-                if(startBtn){ startBtn.classList.remove('paused'); const ico=startBtn.querySelector('i.feather'), txt=startBtn.querySelector('.btn-text'); if(st==='initial'){if(txt)txt.textContent="Iniciar"; if(ico)ico.setAttribute('data-feather','play');} else if(st==='running'){if(txt)txt.textContent="Pausar"; if(ico)ico.setAttribute('data-feather','pause');} else if(st==='paused'){if(txt)txt.textContent="Reanudar"; if(ico)ico.setAttribute('data-feather','play-circle'); startBtn.classList.add('paused');} else if(st==='finished'){if(txt)txt.textContent="Nuevo"; if(ico)ico.setAttribute('data-feather','refresh-cw');} if(ico && typeof feather!=='undefined')feather.replace(); }
+                
+                if(startBtn){
+                    startBtn.classList.remove('paused');
+                    let iconName = 'play';
+                    let buttonText = "Iniciar";
+
+                    if(st==='initial'){ /* default values are correct */ } 
+                    else if(st==='running'){ iconName = 'pause'; buttonText = "Pausar"; } 
+                    else if(st==='paused'){ iconName = 'play-circle'; buttonText = "Reanudar"; startBtn.classList.add('paused'); } 
+                    else if(st==='finished'){ iconName = 'refresh-cw'; buttonText = "Nuevo"; }
+                    
+                    startBtn.innerHTML = `<i data-feather="${iconName}"></i><span class="btn-text">${buttonText}</span>`;
+                }
+
                 if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep);
                 if(restartEjBtn){ const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show); }
                 if(st==='finished'){curPhase='finalizado';rePrep=false;}
                 if(progIndEl){ const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1); let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide); }
                 if(actionButtonsSection) actionButtonsSection.classList.toggle('hidden', isFs || (st === 'running' || st === 'paused'));
+                
+                if(typeof feather!=='undefined') feather.replace(); // Call feather.replace() after potential innerHTML changes
                 updUIDisp();
             }
             function phaseTick() { if (paused && !rePrep) return; if (rePrep) { if (phaseSecs <= RE_PREP_TIME && phaseSecs >= 1 && phaseSecs <= 3) playBeep(beepMidBuf); } else if (curPhase === 'ejercicio' && running) { if (cfg.tiempoEjercicio >= 20 && phaseSecs === Math.ceil(cfg.tiempoEjercicio / 2) && phaseSecs > 5) playBeep(beepMidBuf); if (phaseSecs <= 5 && phaseSecs >= 1) playBeep(beepMidBuf); } phaseSecs--; updUIDisp(); if (phaseSecs < 0) { if (rePrep) { rePrep = false; playBeep(beepStartBuf); startPhase('ejercicio', cfg.tiempoEjercicio); } else { if (running) { if (curPhase === 'ejercicio') { updProgCircles('exercise', curEj, true); if (curEj === cfg.numEjercicios) updProgCircles('series', curSer, true); } playBeep(beepEndBuf); } nextPhase(); } } }
@@ -849,22 +1015,134 @@
             if (startBtn) startBtn.onclick = () => { if (rePrep) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); }); else { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); } };
             if (finishBtn) finishBtn.onclick = () => { if (rePrep) return; finishWorkout(false); };
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
-            if (fsBtn) { const ico = fsBtn.querySelector('i.feather'); const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement); const togBFS = () => { if(!isFSE()){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(e=>{console.warn(`FS Err: ${e.message}`)}) ;else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else if(document.documentElement.msRequestFullscreen)document.documentElement.msRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen()}}; fsBtn.onclick = togBFS; const hFSC = () => { const isFS = isFSE(); bodyEl.classList.toggle('full-screen-mode', isFS); if(ico)ico.setAttribute('data-feather',isFS?'minimize':'maximize'); fsBtn.title=isFS?"Salir Pantalla Completa":"Modo Pantalla Completa"; if(typeof feather!=='undefined')feather.replace(); let cs; if(!running&&!paused&&curPhase==='')cs='initial';else if(curPhase==='finalizado')cs='finished';else if(paused)cs='paused';else cs='running'; setUI(cs); }; ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,hFSC));}
-            const thIco = themeBtn ? themeBtn.querySelector('i.feather') : null; if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); }; function applyTh(th) { bodyEl.classList.toggle('dark-theme', th === 'dark'); if (thIco) thIco.setAttribute('data-feather', th === 'dark' ? 'sun' : 'moon'); if (themeBtn) themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`; if (typeof feather !== 'undefined') feather.replace(); updPhaseColors(); updUIDisp(); }
+            
+            const isFSE = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+            const hFSC = () => {
+                const isFS = isFSE();
+                bodyEl.classList.toggle('full-screen-mode', isFS);
+                if (fsBtn) {
+                    fsBtn.innerHTML = `<i data-feather="${isFS ? 'minimize' : 'maximize'}"></i>`;
+                    fsBtn.title = isFS ? "Salir Pantalla Completa" : "Modo Pantalla Completa";
+                }
+                let cs;
+                if (!running && !paused && curPhase === '') cs = 'initial';
+                else if (curPhase === 'finalizado') cs = 'finished';
+                else if (paused) cs = 'paused';
+                else cs = 'running';
+                setUI(cs); // This will call feather.replace()
+            };
+            if (fsBtn) {
+                 fsBtn.onclick = () => {
+                    if (!isFSE()) {
+                        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(e => { console.warn(`FS Err: ${e.message}`) });
+                        else if (document.documentElement.webkitRequestFullscreen) document.documentElement.webkitRequestFullscreen();
+                        else if (document.documentElement.msRequestFullscreen) document.documentElement.msRequestFullscreen();
+                    } else {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                        else if (document.msExitFullscreen) document.msExitFullscreen();
+                    }
+                };
+                ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(ev => document.addEventListener(ev, hFSC));
+            }
+
+            function applyTh(th) {
+                bodyEl.classList.toggle('dark-theme', th === 'dark');
+                if (themeBtn) {
+                    themeBtn.innerHTML = `<i data-feather="${th === 'dark' ? 'sun' : 'moon'}"></i>`;
+                    themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`;
+                }
+                if (typeof feather !== 'undefined') feather.replace();
+                updPhaseColors();
+                updUIDisp();
+            }
+            if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); };
+            
             if(uploadLogoBtn)uploadLogoBtn.onclick=()=>logoUploadIn.click(); if(logoUploadIn)logoUploadIn.onchange=handleLogoUpload; if(remLogoBtn)remLogoBtn.onclick=remLogo;
             async function getCurCfgObj(forRoutineSave = false){ const currentConfig = { numEjercicios: parseInt(numEjSel.value), numSeries: parseInt(numSerSel.value), tiempoEjercicio: parseInt(tEjSel.value), descansoEjercicio: parseInt(dEjSel.value), descansoSerie: parseInt(dSerSel.value) }; const exerciseNames = []; const nInps = ejNamesContEl.querySelectorAll('input[type="text"]'); nInps.forEach((inp, i) => { exerciseNames[i] = inp.value.trim() || `Ejercicio ${i + 1}`; }); for (let i = exerciseNames.length; i < currentConfig.numEjercicios; i++) exerciseNames[i] = `Ejercicio ${i + 1}`; if (forRoutineSave) { return { config: currentConfig, exerciseNames: exerciseNames }; } else { return { ...currentConfig, exerciseNames: exerciseNames, theme: localStorage.getItem('theme') || 'light', allExerciseNames: Array.from(allEjNamesSet), userLogoBase64: (logoEl.src && logoEl.src !== '#' && !logoEl.classList.contains('hidden') && logoEl.src !== DEFAULT_APP_LOGO_PATH) ? logoEl.src : null }; } }
-            if(exportBtn)exportBtn.onclick=async()=>{const s=await getCurCfgObj(false),j=JSON.stringify(s,null,2),b=new Blob([j],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='chrono_hiit_settings.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);if(typeof feather!=='undefined')feather.replace()};
-            if(importBtn)importBtn.onclick=()=>{importIn.click();if(typeof feather!=='undefined')feather.replace()};
+            if(exportBtn)exportBtn.onclick=async()=>{const s=await getCurCfgObj(false),j=JSON.stringify(s,null,2),b=new Blob([j],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='chrono_hiit_settings.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);};
+            if(importBtn)importBtn.onclick=()=>{importIn.click();};
             if(importIn)importIn.onchange=async e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=async ev=>{try{const s=JSON.parse(ev.target.result);await applyImpCfg(s);alert('Conf. importada. La página se recargará.'); window.location.reload();}catch(err){console.error('Err import conf:',err);alert('Err import.')}};r.readAsText(f);e.target.value=null}};
             async function applyImpCfg(s){if(!s)return;if(s.numEjercicios!==undefined)numEjSel.value=s.numEjercicios;if(s.numSeries!==undefined)numSerSel.value=s.numSeries;if(s.tiempoEjercicio!==undefined)tEjSel.value=s.tiempoEjercicio;if(s.descansoEjercicio!==undefined)dEjSel.value=s.descansoEjercicio;if(s.descansoSerie!==undefined)dSerSel.value=s.descansoSerie;if(s.theme){localStorage.setItem('theme',s.theme);}if(s.allExerciseNames&&Array.isArray(s.allExerciseNames)){allEjNamesSet=new Set(s.allExerciseNames);await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv', EJ_NAMES_K, Array.from(allEjNamesSet))}cfg.exerciseNames=s.exerciseNames||[];if(s.userLogoBase64){try{await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv',LOGO_K,s.userLogoBase64);}catch(e){console.error('Err save imported logo:',e)}}else if(s.hasOwnProperty('userLogoBase64') && s.userLogoBase64===null){try{await dbAction(USER_SETTINGS_STORE, 'readwrite', 'delete',LOGO_K);}catch(e){console.error('Err rem logo from import:',e)}}}
-            function popExplGrid(){ if(!explGridEl||!numEjSel)return; explGridEl.innerHTML=''; const numEj=parseInt(numEjSel.value)||0,ejNameInps=ejNamesContEl.querySelectorAll('input[type="text"]'); for(let i=0;i<numEj;i++){ const itmD=document.createElement('div');itmD.className='explanation-item'; const numS=document.createElement('span');numS.className='explanation-item-number';numS.textContent=i+1; const nameS=document.createElement('span');nameS.className='explanation-item-name'; let curEjName=`Ejercicio ${i+1}`; if(ejNameInps[i]&&ejNameInps[i].value.trim()){curEjName=ejNameInps[i].value.trim()}else if(cfg&&cfg.exerciseNames&&cfg.exerciseNames[i]){curEjName=cfg.exerciseNames[i]} nameS.textContent=curEjName; const imgCont=document.createElement('div');imgCont.className='explanation-item-image-container'; const imgEl=document.createElement('img');imgEl.className='explanation-item-image'; if(predefinedExercises[curEjName]&&predefinedExercises[curEjName].image){ imgEl.src=predefinedExercises[curEjName].image; imgEl.alt=curEjName; }else{ imgEl.src='images/generic.webp'; imgEl.alt=curEjName; } imgCont.appendChild(imgEl); itmD.append(numS,nameS,imgCont); explGridEl.appendChild(itmD) } }
-            if(showExplBtn && explScreenEl && closeExplBtn && toggleExplFSBtn){ showExplBtn.onclick = () => { popExplGrid(); explScreenEl.classList.remove('hidden', 'modal-fullscreen-active'); const icon = toggleExplFSBtn.querySelector('i.feather'); if(icon) icon.setAttribute('data-feather', 'maximize-2'); toggleExplFSBtn.title = "Maximizar Vista"; bodyEl.style.overflow = 'hidden'; if(typeof feather !== 'undefined') feather.replace(); }; const closeExplModal = () => { explScreenEl.classList.add('hidden'); explScreenEl.classList.remove('modal-fullscreen-active'); const icon = toggleExplFSBtn.querySelector('i.feather'); if(icon) icon.setAttribute('data-feather', 'maximize-2'); toggleExplFSBtn.title = "Maximizar Vista"; bodyEl.style.overflow = ''; if(typeof feather !== 'undefined') feather.replace(); }; closeExplBtn.onclick = closeExplModal; toggleExplFSBtn.onclick = () => { explScreenEl.classList.toggle('modal-fullscreen-active'); const isModalFS = explScreenEl.classList.contains('modal-fullscreen-active'); const icon = toggleExplFSBtn.querySelector('i.feather'); if(icon) icon.setAttribute('data-feather', isModalFS ? 'minimize-2' : 'maximize-2'); toggleExplFSBtn.title = isModalFS ? "Restaurar Vista" : "Maximizar Vista"; if(typeof feather !== 'undefined') feather.replace(); }; window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!explScreenEl.classList.contains('hidden')) closeExplModal(); }); explScreenEl.onclick=e=>{if(e.target===explScreenEl) closeExplModal(); }; }
+            
+            function popExplGrid(){
+                if(!explGridEl||!numEjSel)return;
+                explGridEl.innerHTML='';
+                const numEj=parseInt(numEjSel.value)||0,
+                      ejNameInps=ejNamesContEl.querySelectorAll('input[type="text"]');
+
+                for(let i=0;i<numEj;i++){
+                    const itmD=document.createElement('div');
+                    itmD.className='explanation-item';
+
+                    const numS=document.createElement('span');
+                    numS.className='explanation-item-number';
+                    numS.textContent=i+1;
+
+                    const nameS=document.createElement('span');
+                    nameS.className='explanation-item-name';
+                    let curEjName=`Ejercicio ${i+1}`;
+                    if(ejNameInps[i]&&ejNameInps[i].value.trim()){
+                        curEjName=ejNameInps[i].value.trim()
+                    } else if(cfg&&cfg.exerciseNames&&cfg.exerciseNames[i]){
+                        curEjName=cfg.exerciseNames[i]
+                    }
+                    nameS.textContent=curEjName;
+                    
+                    const descP = document.createElement('p');
+                    descP.className = 'explanation-item-description';
+                    if (predefinedExercises[curEjName] && predefinedExercises[curEjName].description) {
+                        descP.textContent = predefinedExercises[curEjName].description;
+                    }
+
+                    const imgCont=document.createElement('div');
+                    imgCont.className='explanation-item-image-container';
+                    const imgEl=document.createElement('img');
+                    imgEl.className='explanation-item-image';
+
+                    if(predefinedExercises[curEjName] && predefinedExercises[curEjName].image){
+                        imgEl.src=predefinedExercises[curEjName].image;
+                        imgEl.alt=curEjName;
+                    } else {
+                        imgEl.src='images/generic.webp';
+                        imgEl.alt=curEjName;
+                    }
+                    imgCont.appendChild(imgEl);
+
+                    itmD.append(numS, nameS, descP, imgCont); 
+                    explGridEl.appendChild(itmD);
+                }
+            }
+
+            if(showExplBtn && explScreenEl && closeExplBtn && toggleExplFSBtn){ showExplBtn.onclick = () => { popExplGrid(); explScreenEl.classList.remove('hidden', 'modal-fullscreen-active'); if(toggleExplFSBtn.firstChild) toggleExplFSBtn.innerHTML = '<i data-feather="maximize-2"></i>'; toggleExplFSBtn.title = "Maximizar Vista"; bodyEl.style.overflow = 'hidden'; if(typeof feather !== 'undefined') feather.replace(); }; const closeExplModal = () => { explScreenEl.classList.add('hidden'); explScreenEl.classList.remove('modal-fullscreen-active'); if(toggleExplFSBtn.firstChild) toggleExplFSBtn.innerHTML = '<i data-feather="maximize-2"></i>'; toggleExplFSBtn.title = "Maximizar Vista"; bodyEl.style.overflow = ''; if(typeof feather !== 'undefined') feather.replace(); }; closeExplBtn.onclick = closeExplModal; toggleExplFSBtn.onclick = () => { explScreenEl.classList.toggle('modal-fullscreen-active'); const isModalFS = explScreenEl.classList.contains('modal-fullscreen-active'); if(toggleExplFSBtn.firstChild) toggleExplFSBtn.innerHTML = `<i data-feather="${isModalFS ? 'minimize-2' : 'maximize-2'}"></i>`; toggleExplFSBtn.title = isModalFS ? "Restaurar Vista" : "Maximizar Vista"; if(typeof feather !== 'undefined') feather.replace(); }; window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!explScreenEl.classList.contains('hidden')) closeExplModal(); }); explScreenEl.onclick=e=>{if(e.target===explScreenEl) closeExplModal(); }; }
             function populateManageNamesModal() { if (!manageNamesListEl || !noNamesMsgEl) return; manageNamesListEl.innerHTML = ''; const sortedNames = Array.from(allEjNamesSet).sort((a, b) => a.localeCompare(b)); noNamesMsgEl.classList.toggle('hidden', sortedNames.length > 0); sortedNames.forEach(name => { const li = document.createElement('li'); const nameSpan = document.createElement('span'); nameSpan.className = 'managed-name-text'; nameSpan.textContent = name; const deleteBtn = document.createElement('button'); deleteBtn.className = 'delete-name-btn'; deleteBtn.innerHTML = '<i data-feather="trash-2"></i>'; deleteBtn.title = `Eliminar "${name}"`; deleteBtn.onclick = async () => { if (confirm(`¿Seguro que quieres eliminar "${name}"?`)) { if (await removeEjNameFromGlobal(name)) { li.remove(); popEjNameInputs(); if (manageNamesListEl.children.length === 0) noNamesMsgEl.classList.remove('hidden'); } else alert(`Error eliminando "${name}".`); } }; li.append(nameSpan, deleteBtn); manageNamesListEl.appendChild(li); }); if (typeof feather !== 'undefined') feather.replace(); }
-            if (manageNamesBtn && manageNamesScreenEl && closeManageNamesBtn) { manageNamesBtn.onclick = () => { populateManageNamesModal(); manageNamesScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; if (typeof feather !== 'undefined') feather.replace(); }; const closeManageModal = () => { manageNamesScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; popEjNameInputs(); }; closeManageNamesBtn.onclick = closeManageModal; window.addEventListener('keydown', e => { if (e.key === 'Escape' && !manageNamesScreenEl.classList.contains('hidden')) closeManageModal(); }); manageNamesScreenEl.onclick = e => { if (e.target === manageNamesScreenEl) closeManageModal(); }; }
+            if (manageNamesBtn && manageNamesScreenEl && closeManageNamesBtn) { manageNamesBtn.onclick = () => { populateManageNamesModal(); manageNamesScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; }; const closeManageModal = () => { manageNamesScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; popEjNameInputs(); }; closeManageNamesBtn.onclick = closeManageModal; window.addEventListener('keydown', e => { if (e.key === 'Escape' && !manageNamesScreenEl.classList.contains('hidden')) closeManageModal(); }); manageNamesScreenEl.onclick = e => { if (e.target === manageNamesScreenEl) closeManageModal(); }; }
             async function saveCurrentRoutine() { const routineName = prompt("Nombre para esta rutina:", `Rutina ${new Date().toLocaleDateString()}`); if (!routineName || routineName.trim() === "") { alert("Nombre inválido."); return; } const routineConfig = await getCurCfgObj(true); const routineToSave = { nombreRutina: routineName.trim(), config: routineConfig.config, exerciseNames: routineConfig.exerciseNames }; try { await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'put', routineToSave); alert(`Rutina "${routineToSave.nombreRutina}" guardada.`); } catch (err) { console.error("Error guardando rutina:", err); if (err.name === 'ConstraintError') { alert("Error: Ya existe rutina con ese nombre."); } else { alert("Error al guardar rutina."); } } }
             async function populateLoadRoutineModal() { if (!loadRoutineListEl || !noRoutinesMsgEl) return; loadRoutineListEl.innerHTML = ''; try { const routines = await dbAction(SAVED_ROUTINES_STORE, 'readonly', 'getAll') || []; noRoutinesMsgEl.classList.toggle('hidden', routines.length > 0); if (routines.length > 0) { routines.sort((a,b) => a.nombreRutina.localeCompare(b.nombreRutina)).forEach(r => { const li = document.createElement('li'); const nameSpan = document.createElement('span'); nameSpan.className = 'routine-name-text'; nameSpan.textContent = r.nombreRutina; const actionsDiv = document.createElement('div'); actionsDiv.className = 'routine-actions'; const loadBtn = document.createElement('button'); loadBtn.className = 'routine-action-btn'; loadBtn.innerHTML = '<i data-feather="download-cloud"></i> Cargar'; loadBtn.onclick = () => { numEjSel.value = r.config.numEjercicios; numSerSel.value = r.config.numSeries; tEjSel.value = r.config.tiempoEjercicio; dEjSel.value = r.config.descansoEjercicio; dSerSel.value = r.config.descansoSerie; cfg.exerciseNames = r.exerciseNames || []; allSels.forEach(sel => sel.dispatchEvent(new Event('change'))); popEjNameInputs(); calcEstTime(); if (running) finishWorkout(false); else setUI('initial'); loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = ''; alert(`Rutina "${r.nombreRutina}" cargada.`); }; const deleteBtn = document.createElement('button'); deleteBtn.className = 'routine-action-btn'; deleteBtn.innerHTML = '<i data-feather="trash-2"></i> Eliminar'; deleteBtn.onclick = async () => { if (confirm(`¿Eliminar rutina "${r.nombreRutina}"?`)) { try { await dbAction(SAVED_ROUTINES_STORE, 'readwrite', 'delete', r.nombreRutina); populateLoadRoutineModal(); } catch (err) { console.error("Error eliminando rutina:", err); alert("Error al eliminar rutina."); } } }; actionsDiv.append(loadBtn, deleteBtn); li.append(nameSpan, actionsDiv); loadRoutineListEl.appendChild(li); }); } } catch (err) { console.error("Error cargando rutinas:", err); noRoutinesMsgEl.classList.remove('hidden'); } if (typeof feather !== 'undefined') feather.replace(); }
             if (saveRoutineBtn) saveRoutineBtn.onclick = saveCurrentRoutine;
-            if (loadRoutineBtn && loadRoutineScreenEl && closeLoadRoutineBtn) { loadRoutineBtn.onclick = () => { populateLoadRoutineModal(); loadRoutineScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden'; if (typeof feather !== 'undefined') feather.replace();}; const closeLoadModal = () => { loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = '';}; closeLoadRoutineBtn.onclick = closeLoadModal; window.addEventListener('keydown', e => { if (e.key === 'Escape' && !loadRoutineScreenEl.classList.contains('hidden')) closeLoadModal(); }); loadRoutineScreenEl.onclick = e => { if (e.target === loadRoutineScreenEl) closeLoadModal(); }; }
+            if (loadRoutineBtn && loadRoutineScreenEl && closeLoadRoutineBtn) { loadRoutineBtn.onclick = () => { populateLoadRoutineModal(); loadRoutineScreenEl.classList.remove('hidden'); bodyEl.style.overflow = 'hidden';}; const closeLoadModal = () => { loadRoutineScreenEl.classList.add('hidden'); bodyEl.style.overflow = '';}; closeLoadRoutineBtn.onclick = closeLoadModal; window.addEventListener('keydown', e => { if (e.key === 'Escape' && !loadRoutineScreenEl.classList.contains('hidden')) closeLoadModal(); }); loadRoutineScreenEl.onclick = e => { if (e.target === loadRoutineScreenEl) closeLoadModal(); }; }
+
+            if (openHelpModalBtn && helpModalScreenEl && closeHelpModalBtn) {
+                openHelpModalBtn.onclick = () => {
+                    helpModalScreenEl.classList.remove('hidden');
+                    bodyEl.style.overflow = 'hidden';
+                };
+                const closeHelpModal = () => {
+                    helpModalScreenEl.classList.add('hidden');
+                    bodyEl.style.overflow = '';
+                };
+                closeHelpModalBtn.onclick = closeHelpModal;
+                window.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && !helpModalScreenEl.classList.contains('hidden')) {
+                        closeHelpModal();
+                    }
+                });
+                helpModalScreenEl.onclick = e => {
+                    if (e.target === helpModalScreenEl) {
+                        closeHelpModal();
+                    }
+                };
+            }
 
             // --- Initial Setup ---
             try {
@@ -872,8 +1150,8 @@
                 popSel(numEjSel, 1, 20, 1, 4); popSel(numSerSel, 1, 10, 1, 3); popSel(tEjSel, 30, 90, 5, 45); popSel(dEjSel, 15, 30, 5, 15); popSel(dSerSel, 30, 120, 15, 60);
                 calcEstTime();
                 const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                applyTh(savedTh);
-                setUI('initial');
+                applyTh(savedTh); 
+                setUI('initial'); 
                 popEjNameInputs();
                 if (typeof feather !== 'undefined') feather.replace();
             } catch (err) {
