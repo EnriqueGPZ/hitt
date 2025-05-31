@@ -271,7 +271,6 @@
             font-size: 0.9em; 
             color: var(--color-txt-sec);
             background-color: var(--sel-bg);
-            /* --- MODIFIED --- HR Box Border Color */
             border: 1px solid var(--sel-brd); 
             border-radius: var(--brd-rad-sm);
             text-align: center;
@@ -281,9 +280,7 @@
             transition: font-size 0.3s ease, padding 0.3s ease, background-color 0.3s ease; 
         }
         #heartRateDisplayArea.connected {
-            /* --- MODIFIED --- Border color for connected state - uses default --sel-brd from above */
-            /* border-color: var(--sel-brd);  No longer needs specific override here if it matches default */
-            color: var(--color-txt-prim); /* Keep primary text color for "Ritmo Cardíaco:" label */
+            color: var(--color-txt-prim); 
         }
         #heartRateDisplayArea.workout-active { 
             font-size: 1.2em; 
@@ -292,7 +289,6 @@
         }
         #hrValue {
             font-weight: 700;
-            /* --- MODIFIED --- HR Value Color to primary text color */
             color: var(--color-txt-prim); 
             margin-left: 5px;
         }
@@ -510,10 +506,9 @@
             font-weight: 700;
             color: var(--color-txt-prim);
         }
-        /* Style for the new list of HR brands */
         .help-modal-body .brand-list {
             font-size: 0.9em;
-            column-count: 2; /* Show brands in two columns if space allows */
+            column-count: 2; 
             column-gap: 20px;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -526,7 +521,6 @@
                 column-count: 1;
             }
         }
-
 
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
@@ -572,7 +566,7 @@
         #manageNamesList .delete-name-btn:hover, #loadRoutineList .routine-action-btn:hover { border-color:var(--phase-end); color:var(--phase-end); }
         #manageNamesList .delete-name-btn i.feather, #loadRoutineList .routine-action-btn i.feather { width:1em; height:1em; vertical-align: middle; margin-right: 3px;}
         #loadRoutineList .routine-actions { display: flex; gap: 5px; flex-shrink: 0; }
-        .no-items-message { margin-top: 20px; color: var(--color-txt-sec); }
+        .no-items-message { margin-top: 20px; color: var(--color-txt-sec); text-align: center;}
 
         #exerciseGuideList {
             display: grid;
@@ -593,6 +587,91 @@
             margin-bottom: 0; 
         }
 
+        /* Styles for Workout Summary Modal */
+        .workout-summary-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            line-height: 1.5;
+            font-size: 0.9em;
+            padding: 0 5px; /* Add some padding to the body */
+        }
+        .summary-stats-top {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--color-prim-acc);
+            margin-bottom: 10px;
+        }
+        .summary-stats-top p {
+            margin: 0;
+            font-size: 1em;
+        }
+        .summary-stats-top strong {
+            color: var(--color-txt-prim);
+        }
+
+        .summary-hr-chart-container,
+        .summary-pie-chart-container {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+            border: 1px solid var(--sel-brd);
+            border-radius: var(--brd-rad-sm);
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: var(--sel-bg);
+        }
+        .summary-pie-chart-container {
+            height: 250px; 
+        }
+        .workout-summary-body h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--color-hl);
+            margin-top: 10px;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            border-bottom: 1px solid var(--color-prim-acc);
+            padding-bottom: 5px;
+        }
+        .summary-zone-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .summary-zone-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 5px;
+            border-radius: var(--brd-rad-sm);
+            background-color: color-mix(in srgb, var(--color-bg) 50%, transparent);
+        }
+        .zone-color-indicator {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .zone-name {
+            flex-grow: 1;
+            font-weight: 500;
+            color: var(--color-txt-prim);
+        }
+        .zone-time, .zone-percentage {
+            font-weight: 700;
+            color: var(--color-txt-sec);
+            min-width: 70px; 
+            text-align: right;
+        }
+        .zone-percentage {
+            min-width: 60px;
+            font-weight: normal;
+        }
+
+
         @media (min-width: 769px) {
             #explanationScreen:not(.modal-fullscreen-active) .explanation-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
             #explanationScreen:not(.modal-fullscreen-active) .modal-content { max-width: 900px; }
@@ -606,6 +685,9 @@
             #exerciseGuideList {
                  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
                  gap: 20px;
+            }
+            #workoutSummaryScreen .modal-content {
+                 max-width: 700px; /* Slightly wider for summary */
             }
         }
         @media (max-width:768px) {
@@ -623,6 +705,14 @@
             .explanation-item-number { font-size:1.8em; }
             .explanation-item-name { font-size:1em; margin-bottom: 5px; }
             #hrChartContainer { height: 120px; }
+        }
+        @media (max-width:600px) {
+            .summary-hr-chart-container { height: 180px; }
+            .summary-pie-chart-container { height: 220px; }
+            .summary-zone-item { font-size: 0.9em; }
+            .zone-name { flex-basis: 40%; } /* Give more space to name on small screens */
+            .zone-time { min-width: 65px; }
+            .zone-percentage { min-width: 55px; }
         }
         @media (max-width:480px) {
             body:not(.full-screen-mode) .controls-section button { padding:10px 12px; font-size:.85em; }
@@ -673,6 +763,10 @@
             }
             .explanation-item { min-height:200px; }
             .explanation-item-image-container { height:80px; }
+            .summary-zone-item { flex-wrap: wrap; } /* Allow wrapping for very small screens */
+            .zone-name { flex-basis: 100%; margin-bottom: 3px; }
+            .zone-time, .zone-percentage { flex-basis: 45%; text-align: left; }
+
         }
         @media (max-width:360px) {
             body:not(.full-screen-mode) .container { padding:20px 15px; }
@@ -895,7 +989,7 @@
                     <li><strong>Guardar/Cargar Rutina:</strong> Guarda la configuración actual como una rutina con nombre para acceder rápidamente a ella más tarde.</li>
                     <li><strong>Nombres:</strong> Gestiona la lista de nombres de ejercicios personalizados que has guardado.</li>
                     <li><strong>Ver Ej.:</strong> Muestra una vista con imágenes y descripciones (si están disponibles) de los ejercicios configurados para la rutina actual.</li>
-                    <li><strong>Pulsera (Bluetooth):</strong> Conecta una pulsera de ritmo cardíaco compatible para ver tus pulsaciones y una gráfica en tiempo real.</li>
+                    <li><strong>Pulsera (Bluetooth):</strong> Conecta una pulsera de ritmo cardíaco compatible para ver tus pulsaciones y una gráfica en tiempo real. Al finalizar, se mostrará un resumen con el tiempo en cada zona cardíaca.</li>
                 </ul>
 
                 <h4>Conexión de Pulsera Cardíaca (Bluetooth):</h4>
@@ -939,7 +1033,7 @@
                     <li><strong>Pantalla de Tiempo:</strong> Muestra la fase actual (Preparación, Ejercicio, Descanso), el tiempo restante de la fase y el tiempo total acumulado.</li>
                     <li><strong>Información de Ejercicio (Pantalla Completa):</strong> En modo pantalla completa, verás el ejercicio actual y el siguiente, junto con sus imágenes si están disponibles.</li>
                     <li><strong>Alertas Sonoras:</strong> Sonidos te avisarán de los cambios de fase y puntos intermedios.</li>
-                    <li><strong>Ritmo Cardíaco:</strong> Si una pulsera está conectada, se mostrarán tus pulsaciones por minuto (BPM) y una gráfica de tu ritmo cardíaco.</li>
+                    <li><strong>Ritmo Cardíaco:</strong> Si una pulsera está conectada, se mostrarán tus pulsaciones por minuto (BPM) y una gráfica de tu ritmo cardíaco. Al finalizar el entrenamiento, si se recogieron datos de HR, se mostrará un modal con el resumen de la sesión, incluyendo tiempo en zonas cardíacas y gráficas.</li>
                 </ul>
                  <p>¡Disfruta de tus entrenamientos con Chrono HIIT!</p>
             </div>
@@ -963,6 +1057,35 @@
             </p>
         </div>
     </div>
+
+    <div id="workoutSummaryScreen" class="modal-screen hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Resumen del Ejercicio</h2>
+                <div class="modal-header-buttons">
+                    <button id="closeWorkoutSummaryBtn" class="modal-close-btn" title="Cerrar"><i data-feather="x"></i></button>
+                </div>
+            </div>
+            <div class="workout-summary-body">
+                <div class="summary-stats-top">
+                    <p><strong>Tiempo Total:</strong> <span id="summaryTotalTime">00:00:00</span></p>
+                    <p><strong>Máx. BPM:</strong> <span id="summaryMaxHr">-</span></p>
+                </div>
+                <div id="summaryHrChartContainerParent" class="summary-hr-chart-container">
+                    <canvas id="summaryHrChartCanvas"></canvas>
+                </div>
+                <h3>Tiempo en Zonas Cardíacas:</h3>
+                <div id="summaryZoneStatsContainer" class="summary-zone-stats">
+                    <!-- Zone stats will be populated here -->
+                </div>
+                <div id="summaryZonePieChartContainerParent" class="summary-pie-chart-container">
+                    <canvas id="summaryZonePieChartCanvas"></canvas>
+                </div>
+                <p id="noSummaryDataMessage" class="no-items-message hidden">No hay datos de ritmo cardíaco para mostrar en el resumen.</p>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // Chart.register(ChartAnnotation); // No es necesario registrar explícitamente si se carga después de Chart.js
@@ -1066,6 +1189,20 @@
             const hrChartContainerEl = getEl('hrChartContainer');
             const hrChartCanvasEl = getEl('hrChart');
 
+            // Workout Summary Modal Elements
+            const workoutSummaryScreenEl = getEl('workoutSummaryScreen');
+            const closeWorkoutSummaryBtn = getEl('closeWorkoutSummaryBtn');
+            const summaryTotalTimeEl = getEl('summaryTotalTime');
+            const summaryMaxHrEl = getEl('summaryMaxHr');
+            const summaryHrChartCanvasEl = getEl('summaryHrChartCanvas');
+            const summaryHrChartContainerParentEl = getEl('summaryHrChartContainerParent'); // Parent for hiding
+            const summaryZoneStatsContainerEl = getEl('summaryZoneStatsContainer');
+            const summaryZonePieChartCanvasEl = getEl('summaryZonePieChartCanvas');
+            const summaryZonePieChartContainerParentEl = getEl('summaryZonePieChartContainerParent'); // Parent for hiding
+            const noSummaryDataMessageEl = getEl('noSummaryDataMessage');
+            let summaryHrChartInstance = null;
+            let summaryZonePieChartInstance = null;
+
 
             let rootSt = getComputedStyle(document.documentElement), phaseColors = {};
             function updPhaseColors() { 
@@ -1085,7 +1222,6 @@
                     const newPointColor = rootSt.getPropertyValue('--chart-point-color').trim();
                     const newAnnotationBoxBg = rootSt.getPropertyValue('--chart-annotation-box-bg').trim();
 
-
                     hrChartInstance.options.scales.x.grid.color = newGridColor;
                     hrChartInstance.options.scales.y.grid.color = newGridColor;
                     hrChartInstance.options.scales.x.ticks.color = newTickColor;
@@ -1099,6 +1235,23 @@
                     }
                     hrChartInstance.update('none'); 
                 }
+                // Update summary charts if they exist
+                if (summaryHrChartInstance) {
+                    summaryHrChartInstance.options.scales.x.ticks.color = rootSt.getPropertyValue('--chart-tick-color').trim();
+                    summaryHrChartInstance.options.scales.y.ticks.color = rootSt.getPropertyValue('--chart-tick-color').trim();
+                    summaryHrChartInstance.options.scales.x.grid.color = rootSt.getPropertyValue('--chart-grid-color').trim();
+                    summaryHrChartInstance.options.scales.y.grid.color = rootSt.getPropertyValue('--chart-grid-color').trim();
+                    summaryHrChartInstance.data.datasets[0].borderColor = rootSt.getPropertyValue('--chart-line-color').trim();
+                    summaryHrChartInstance.data.datasets[0].backgroundColor = rootSt.getPropertyValue('--chart-line-color').trim().replace(')', ', 0.3)').replace('rgb', 'rgba');
+                    summaryHrChartInstance.update('none');
+                }
+                if (summaryZonePieChartInstance) {
+                    summaryZonePieChartInstance.options.plugins.legend.labels.color = rootSt.getPropertyValue('--color-txt-prim').trim();
+                    summaryZonePieChartInstance.data.datasets[0].borderColor = rootSt.getPropertyValue('--color-surf').trim();
+                    // Colors for pie segments are set directly from hrZones, so they don't need dynamic CSS var updates here
+                    summaryZonePieChartInstance.update('none');
+                }
+
             }
 
             let audioCtx, beepStartBuf, beepEndBuf, beepMidBuf;
@@ -1118,10 +1271,9 @@
             let hrServer = null;
             let hrChartInstance = null;
             let fullHrHistory = { labels: [], data: [] }; 
-            const MAX_CHART_POINTS_DISPLAY = 60; // For the live chart view
+            const MAX_CHART_POINTS_DISPLAY = 60; 
             const CHART_X_AXIS_LABELS = ["-60s", "-45s", "-30s", "-15s", "Ahora"]; 
 
-            // --- NEW --- Heart Rate Zones Definitions (as per image)
             const hrZones = {
                 limit:     { min: 145, max: Infinity, color: '#F44336', label: 'Límite (>144bpm)', time: 0, id:'limit' },
                 anaerobic: { min: 128, max: 144,    color: '#FF9800', label: 'Anaeróbico (128-144bpm)', time: 0, id:'anaerobic' },
@@ -1130,7 +1282,7 @@
                 warmup:    { min: 0,   max: 95,     color: '#03A9F4', label: 'Calentamiento (<96bpm)', time: 0, id:'warmup' }
             };
             let currentSessionMaxHr = 0;
-            let lastHrTimestamp = 0; // To calculate duration between HR readings
+            let lastHrTimestamp = 0;
 
 
             const openDB = () => new Promise((res, rej) => { 
@@ -1360,7 +1512,7 @@
                 
                 fullHrHistory.labels = []; 
                 fullHrHistory.data = [];
-                resetZoneTimes(); // Reset zone times and max HR for the new session
+                resetZoneTimes(); 
 
                 if (hrChartInstance) { 
                     hrChartInstance.data.labels = [...CHART_X_AXIS_LABELS];
@@ -1374,6 +1526,135 @@
             }
             function pauseWorkout() { if (!running || paused || rePrep) return; paused = true; setUI('paused'); }
             function resumeWorkout() { if (!running || !paused || rePrep) return; if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().then(() => { paused = false; setUI('running'); }).catch(e => console.error("Resume AC err:", e)); else { paused = false; setUI('running'); } }
+            
+            async function showWorkoutSummaryModal() {
+                if (!workoutSummaryScreenEl || !summaryTotalTimeEl || !summaryMaxHrEl || 
+                    !summaryHrChartCanvasEl || !summaryZoneStatsContainerEl || !summaryZonePieChartCanvasEl ||
+                    !summaryHrChartContainerParentEl || !summaryZonePieChartContainerParentEl || !noSummaryDataMessageEl) {
+                    console.error("Summary modal elements not found.");
+                    return;
+                }
+                
+                const hasHrData = fullHrHistory.data.length > 0;
+                noSummaryDataMessageEl.classList.toggle('hidden', hasHrData);
+
+                summaryTotalTimeEl.textContent = fmtTotalTime(totalSecs);
+                summaryMaxHrEl.textContent = currentSessionMaxHr > 0 ? currentSessionMaxHr : '-';
+
+                summaryZoneStatsContainerEl.innerHTML = ''; 
+                const zoneDataForPie = [];
+                const zoneLabelsForPie = [];
+                const zoneColorsForPie = [];
+                const zoneOrder = ['limit', 'anaerobic', 'aerobic', 'fatBurning', 'warmup'];
+
+                for (const zoneId of zoneOrder) {
+                    const zone = hrZones[zoneId];
+                    if (zone) {
+                        const percentage = totalSecs > 0 ? (zone.time / totalSecs) * 100 : 0;
+                        const currentZonePercentage = parseFloat(percentage.toFixed(1));
+
+                        const zoneItemEl = document.createElement('div');
+                        zoneItemEl.className = 'summary-zone-item';
+                        zoneItemEl.innerHTML = `
+                            <span class="zone-color-indicator" style="background-color: ${zone.color};"></span>
+                            <span class="zone-name">${zone.label}</span>
+                            <span class="zone-time">${fmtTotalTime(Math.round(zone.time))}</span>
+                            <span class="zone-percentage">(${currentZonePercentage}%)</span>
+                        `;
+                        summaryZoneStatsContainerEl.appendChild(zoneItemEl);
+
+                        // Add to pie chart data only if there's time or if it's part of the structure
+                        // Ensure a slice is added even if percentage is 0, if we want all zones in legend
+                        zoneDataForPie.push(currentZonePercentage); 
+                        zoneLabelsForPie.push(zone.label.substring(0, zone.label.indexOf('(') > 0 ? zone.label.indexOf('(') : zone.label.length).trim());
+                        zoneColorsForPie.push(zone.color);
+                    }
+                }
+                
+                summaryHrChartContainerParentEl.classList.toggle('hidden', !hasHrData);
+                if (summaryHrChartInstance) summaryHrChartInstance.destroy();
+                if (hasHrData) {
+                    const minHr = Math.max(0, Math.min(...fullHrHistory.data) - 10);
+                    const maxHr = Math.max(60, Math.max(...fullHrHistory.data) + 10);
+
+                    summaryHrChartInstance = new Chart(summaryHrChartCanvasEl, {
+                        type: 'line',
+                        data: {
+                            labels: fullHrHistory.labels.map((_, i) => i + 1), // Use simple numeric labels for summary
+                            datasets: [{
+                                label: 'BPM',
+                                data: fullHrHistory.data,
+                                borderColor: rootSt.getPropertyValue('--chart-line-color').trim(),
+                                backgroundColor: rootSt.getPropertyValue('--chart-line-color').trim().replace(')', ', 0.3)').replace('rgb', 'rgba'),
+                                fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5
+                            }]
+                        },
+                        options: {
+                            responsive: true, maintainAspectRatio: false, animation: { duration: 0 },
+                            scales: {
+                                x: { 
+                                    ticks: { autoSkip: true, maxTicksLimit: 10, color: rootSt.getPropertyValue('--chart-tick-color').trim() },
+                                    grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim() },
+                                    title: { display: true, text: 'Muestras de Ritmo Cardíaco', color: rootSt.getPropertyValue('--chart-tick-color').trim() }
+                                },
+                                y: { 
+                                    min: minHr, max: maxHr,
+                                    ticks: { color: rootSt.getPropertyValue('--chart-tick-color').trim() },
+                                    grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim() },
+                                    title: { display: true, text: 'BPM', color: rootSt.getPropertyValue('--chart-tick-color').trim() }
+                                }
+                            },
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+                }
+                
+                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && zoneDataForPie.every(p => p === 0));
+                if (summaryZonePieChartInstance) summaryZonePieChartInstance.destroy();
+
+                // Only create pie chart if there's actually some distribution to show or if explicitly requested for 0%s
+                const nonZeroPercentages = zoneDataForPie.some(p => p > 0);
+                if (hasHrData || nonZeroPercentages) {
+                     summaryZonePieChartInstance = new Chart(summaryZonePieChartCanvasEl, {
+                        type: 'doughnut',
+                        data: {
+                            labels: zoneLabelsForPie,
+                            datasets: [{
+                                label: 'Tiempo en Zona', data: zoneDataForPie,
+                                backgroundColor: zoneColorsForPie,
+                                borderColor: rootSt.getPropertyValue('--color-surf').trim(), borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true, maintainAspectRatio: false,
+                            plugins: {
+                                legend: { 
+                                    position: 'bottom', 
+                                    labels: { color: rootSt.getPropertyValue('--color-txt-prim').trim(), boxWidth: 15, padding: 10, font: {size: 10} }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.label || '';
+                                            if (label) label += ': ';
+                                            if (context.parsed !== null) label += context.parsed.toFixed(1) + '%';
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+                     summaryZonePieChartContainerParentEl.classList.add('hidden');
+                }
+
+
+                workoutSummaryScreenEl.classList.remove('hidden');
+                bodyEl.style.overflow = 'hidden';
+                if (typeof feather !== 'undefined') feather.replace();
+            }
+
             function finishWorkout(completed = true) { 
                 clearInterval(phaseTimer); clearInterval(totalTimer); phaseTimer = null; totalTimer = null; 
                 running = false; paused = false; rePrep = false; 
@@ -1382,10 +1663,8 @@
                     if (cfg.numEjercicios) updProgCircles('exercise', cfg.numEjercicios, true); 
                     if (cfg.numSeries) updProgCircles('series', cfg.numSeries, true); 
                     setUI('finished'); 
-                    // Placeholder for showing summary if HR data exists
-                    if (fullHrHistory.data.length > 0) {
-                        console.log("Workout completed with HR data. Max HR:", currentSessionMaxHr, "Zone Times:", hrZones);
-                        // Future: showWorkoutSummaryModal(fullHrHistory, currentSessionMaxHr, hrZones, totalSecs);
+                    if (fullHrHistory.data.length > 0) { // Show summary if HR data was collected
+                        showWorkoutSummaryModal();
                     }
                 } else { 
                     totalSecs = 0; phaseSecs = 0; curPhase = ''; 
@@ -1397,7 +1676,7 @@
                     
                     fullHrHistory.labels = [];
                     fullHrHistory.data = [];
-                    resetZoneTimes(); // Reset zone times if workout is aborted
+                    resetZoneTimes(); 
                     if (hrChartInstance) { 
                         hrChartInstance.data.labels = [...CHART_X_AXIS_LABELS];
                         hrChartInstance.data.datasets[0].data = Array(CHART_X_AXIS_LABELS.length).fill(null);
@@ -1405,6 +1684,7 @@
                     }
                 } 
             }
+
             allSels.forEach(s => { if (s) s.onchange = calcEstTime; });
             if (numEjSel) numEjSel.onchange = () => { calcEstTime(); popEjNameInputs(); };
             if (startBtn) startBtn.onclick = () => { if (rePrep) return; if (!audioCtx || audioCtx.state === 'suspended') initAudio().then(() => { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); }); else { if (!running) startWorkout(); else if (paused) resumeWorkout(); else pauseWorkout(); } };
@@ -1605,8 +1885,8 @@
                         fill: false,
                         tension: 0.2, 
                         pointRadius: 1.5,
-                        pointHoverRadius: 4, // Slightly larger hover
-                        borderWidth: 2 // Slightly thicker line
+                        pointHoverRadius: 4, 
+                        borderWidth: 2 
                     }]
                 };
                 
@@ -1616,7 +1896,7 @@
                     animation: { duration: 0 }, 
                     scales: {
                         x: {
-                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true, drawOnChartArea: true, z: -1 }, // z:-1 to draw behind line
+                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true, drawOnChartArea: true, z: -1 }, 
                             ticks: { 
                                 color: rootSt.getPropertyValue('--chart-tick-color').trim(), 
                                 autoSkip: false, 
@@ -1646,16 +1926,16 @@
                          },
                         annotation: { 
                             annotations: {
-                                nowBox: { // Renamed from nowLine to nowBox
+                                nowBox: { 
                                     type: 'box',
-                                    xMin: "Ahora", // Start at "Ahora" tick
-                                    xMax: "Ahora", // End at "Ahora" tick (effectively a line, but box allows bg)
-                                    yMin: 0,       // From bottom of chart
-                                    yMax: 220,     // To top of chart (adjust if y-axis max changes)
+                                    xMin: "Ahora", 
+                                    xMax: "Ahora", 
+                                    yMin: 0,       
+                                    yMax: 220,     
                                     backgroundColor: rootSt.getPropertyValue('--chart-annotation-box-bg').trim(),
-                                    borderColor: 'transparent', // No border for the box itself
+                                    borderColor: 'transparent', 
                                     borderWidth: 0,
-                                    drawTime: 'beforeDatasetsDraw' // Draw behind dataset lines
+                                    drawTime: 'beforeDatasetsDraw' 
                                 }
                             }
                         }
@@ -1672,7 +1952,6 @@
                     options: chartOptions
                 });
                 if(hrChartContainerEl) hrChartContainerEl.classList.remove('hidden');
-                 // Make sure annotation plugin is registered if loaded dynamically or Chart.js version requires it
                 if (window.ChartAnnotation && !Chart.registry.plugins.get('annotation')) {
                      Chart.register(window.ChartAnnotation);
                 }
@@ -1700,9 +1979,8 @@
                     hrChartInstance.destroy();
                     hrChartInstance = null;
                 }
-                fullHrHistory.labels = []; 
-                fullHrHistory.data = [];
-                resetZoneTimes();
+                // Don't reset fullHrHistory here, it might be needed for summary if disconnected right at the end.
+                // resetZoneTimes(); // Also, zone times might be part of the summary.
 
                 hrDevice = null;
                 hrCharacteristic = null;
@@ -1727,14 +2005,12 @@
                     hrValueEl.textContent = heartRate;
                 }
                 
-                // Update Max HR
                 if (heartRate > currentSessionMaxHr) {
                     currentSessionMaxHr = heartRate;
                 }
 
-                // Calculate time in zone
                 const currentTimestamp = Date.now();
-                let durationSinceLastSample = 1000; // Default to 1 second if no previous timestamp
+                let durationSinceLastSample = 1000; 
                 if (lastHrTimestamp > 0) {
                     durationSinceLastSample = currentTimestamp - lastHrTimestamp;
                 }
@@ -1743,11 +2019,10 @@
                 for (const zoneKey in hrZones) {
                     const zone = hrZones[zoneKey];
                     if (heartRate >= zone.min && heartRate <= zone.max) {
-                        zone.time += durationSinceLastSample / 1000; // Add seconds
+                        zone.time += durationSinceLastSample / 1000; 
                         break; 
                     }
                 }
-                // console.log("Zone times:", hrZones); // For debugging
 
                 if (hrChartInstance) {
                     const now = new Date();
@@ -1810,7 +2085,7 @@
                     
                     fullHrHistory.labels = []; 
                     fullHrHistory.data = [];
-                    resetZoneTimes(); // Reset zones for new connection
+                    resetZoneTimes(); 
                     initHrChart(); 
 
                     console.log('Obteniendo servicio de Ritmo Cardíaco...');
@@ -1823,7 +2098,7 @@
 
                     console.log('Iniciando notificaciones de Ritmo Cardíaco...');
                     await hrCharacteristic.startNotifications();
-                    lastHrTimestamp = Date.now(); // Set initial timestamp for zone calculation
+                    lastHrTimestamp = Date.now(); 
                     hrCharacteristic.addEventListener('characteristicvaluechanged', handleHeartRateChanged);
                     console.log('Notificaciones iniciadas. Esperando datos...');
 
@@ -1877,7 +2152,7 @@
                     if (hrDevice.gatt.connected) { 
                         await hrDevice.gatt.disconnect(); 
                     } else { 
-                         onHRDeviceDisconnected({target: hrDevice});
+                         onHRDeviceDisconnected({target: hrDevice}); // Manually call if already disconnected
                     }
                     console.log('Dispositivo HR desconectado por el usuario.');
                 } else {
@@ -1897,6 +2172,27 @@
                 };
             }
             
+            // Event Listeners for Workout Summary Modal
+            if (closeWorkoutSummaryBtn && workoutSummaryScreenEl) {
+                const closeSummaryModal = () => {
+                    workoutSummaryScreenEl.classList.add('hidden');
+                    bodyEl.style.overflow = '';
+                    if (summaryHrChartInstance) { summaryHrChartInstance.destroy(); summaryHrChartInstance = null; }
+                    if (summaryZonePieChartInstance) { summaryZonePieChartInstance.destroy(); summaryZonePieChartInstance = null; }
+                };
+                closeWorkoutSummaryBtn.onclick = closeSummaryModal;
+                window.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && !workoutSummaryScreenEl.classList.contains('hidden')) {
+                        closeSummaryModal();
+                    }
+                });
+                workoutSummaryScreenEl.onclick = e => {
+                    if (e.target === workoutSummaryScreenEl) {
+                        closeSummaryModal();
+                    }
+                };
+            }
+
             // --- Initial Setup ---
             try {
                 await openDB(); await loadAllEjNames(); await loadLogo(); 
