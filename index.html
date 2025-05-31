@@ -13,7 +13,6 @@
     <meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;900&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-    <!-- --- NEW --- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones. Incluye monitor de ritmo cardíaco (BLE) con gráfica en tiempo real.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres, guardar rutinas, cargar rutinas, bluetooth, heart rate, ritmo cardiaco, BLE, grafica, chart","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado y ejercicios predefinidos con imágenes","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios con imágenes predefinidas y opción de maximizar", "Guardar rutinas personalizadas", "Cargar rutinas guardadas", "Conexión Bluetooth para monitor de ritmo cardíaco (BLE)", "Gráfica de ritmo cardíaco en tiempo real"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
     <style>
@@ -34,16 +33,14 @@
             --prog-circ-brd-l: #333333;
             --prog-circ-comp-bg-l: #121212;
             --prog-circ-act-brd-l: #000000;
-            /* --- NEW --- Chart colors light theme */
             --chart-grid-color-l: rgba(0,0,0,0.1);
             --chart-tick-color-l: #555555;
-            --chart-line-color-l: #2ed573; /* Match exercise phase color */
+            --chart-line-color-l: #2ed573; 
             --chart-point-color-l: #25a25a;
 
 
             --color-bg-d: #2D2D2D;
             --color-surf-d: #3C3C3C;
-             /* --- NEW --- Chart colors dark theme */
             --chart-grid-color-d: rgba(255,255,255,0.1);
             --chart-tick-color-d: #B0B0B0;
             --chart-line-color-d: #2ed573;
@@ -301,23 +298,22 @@
             padding: 8px 12px;
         }
         
-        /* --- NEW --- Styles for Heart Rate Chart Container */
         #hrChartContainer {
             width: 100%;
-            max-width: 460px; /* Slightly less than container max-width to fit */
-            height: 150px;    /* Adjust height as needed */
+            max-width: 460px; 
+            height: 150px;    
             margin-top: 10px;
             margin-bottom: 15px;
             border: 1px solid var(--sel-brd);
             border-radius: var(--brd-rad-sm);
             padding: 5px;
             box-sizing: border-box;
-            position: relative; /* For Chart.js responsiveness */
+            position: relative; 
+            background-color: var(--sel-bg); /* Subtle background */
         }
         body.full-screen-mode #hrChartContainer {
-             display: none !important; /* Hide chart in full screen for now, can be re-evaluated */
+             display: none !important; 
         }
-        /* --- END --- Styles for Heart Rate Chart Container */
 
         .active-exercise-info { display: none; justify-content: space-around; gap: 2vw; width: 100%; max-width: 700px; margin-top: 1.5vh; margin-bottom: 1.5vh; }
         .exercise-info-card { background-color: transparent; padding: 1vh 0.5vw; border-radius: var(--brd-rad-sm); flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 140px; max-width: 300px; }
@@ -596,7 +592,6 @@
             .explanation-grid { grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; }
             .explanation-item-number { font-size:1.8em; }
             .explanation-item-name { font-size:1em; margin-bottom: 5px; }
-             /* --- NEW --- Chart container on smaller screens */
             #hrChartContainer { height: 120px; }
         }
         @media (max-width:480px) {
@@ -623,7 +618,7 @@
             }
             #heartRateDisplayArea { max-width: 90%; font-size: 0.8em; padding: 6px 10px;}
             #heartRateDisplayArea.workout-active { font-size: 1em; padding: 8px 12px; } 
-            #hrChartContainer { height: 100px; max-width: 95%; } /* Adjust chart for very small screens */
+            #hrChartContainer { height: 100px; max-width: 95%; } 
         }
         @media (max-width:420px) {
             body:not(.full-screen-mode) .container { padding:25px 20px; }
@@ -768,7 +763,6 @@
             Ritmo Cardíaco: <span id="hrValue">-</span> bpm
         </div>
         
-        <!-- --- NEW --- Canvas for Heart Rate Chart -->
         <div id="hrChartContainer" class="hidden">
             <canvas id="hrChart"></canvas>
         </div>
@@ -829,7 +823,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE AYUDA -->
     <div id="helpModalScreen" class="modal-screen hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -904,7 +897,6 @@
         </div>
     </div>
 
-    <!-- MODAL GUÍA DE EJERCICIOS -->
     <div id="exerciseGuideScreen" class="modal-screen hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -916,7 +908,6 @@
                 </div>
             </div>
             <div id="exerciseGuideList" class="exercise-guide-list">
-                <!-- Los ejercicios predefinidos se cargarán aquí por JavaScript -->
             </div>
             <p id="noPredefinedExercisesMessage" class="no-items-message hidden">
                 No hay ejercicios predefinidos cargados.
@@ -1021,7 +1012,6 @@
             const connectHrDeviceBtn = getEl('connectHrDeviceBtn');
             const heartRateDisplayAreaEl = getEl('heartRateDisplayArea');
             const hrValueEl = getEl('hrValue');
-            // --- NEW --- Chart DOM elements
             const hrChartContainerEl = getEl('hrChartContainer');
             const hrChartCanvasEl = getEl('hrChart');
 
@@ -1037,15 +1027,19 @@
                     descanso_serie: rootSt.getPropertyValue('--phase-rest').trim(), 
                     finalizado: rootSt.getPropertyValue('--phase-end').trim() 
                 };
-                // --- NEW --- Update chart colors if chart exists
                 if (hrChartInstance) {
-                    hrChartInstance.options.scales.x.grid.color = rootSt.getPropertyValue('--chart-grid-color').trim();
-                    hrChartInstance.options.scales.y.grid.color = rootSt.getPropertyValue('--chart-grid-color').trim();
-                    hrChartInstance.options.scales.x.ticks.color = rootSt.getPropertyValue('--chart-tick-color').trim();
-                    hrChartInstance.options.scales.y.ticks.color = rootSt.getPropertyValue('--chart-tick-color').trim();
-                    hrChartInstance.data.datasets[0].borderColor = rootSt.getPropertyValue('--chart-line-color').trim();
-                    hrChartInstance.data.datasets[0].pointBackgroundColor = rootSt.getPropertyValue('--chart-point-color').trim();
-                    hrChartInstance.update('none'); // 'none' for no animation
+                    const newGridColor = rootSt.getPropertyValue('--chart-grid-color').trim();
+                    const newTickColor = rootSt.getPropertyValue('--chart-tick-color').trim();
+                    const newLineColor = rootSt.getPropertyValue('--chart-line-color').trim();
+                    const newPointColor = rootSt.getPropertyValue('--chart-point-color').trim();
+
+                    hrChartInstance.options.scales.x.grid.color = newGridColor;
+                    hrChartInstance.options.scales.y.grid.color = newGridColor;
+                    hrChartInstance.options.scales.x.ticks.color = newTickColor;
+                    hrChartInstance.options.scales.y.ticks.color = newTickColor;
+                    hrChartInstance.data.datasets[0].borderColor = newLineColor;
+                    hrChartInstance.data.datasets[0].pointBackgroundColor = newPointColor;
+                    hrChartInstance.update('none'); 
                 }
             }
 
@@ -1055,8 +1049,9 @@
             let cfg = { exerciseNames: [] }, curSer = 1, curEj = 1;
             let curPhase = '', running = false, paused = false, rePrep = false;
             const PREP_TIME = 5, RE_PREP_TIME = 5;
-            const DB_NAME = 'ChronoHIIT_DB', DB_VER = 2;
+            const DB_NAME = 'ChronoHIIT_DB', DB_VER = 2; // Potentially DB_VER = 3 if we add session storage schema
             const USER_SETTINGS_STORE = 'userSettings', SAVED_ROUTINES_STORE = 'savedRoutines';
+            // const WORKOUT_SESSIONS_STORE = 'workoutSessions'; // For future session saving
             const LOGO_K = 'userLogoData', EJ_NAMES_K = 'allExerciseNames';
             let db, allEjNamesSet = new Set();
             let suggestionsDropdown = null, activeSuggestionInput = null, blurTimeout = null;
@@ -1064,13 +1059,23 @@
             let hrDevice = null;
             let hrCharacteristic = null;
             let hrServer = null;
-            // --- NEW --- Chart variables
             let hrChartInstance = null;
-            let hrChartData = { labels: [], datasets: [{ label: 'Ritmo Cardíaco (BPM)', data: [], fill: false, tension: 0.1, pointRadius: 2, pointHoverRadius: 4 }] };
-            const MAX_CHART_POINTS = 60; // Show last 60 readings (e.g., 1 minute if 1 reading/sec)
+            // Storing full history for potential "view all" later, chart itself will display a sliding window
+            let fullHrHistory = { labels: [], data: [] }; 
+            const MAX_CHART_POINTS_DISPLAY = 60; // Number of points to DISPLAY on the live chart
 
 
-            const openDB = () => new Promise((res, rej) => { const req = indexedDB.open(DB_NAME, DB_VER); req.onupgradeneeded = e => { const d = e.target.result; if (!d.objectStoreNames.contains(USER_SETTINGS_STORE)) d.createObjectStore(USER_SETTINGS_STORE); if (!d.objectStoreNames.contains(SAVED_ROUTINES_STORE)) d.createObjectStore(SAVED_ROUTINES_STORE, { keyPath: 'nombreRutina' }); }; req.onsuccess = e => { db = e.target.result; res(db); }; req.onerror = e => { console.error('IDB err:', e.target.errorCode); rej('IDB err.'); }; });
+            const openDB = () => new Promise((res, rej) => { 
+                const req = indexedDB.open(DB_NAME, DB_VER); 
+                req.onupgradeneeded = e => { 
+                    const d = e.target.result; 
+                    if (!d.objectStoreNames.contains(USER_SETTINGS_STORE)) d.createObjectStore(USER_SETTINGS_STORE); 
+                    if (!d.objectStoreNames.contains(SAVED_ROUTINES_STORE)) d.createObjectStore(SAVED_ROUTINES_STORE, { keyPath: 'nombreRutina' }); 
+                    // if (!d.objectStoreNames.contains(WORKOUT_SESSIONS_STORE)) d.createObjectStore(WORKOUT_SESSIONS_STORE, { autoIncrement: true }); // Future
+                }; 
+                req.onsuccess = e => { db = e.target.result; res(db); }; 
+                req.onerror = e => { console.error('IDB err:', e.target.errorCode); rej('IDB err.'); }; 
+            });
             const dbAction = async (storeName, mode, action, keyOrData, dataOnlyForPutKv) => { if (!db) await openDB(); return new Promise((res, rej) => { const tx = db.transaction([storeName], mode); const store = tx.objectStore(storeName); let req; if (action === 'put' && storeName === SAVED_ROUTINES_STORE) req = store.put(keyOrData); else if (action === 'put_kv' && storeName === USER_SETTINGS_STORE) req = store.put(dataOnlyForPutKv, keyOrData); else if (action === 'get') req = store.get(keyOrData); else if (action === 'delete') req = store.delete(keyOrData); else if (action === 'getAll') req = store.getAll(); else return rej('Invalid DB action'); req.onsuccess = e => res(action === 'get' || action === 'getAll' ? e.target.result : true); req.onerror = e => { console.error(`DB ${action} err on ${storeName}:`, e); rej(e); }; }); };
             async function loadAllEjNames() { try { const names = await dbAction(USER_SETTINGS_STORE, 'readonly', 'get', EJ_NAMES_K); allEjNamesSet = (names && Array.isArray(names)) ? new Set(names) : new Set(); } catch (err) { console.error("Err load all ej names:", err); allEjNamesSet = new Set(); } }
             async function addEjNameToGlobal(name) { if (name && !allEjNamesSet.has(name) && !predefinedExercises[name]) { allEjNamesSet.add(name); try { await dbAction(USER_SETTINGS_STORE, 'readwrite', 'put_kv', EJ_NAMES_K, Array.from(allEjNamesSet)); } catch (err) { console.error("Err save global ej name list:", err); } } }
@@ -1253,10 +1258,11 @@
                         heartRateDisplayAreaEl.classList.add('hidden'); 
                     }
                 }
-                // --- NEW --- Show/hide HR Chart
                 if (hrChartContainerEl) {
                     const hrConnected = hrDevice && hrDevice.gatt.connected;
-                    hrChartContainerEl.classList.toggle('hidden', isFs || !hrConnected || isWorkoutActive && curPhase === 'finalizado');
+                     // Show chart if connected, not in FS, and workout hasn't finished (or is not in initial state without connection)
+                    const shouldShowChart = hrConnected && !isFs && !(st === 'finished') && !(st === 'initial' && !isWorkoutActive) ;
+                    hrChartContainerEl.classList.toggle('hidden', !shouldShowChart);
                 }
 
 
@@ -1276,12 +1282,15 @@
                 if (cfg.exerciseNames && cfg.exerciseNames.length > 0) { for (const name of cfg.exerciseNames) { if (name.startsWith('Ejercicio ') || predefinedExercises[name]) continue; await addEjNameToGlobal(name); } } 
                 curSer = 1; curEj = 1; totalSecs = 0; paused = false; running = true; rePrep = false; 
                 if (ejProgEl) genProgCircles(ejProgEl, cfg.numEjercicios); if (serProgEl) genProgCircles(serProgEl, cfg.numSeries); 
-                // --- NEW --- Reset chart data for new workout
-                if (hrChartInstance) {
-                    hrChartData.labels = [];
-                    hrChartData.datasets[0].data = [];
-                    hrChartInstance.update();
+                
+                fullHrHistory.labels = []; // Clear full history for new workout
+                fullHrHistory.data = [];
+                if (hrChartInstance) { // Also clear display data for chart
+                    hrChartInstance.data.labels = [];
+                    hrChartInstance.data.datasets[0].data = [];
+                    hrChartInstance.update('none');
                 }
+
                 startPhase('preparacion', PREP_TIME); 
                 if (totalTimer) clearInterval(totalTimer); 
                 totalTimer = setInterval(totalTick, 1000); 
@@ -1296,6 +1305,7 @@
                     if (cfg.numEjercicios) updProgCircles('exercise', cfg.numEjercicios, true); 
                     if (cfg.numSeries) updProgCircles('series', cfg.numSeries, true); 
                     setUI('finished'); 
+                    // TODO: Here would be a good place to offer to save the workout session if HR data exists in fullHrHistory
                 } else { 
                     totalSecs = 0; phaseSecs = 0; curPhase = ''; 
                     if (cfg) cfg.exerciseNames = []; 
@@ -1303,13 +1313,15 @@
                     if (ejProgEl) ejProgEl.innerHTML = ''; 
                     if (serProgEl) serProgEl.innerHTML = ''; 
                     setUI('initial'); calcEstTime(); popEjNameInputs(); 
+                    // If workout aborted, clear HR history
+                    fullHrHistory.labels = [];
+                    fullHrHistory.data = [];
+                    if (hrChartInstance) {
+                        hrChartInstance.data.labels = [];
+                        hrChartInstance.data.datasets[0].data = [];
+                        hrChartInstance.update('none');
+                    }
                 } 
-                // --- NEW --- Optionally keep chart data after workout, or clear it. For now, keep.
-                // if (hrChartInstance && !completed) { // Clear if workout is aborted
-                //     hrChartData.labels = [];
-                //     hrChartData.datasets[0].data = [];
-                //     hrChartInstance.update();
-                // }
             }
             allSels.forEach(s => { if (s) s.onchange = calcEstTime; });
             if (numEjSel) numEjSel.onchange = () => { calcEstTime(); popEjNameInputs(); };
@@ -1354,7 +1366,7 @@
                     themeBtn.title = `Cambiar a Tema ${th === 'dark' ? 'Claro' : 'Oscuro'}`;
                 }
                 if (typeof feather !== 'undefined') feather.replace();
-                updPhaseColors(); // This will now update chart colors too
+                updPhaseColors(); 
                 updUIDisp();
             }
             if (themeBtn) themeBtn.onclick = () => { const newTh = bodyEl.classList.contains('dark-theme') ? 'light' : 'dark'; localStorage.setItem('theme', newTh); applyTh(newTh); };
@@ -1497,46 +1509,69 @@
                 };
             }
             
-            // --- NEW --- Chart Initialization Function
             function initHrChart() {
-                if (hrChartInstance) { // Destroy existing chart if any
+                if (hrChartInstance) { 
                     hrChartInstance.destroy();
                 }
                 if (!hrChartCanvasEl) return;
 
-                // Reset data
-                hrChartData.labels = [];
-                hrChartData.datasets[0].data = [];
+                // Use a fresh data object for the chart display itself
+                let displayChartData = {
+                    labels: [],
+                    datasets: [{
+                        label: 'BPM', // Simplified label
+                        data: [],
+                        fill: false,
+                        tension: 0.2, // Smoother line
+                        pointRadius: 1.5,
+                        pointHoverRadius: 3,
+                        borderWidth: 1.5
+                    }]
+                };
                 
                 const chartOptions = {
                     responsive: true,
                     maintainAspectRatio: false,
-                    animation: { duration: 200 }, // Smooth updates
+                    animation: { duration: 0 }, // Faster updates, less jarring
                     scales: {
                         x: {
-                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim() },
-                            ticks: { color: rootSt.getPropertyValue('--chart-tick-color').trim(), autoSkip: true, maxTicksLimit: 10 }
+                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true },
+                            ticks: { 
+                                color: rootSt.getPropertyValue('--chart-tick-color').trim(), 
+                                autoSkip: true, 
+                                maxTicksLimit: 6, // Show fewer time labels (e.g., every 10s if MAX_CHART_POINTS_DISPLAY is 60)
+                                font: { size: 9 } // Smaller font for ticks
+                            }
                         },
                         y: {
-                            beginAtZero: false, // HR usually doesn't start at 0
-                            min: 40,  // Reasonable min HR
-                            max: 220, // Reasonable max HR
-                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim() },
-                            ticks: { color: rootSt.getPropertyValue('--chart-tick-color').trim(), stepSize: 20 }
+                            beginAtZero: false, 
+                            min: 40,  
+                            max: 220, 
+                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true },
+                            ticks: { 
+                                color: rootSt.getPropertyValue('--chart-tick-color').trim(), 
+                                stepSize: 20,
+                                font: { size: 10 }
+                            }
                         }
                     },
                     plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true }
+                        legend: { display: false }, // Hide legend
+                        tooltip: { 
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                         }
                     }
                 };
-                hrChartData.datasets[0].borderColor = rootSt.getPropertyValue('--chart-line-color').trim();
-                hrChartData.datasets[0].backgroundColor = rootSt.getPropertyValue('--chart-line-color').trim(); // For point fill if desired
-                hrChartData.datasets[0].pointBackgroundColor = rootSt.getPropertyValue('--chart-point-color').trim();
+                displayChartData.datasets[0].borderColor = rootSt.getPropertyValue('--chart-line-color').trim();
+                displayChartData.datasets[0].pointBackgroundColor = rootSt.getPropertyValue('--chart-point-color').trim();
+                displayChartData.datasets[0].pointBorderColor = rootSt.getPropertyValue('--chart-point-color').trim();
+
 
                 hrChartInstance = new Chart(hrChartCanvasEl, {
                     type: 'line',
-                    data: hrChartData,
+                    data: displayChartData,
                     options: chartOptions
                 });
                 if(hrChartContainerEl) hrChartContainerEl.classList.remove('hidden');
@@ -1546,7 +1581,9 @@
             function onHRDeviceDisconnected(event) {
                 const device = event.target;
                 console.log(`Dispositivo HR '${device.name}' desconectado.`);
-                alert(`Pulsera '${device.name}' desconectada.`);
+                if(hrCharacteristic) { // Only alert if it was truly connected and then lost
+                     alert(`Pulsera '${device.name}' desconectada.`);
+                }
                 if (connectHrDeviceBtn) {
                     connectHrDeviceBtn.innerHTML = '<i data-feather="bluetooth"></i><span class="btn-text">Pulsera</span>';
                     connectHrDeviceBtn.title = "Conectar Pulsera Cardíaca";
@@ -1557,12 +1594,14 @@
                     heartRateDisplayAreaEl.classList.remove('connected', 'workout-active');
                 }
                 if (hrValueEl) hrValueEl.textContent = '-';
-                // --- NEW --- Hide and destroy chart on disconnect
                 if (hrChartContainerEl) hrChartContainerEl.classList.add('hidden');
                 if (hrChartInstance) {
                     hrChartInstance.destroy();
                     hrChartInstance = null;
                 }
+                fullHrHistory.labels = []; // Clear history on disconnect
+                fullHrHistory.data = [];
+
                 hrDevice = null;
                 hrCharacteristic = null;
                 hrServer = null;
@@ -1585,20 +1624,24 @@
                 if (hrValueEl) {
                     hrValueEl.textContent = heartRate;
                 }
-                // --- NEW --- Update Chart
+                
                 if (hrChartInstance) {
                     const now = new Date();
                     const timeString = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
                     
-                    hrChartData.labels.push(timeString);
-                    hrChartData.datasets[0].data.push(heartRate);
+                    // Add to full history
+                    fullHrHistory.labels.push(timeString);
+                    fullHrHistory.data.push(heartRate);
 
-                    // Keep chart data to a manageable size
-                    if (hrChartData.labels.length > MAX_CHART_POINTS) {
-                        hrChartData.labels.shift();
-                        hrChartData.datasets[0].data.shift();
+                    // Update chart's display data (sliding window)
+                    hrChartInstance.data.labels.push(timeString);
+                    hrChartInstance.data.datasets[0].data.push(heartRate);
+
+                    if (hrChartInstance.data.labels.length > MAX_CHART_POINTS_DISPLAY) {
+                        hrChartInstance.data.labels.shift();
+                        hrChartInstance.data.datasets[0].data.shift();
                     }
-                    hrChartInstance.update();
+                    hrChartInstance.update('none'); // 'none' for no animation, smoother for real-time
                 }
             }
 
@@ -1645,9 +1688,10 @@
                     console.log('Conectando al servidor GATT...');
                     hrServer = await hrDevice.gatt.connect();
                     console.log('Conectado al servidor GATT.');
-
-                    // --- NEW --- Initialize chart after successful GATT connection
-                    initHrChart();
+                    
+                    fullHrHistory.labels = []; // Clear previous full history
+                    fullHrHistory.data = [];
+                    initHrChart(); // Initialize chart after successful GATT connection
 
                     console.log('Obteniendo servicio de Ritmo Cardíaco...');
                     const service = await hrServer.getPrimaryService('heart_rate');
@@ -1682,7 +1726,6 @@
                          if (typeof feather !== 'undefined') feather.replace();
                     }
                     if (heartRateDisplayAreaEl) heartRateDisplayAreaEl.classList.add('hidden');
-                    // --- NEW --- Hide chart on connection error
                     if (hrChartContainerEl) hrChartContainerEl.classList.add('hidden');
                     if (hrChartInstance) { hrChartInstance.destroy(); hrChartInstance = null; }
 
@@ -1712,6 +1755,8 @@
                     hrDevice.removeEventListener('gattserverdisconnected', onHRDeviceDisconnected); 
                     if (hrDevice.gatt.connected) { 
                         await hrDevice.gatt.disconnect(); 
+                    } else { // If already disconnected by other means, still trigger our cleanup
+                         onHRDeviceDisconnected({target: hrDevice});
                     }
                     console.log('Dispositivo HR desconectado por el usuario.');
                 } else {
@@ -1737,7 +1782,7 @@
                 popSel(numEjSel, 1, 20, 1, 4); popSel(numSerSel, 1, 10, 1, 3); popSel(tEjSel, 30, 90, 5, 45); popSel(dEjSel, 15, 30, 5, 15); popSel(dSerSel, 30, 120, 15, 60);
                 calcEstTime();
                 const savedTh = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                applyTh(savedTh); // updPhaseColors is called within applyTh
+                applyTh(savedTh); 
                 setUI('initial'); 
                 popEjNameInputs();
                 if (typeof feather !== 'undefined') feather.replace();
