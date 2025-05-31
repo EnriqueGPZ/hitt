@@ -14,10 +14,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;900&family=Roboto+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- --- NEW --- Chart.js Annotation Plugin (opcional, para la línea vertical "Ahora") -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@latest/dist/chartjs-plugin-annotation.min.js"></script>
 
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones. Incluye monitor de ritmo cardíaco (BLE) con gráfica en tiempo real.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres, guardar rutinas, cargar rutinas, bluetooth, heart rate, ritmo cardiaco, BLE, grafica, chart, COOSPO, COROS, Decathlon, Fitbit, Garmin, Huawei, Magene, Polar, Scosche, Sigma, Suunto, Wahoo, Xiaomi","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado y ejercicios predefinidos con imágenes","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios con imágenes predefinidas y opción de maximizar", "Guardar rutinas personalizadas", "Cargar rutinas guardadas", "Conexión Bluetooth para monitor de ritmo cardíaco (BLE)", "Gráfica de ritmo cardíaco en tiempo real"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Chrono HIIT - Cronómetro de Intervalos Avanzado","description":"Herramienta online gratuita para configurar y seguir entrenamientos por intervalos, incluyendo rutinas Tabata. Personaliza tus tiempos, nombres de ejercicios, y gestiona tus configuraciones. Incluye monitor de ritmo cardíaco (BLE) con gráfica en tiempo real y análisis de zonas cardíacas.","url":"https://www.hiit.es","keywords":"chrono hiit, cronómetro entrenamiento, temporizador intervalos, tabata, HIIT, ejercicio, fitness, rutina, workout, guardar ejercicios, exportar configuracion, resetear nombres, guardar rutinas, cargar rutinas, bluetooth, heart rate, ritmo cardiaco, BLE, grafica, chart, zonas cardiacas, COOSPO, COROS, Decathlon, Fitbit, Garmin, Huawei, Magene, Polar, Scosche, Sigma, Suunto, Wahoo, Xiaomi","mainEntity":{"@type":"SoftwareApplication","name":"Chrono HIIT","applicationCategory":"HealthApplication","operatingSystem":"Web","browserRequirements":"Requires HTML5, CSS3, JavaScript, IndexedDB support.","featureList":["Temporizador de preparación","Configuración de tiempo de ejercicio","Configuración de tiempo de descanso entre ejercicios","Configuración de tiempo de descanso entre series","Configuración de número de ejercicios por serie","Configuración de número de series","Nombres de ejercicios personalizables con autocompletado y ejercicios predefinidos con imágenes","Almacenamiento de lista global de ejercicios","Gestión individual de nombres de ejercicios guardados","Cálculo de tiempo total estimado","Alertas sonoras de cambio de fase","Soporte para rutinas tipo Tabata y HIIT","Reinicio de ejercicio actual con preparación","Modo pantalla completa para visualización en grande","Indicadores visuales de progreso","Tema Claro/Oscuro con persistencia","Exportar configuración a JSON","Importar configuración desde JSON","Gestión de logo personalizado","Vista de explicación de ejercicios con imágenes predefinidas y opción de maximizar", "Guardar rutinas personalizadas", "Cargar rutinas guardadas", "Conexión Bluetooth para monitor de ritmo cardíaco (BLE)", "Gráfica de ritmo cardíaco en tiempo real", "Cálculo de tiempo en zonas cardíacas"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Herramientas de Fitness","item":"https://www.hiit.es"},{"@type":"ListItem","position":2,"name":"Chrono HIIT"}]}}</script>
     <style>
         :root {
             --font-display: 'Oswald', sans-serif; --font-body: 'Roboto Condensed', sans-serif;
@@ -38,20 +37,20 @@
             --prog-circ-act-brd-l: #000000;
             --chart-grid-color-l: rgba(0,0,0,0.1);
             --chart-tick-color-l: #555555;
-            /* --- MODIFIED --- Chart line/point colors */
-            --chart-line-color-l: #FF6347; /* Tomato Red */
-            --chart-point-color-l: #E55039; /* Darker Tomato Red */
+            --chart-line-color-l: #FF6347; 
+            --chart-point-color-l: #E55039; 
             --chart-annotation-line-l: #333333;
+            --chart-annotation-box-bg-l: rgba(220, 220, 220, 0.3); /* Light gray semi-transparent */
 
 
             --color-bg-d: #2D2D2D;
             --color-surf-d: #3C3C3C;
             --chart-grid-color-d: rgba(255,255,255,0.1);
             --chart-tick-color-d: #B0B0B0;
-            /* --- MODIFIED --- Chart line/point colors */
-            --chart-line-color-d: #FFA07A; /* Light Salmon / Orange-Red */
-            --chart-point-color-d: #FF7F50; /* Coral */
+            --chart-line-color-d: #FFA07A; 
+            --chart-point-color-d: #FF7F50; 
             --chart-annotation-line-d: #E0E0E0;
+            --chart-annotation-box-bg-d: rgba(80, 80, 80, 0.3); /* Dark gray semi-transparent */
 
 
             --color-bg: var(--color-bg-l); --color-surf: var(--color-surf-l);
@@ -66,6 +65,7 @@
             --chart-line-color: var(--chart-line-color-l);
             --chart-point-color: var(--chart-point-color-l);
             --chart-annotation-line: var(--chart-annotation-line-l);
+            --chart-annotation-box-bg: var(--chart-annotation-box-bg-l);
 
 
             --box-shdw-subtle: none; 
@@ -102,6 +102,7 @@
             --chart-line-color: var(--chart-line-color-d);
             --chart-point-color: var(--chart-point-color-d);
             --chart-annotation-line: var(--chart-annotation-line-d);
+            --chart-annotation-box-bg: var(--chart-annotation-box-bg-d);
         }
         html, body { height:100%; margin:0; }
         body { font-family:var(--font-body); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100%; background-color:var(--color-bg); color:var(--color-txt-prim); padding:20px; box-sizing:border-box; text-align:center; transition:background-color .4s ease-in-out, padding .3s ease-in-out, color .3s ease; position:relative; }
@@ -270,7 +271,8 @@
             font-size: 0.9em; 
             color: var(--color-txt-sec);
             background-color: var(--sel-bg);
-            border: 1px solid var(--sel-brd);
+            /* --- MODIFIED --- HR Box Border Color */
+            border: 1px solid var(--sel-brd); 
             border-radius: var(--brd-rad-sm);
             text-align: center;
             width: auto;
@@ -279,8 +281,9 @@
             transition: font-size 0.3s ease, padding 0.3s ease, background-color 0.3s ease; 
         }
         #heartRateDisplayArea.connected {
-            border-color: var(--chart-line-color); /* Match chart line color */
-            color: var(--color-txt-prim);
+            /* --- MODIFIED --- Border color for connected state - uses default --sel-brd from above */
+            /* border-color: var(--sel-brd);  No longer needs specific override here if it matches default */
+            color: var(--color-txt-prim); /* Keep primary text color for "Ritmo Cardíaco:" label */
         }
         #heartRateDisplayArea.workout-active { 
             font-size: 1.2em; 
@@ -289,7 +292,8 @@
         }
         #hrValue {
             font-weight: 700;
-            color: var(--chart-line-color); /* Match chart line color for emphasis */
+            /* --- MODIFIED --- HR Value Color to primary text color */
+            color: var(--color-txt-prim); 
             margin-left: 5px;
         }
         body.full-screen-mode #heartRateDisplayArea {
@@ -506,6 +510,23 @@
             font-weight: 700;
             color: var(--color-txt-prim);
         }
+        /* Style for the new list of HR brands */
+        .help-modal-body .brand-list {
+            font-size: 0.9em;
+            column-count: 2; /* Show brands in two columns if space allows */
+            column-gap: 20px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .help-modal-body .brand-list li {
+            margin-bottom: 3px;
+        }
+        @media (max-width: 480px) {
+            .help-modal-body .brand-list {
+                column-count: 1;
+            }
+        }
+
 
         .modal-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; box-sizing:border-box; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility 0s linear .3s; }
         .modal-screen:not(.hidden) { opacity:1; visibility:visible; transition:opacity .3s ease; }
@@ -880,7 +901,24 @@
                 <h4>Conexión de Pulsera Cardíaca (Bluetooth):</h4>
                 <ul>
                     <li><strong>Compatibilidad:</strong> Esta función permite conectar pulseras o monitores de ritmo cardíaco que utilicen <strong>Bluetooth Low Energy (BLE)</strong> y expongan el servicio estándar de "Ritmo Cardíaco" (Heart Rate Service).</li>
-                    <li><strong>Marcas y Modelos Comprobados/Sugeridos:</strong> Las siguientes marcas disponen de dispositivos compatibles con la tecnología Bluetooth Low Energy (BLE), lo que permite su uso con nuestra aplicación para monitorizar la frecuencia cardíaca en tiempo real. Entre ellas se encuentran COOSPO, con modelos como el HW6, HW807 Armband, HW9, entre otros; COROS, con el Pace 3 y el Heart Rate Monitor; Decathlon, con dispositivos como el Kalenji HRB 500 y el Kiprun GPS 500; Fitbit, con su Charge 6 y otros modelos de su línea avanzada; Garmin, con opciones como el Vivosmart 5, el Fenix 7 o el HRM-Dual; Huawei, con la Band 8; Magene, con el H303; Polar, con referencias tan populares como el H10, Verity Sense o Vantage V3; Scosche, con su brazalete Rhythm+ 2.0; Sigma, con el R1 Duo; Suunto, con el Smart Sensor y Vertical; Wahoo, con dispositivos como el TICKR FIT, TICKR X o el reloj ELEMNT RIVAL; y Xiaomi, con su Smart Band 8, entre otras. Estas marcas ofrecen una amplia gama de modelos BLE que garantizan compatibilidad, fiabilidad y una experiencia óptima de entrenamiento conectada.</li>
+                    <li><strong>Marcas y Modelos Comprobados/Sugeridos:</strong>
+                        <ul class="brand-list">
+                            <li>COOSPO (HW6, HW807, HW9)</li>
+                            <li>COROS (Pace 3, Heart Rate Monitor)</li>
+                            <li>Decathlon (Kalenji HRB 500, Kiprun GPS 500)</li>
+                            <li>Fitbit (Charge 6)</li>
+                            <li>Garmin (Vivosmart 5, Fenix 7, HRM-Dual)</li>
+                            <li>Huawei (Band 8)</li>
+                            <li>Magene (H303)</li>
+                            <li>Polar (H10, Verity Sense, Vantage V3)</li>
+                            <li>Scosche (Rhythm+ 2.0)</li>
+                            <li>Sigma (R1 Duo)</li>
+                            <li>Suunto (Smart Sensor, Vertical)</li>
+                            <li>Wahoo (TICKR FIT, TICKR X, ELEMNT RIVAL)</li>
+                            <li>Xiaomi (Smart Band 8)</li>
+                            <li>Y otros modelos BLE compatibles...</li>
+                        </ul>
+                    </li>
                     <li><strong>Importante:</strong> Antes de adquirir un nuevo dispositivo, o si ya dispones de uno, te recomendamos consultar sus instrucciones o ficha técnica para comprobar que dispone de conectividad BLE y, sobre todo, aprender cómo activar correctamente el modo de transmisión por Bluetooth, ya que en muchos casos no está habilitado de forma predeterminada.</li>
                     <li><strong>Navegador:</strong> La API Web Bluetooth es necesaria. Funciona mejor en Chrome (escritorio y Android), Edge y Opera. No está disponible en iOS (iPhone/iPad) ni Firefox por defecto. Asegúrate de que tu web se sirva por HTTPS (o localhost para desarrollo).</li>
                     <li><strong>Proceso:</strong>
@@ -891,7 +929,7 @@
                             <li>Una vez conectada, el área de "Ritmo Cardíaco" mostrará tus pulsaciones por minuto (BPM) y aparecerá una gráfica debajo mostrando la evolución. El botón "Pulsera" cambiará para permitir la desconexión.</li>
                         </ol>
                     </li>
-                    <li><strong>Visualización:</strong> El ritmo cardíaco se mostrará de forma más prominente durante el entrenamiento activo. La gráfica muestra los últimos minutos de datos.</li>
+                    <li><strong>Visualización:</strong> El ritmo cardíaco se mostrará de forma más prominente durante el entrenamiento activo. La gráfica muestra los últimos minutos de datos, con el punto más reciente destacado.</li>
                 </ul>
 
 
@@ -927,8 +965,7 @@
     </div>
 
     <script>
-        // Asegúrate de que ChartJS Annotation plugin se registre si se usa.
-        // Chart.register(ChartAnnotation); // Descomentar si se usa y no se registra automáticamente
+        // Chart.register(ChartAnnotation); // No es necesario registrar explícitamente si se carga después de Chart.js
 
         let predefinedExercises = {};
         const DEFAULT_APP_LOGO_PATH = 'icons/android-icon-192x192.png';
@@ -1046,7 +1083,7 @@
                     const newTickColor = rootSt.getPropertyValue('--chart-tick-color').trim();
                     const newLineColor = rootSt.getPropertyValue('--chart-line-color').trim();
                     const newPointColor = rootSt.getPropertyValue('--chart-point-color').trim();
-                    const newAnnotationLineColor = rootSt.getPropertyValue('--chart-annotation-line').trim();
+                    const newAnnotationBoxBg = rootSt.getPropertyValue('--chart-annotation-box-bg').trim();
 
 
                     hrChartInstance.options.scales.x.grid.color = newGridColor;
@@ -1055,11 +1092,10 @@
                     hrChartInstance.options.scales.y.ticks.color = newTickColor;
                     hrChartInstance.data.datasets[0].borderColor = newLineColor;
                     hrChartInstance.data.datasets[0].pointBackgroundColor = newPointColor;
-                    hrChartInstance.data.datasets[0].pointBorderColor = newPointColor; // Match point background
+                    hrChartInstance.data.datasets[0].pointBorderColor = newPointColor; 
 
-                    // Update annotation line color if plugin is used and line exists
-                    if (hrChartInstance.options.plugins.annotation && hrChartInstance.options.plugins.annotation.annotations.nowLine) {
-                        hrChartInstance.options.plugins.annotation.annotations.nowLine.borderColor = newAnnotationLineColor;
+                    if (hrChartInstance.options.plugins.annotation && hrChartInstance.options.plugins.annotation.annotations.nowBox) {
+                        hrChartInstance.options.plugins.annotation.annotations.nowBox.backgroundColor = newAnnotationBoxBg;
                     }
                     hrChartInstance.update('none'); 
                 }
@@ -1082,8 +1118,19 @@
             let hrServer = null;
             let hrChartInstance = null;
             let fullHrHistory = { labels: [], data: [] }; 
-            const MAX_CHART_POINTS_DISPLAY = 60; 
-            const CHART_X_AXIS_LABELS = ["-60s", "-45s", "-30s", "-15s", "Ahora"]; // Static labels for X-axis
+            const MAX_CHART_POINTS_DISPLAY = 60; // For the live chart view
+            const CHART_X_AXIS_LABELS = ["-60s", "-45s", "-30s", "-15s", "Ahora"]; 
+
+            // --- NEW --- Heart Rate Zones Definitions (as per image)
+            const hrZones = {
+                limit:     { min: 145, max: Infinity, color: '#F44336', label: 'Límite (>144bpm)', time: 0, id:'limit' },
+                anaerobic: { min: 128, max: 144,    color: '#FF9800', label: 'Anaeróbico (128-144bpm)', time: 0, id:'anaerobic' },
+                aerobic:   { min: 112, max: 127,    color: '#8BC34A', label: 'Aeróbico (112-127bpm)', time: 0, id:'aerobic' },
+                fatBurning:{ min: 96,  max: 111,    color: '#2196F3', label: 'Quema Grasa (96-111bpm)', time: 0, id:'fatBurning' },
+                warmup:    { min: 0,   max: 95,     color: '#03A9F4', label: 'Calentamiento (<96bpm)', time: 0, id:'warmup' }
+            };
+            let currentSessionMaxHr = 0;
+            let lastHrTimestamp = 0; // To calculate duration between HR readings
 
 
             const openDB = () => new Promise((res, rej) => { 
@@ -1293,6 +1340,15 @@
             function nextPhase() { clearInterval(phaseTimer); phaseTimer = null; let name = '', dur = 0; if (curPhase === 'preparacion') { name = 'ejercicio'; dur = cfg.tiempoEjercicio; } else if (curPhase === 'ejercicio') { if (cfg.numEjercicios > 1 && curEj < cfg.numEjercicios) { name = 'descanso_ejercicio'; dur = cfg.descansoEjercicio; } else { if (curSer < cfg.numSeries) { name = 'descanso_serie'; dur = cfg.descansoSerie; } else { finishWorkout(true); return; } } } else if (curPhase === 'descanso_ejercicio') { curEj++; name = 'ejercicio'; dur = cfg.tiempoEjercicio; } else if (curPhase === 'descanso_serie') { curSer++; curEj = 1; name = 'ejercicio'; dur = cfg.tiempoEjercicio; } else { finishWorkout(false); return; } startPhase(name, dur); }
             function startPhase(name, dur) { curPhase = name; rePrep = false; phaseSecs = dur; if (name === 'ejercicio') { updProgCircles('exercise', curEj); updProgCircles('series', curSer); } else if (name === 'preparacion') { if (cfg && cfg.numEjercicios) updProgCircles('exercise', curEj); if (cfg && cfg.numSeries) updProgCircles('series', curSer); } setUI(running ? (paused ? 'paused' : 'running') : 'initial'); if (running && !paused && name === 'ejercicio' && !rePrep) playBeep(beepStartBuf); if (phaseTimer) clearInterval(phaseTimer); if (dur <= 0 && running && !paused && name !== 'finalizado') { setTimeout(nextPhase, 50); return; } if (running && !paused && name !== 'finalizado') phaseTimer = setInterval(phaseTick, 1000); }
             async function restartCurEj() { if (!running || curPhase !== 'ejercicio' || rePrep) return; await initAudio(); clearInterval(phaseTimer); phaseTimer = null; paused = false; rePrep = true; phaseSecs = RE_PREP_TIME; playBeep(beepMidBuf); setUI('running'); phaseTimer = setInterval(phaseTick, 1000); }
+            
+            function resetZoneTimes() {
+                for (const zoneKey in hrZones) {
+                    hrZones[zoneKey].time = 0;
+                }
+                currentSessionMaxHr = 0;
+                lastHrTimestamp = 0;
+            }
+
             async function startWorkout() { 
                 if (running && !paused) return; 
                 await initAudio(); 
@@ -1304,9 +1360,11 @@
                 
                 fullHrHistory.labels = []; 
                 fullHrHistory.data = [];
+                resetZoneTimes(); // Reset zone times and max HR for the new session
+
                 if (hrChartInstance) { 
-                    hrChartInstance.data.labels = [...CHART_X_AXIS_LABELS]; // Initialize with static labels
-                    hrChartInstance.data.datasets[0].data = Array(CHART_X_AXIS_LABELS.length).fill(null); // Fill with nulls
+                    hrChartInstance.data.labels = [...CHART_X_AXIS_LABELS];
+                    hrChartInstance.data.datasets[0].data = Array(CHART_X_AXIS_LABELS.length).fill(null);
                     hrChartInstance.update('none');
                 }
 
@@ -1324,6 +1382,11 @@
                     if (cfg.numEjercicios) updProgCircles('exercise', cfg.numEjercicios, true); 
                     if (cfg.numSeries) updProgCircles('series', cfg.numSeries, true); 
                     setUI('finished'); 
+                    // Placeholder for showing summary if HR data exists
+                    if (fullHrHistory.data.length > 0) {
+                        console.log("Workout completed with HR data. Max HR:", currentSessionMaxHr, "Zone Times:", hrZones);
+                        // Future: showWorkoutSummaryModal(fullHrHistory, currentSessionMaxHr, hrZones, totalSecs);
+                    }
                 } else { 
                     totalSecs = 0; phaseSecs = 0; curPhase = ''; 
                     if (cfg) cfg.exerciseNames = []; 
@@ -1334,7 +1397,8 @@
                     
                     fullHrHistory.labels = [];
                     fullHrHistory.data = [];
-                    if (hrChartInstance) { // Reset chart on abort
+                    resetZoneTimes(); // Reset zone times if workout is aborted
+                    if (hrChartInstance) { 
                         hrChartInstance.data.labels = [...CHART_X_AXIS_LABELS];
                         hrChartInstance.data.datasets[0].data = Array(CHART_X_AXIS_LABELS.length).fill(null);
                         hrChartInstance.update('none');
@@ -1534,15 +1598,15 @@
                 if (!hrChartCanvasEl) return;
 
                 let displayChartData = {
-                    labels: [...CHART_X_AXIS_LABELS], // Use static labels
+                    labels: [...CHART_X_AXIS_LABELS], 
                     datasets: [{
                         label: 'BPM', 
-                        data: Array(CHART_X_AXIS_LABELS.length).fill(null), // Start with null data
+                        data: Array(CHART_X_AXIS_LABELS.length).fill(null), 
                         fill: false,
                         tension: 0.2, 
                         pointRadius: 1.5,
-                        pointHoverRadius: 3,
-                        borderWidth: 1.5
+                        pointHoverRadius: 4, // Slightly larger hover
+                        borderWidth: 2 // Slightly thicker line
                     }]
                 };
                 
@@ -1552,11 +1616,11 @@
                     animation: { duration: 0 }, 
                     scales: {
                         x: {
-                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true, drawOnChartArea: true },
+                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true, drawOnChartArea: true, z: -1 }, // z:-1 to draw behind line
                             ticks: { 
                                 color: rootSt.getPropertyValue('--chart-tick-color').trim(), 
-                                autoSkip: false, // Do not auto skip for fixed labels
-                                maxRotation: 0, // Keep labels horizontal
+                                autoSkip: false, 
+                                maxRotation: 0, 
                                 minRotation: 0,
                                 font: { size: 9 } 
                             }
@@ -1565,7 +1629,7 @@
                             beginAtZero: false, 
                             min: 40,  
                             max: 220, 
-                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true },
+                            grid: { color: rootSt.getPropertyValue('--chart-grid-color').trim(), display: true, z: -1 },
                             ticks: { 
                                 color: rootSt.getPropertyValue('--chart-tick-color').trim(), 
                                 stepSize: 20,
@@ -1580,18 +1644,18 @@
                             mode: 'index',
                             intersect: false,
                          },
-                        annotation: { // For the "Now" line
+                        annotation: { 
                             annotations: {
-                                nowLine: {
-                                    type: 'line',
-                                    scaleID: 'x',
-                                    value: "Ahora", // Match the label
-                                    borderColor: rootSt.getPropertyValue('--chart-annotation-line').trim(),
-                                    borderWidth: 2,
-                                    borderDash: [6, 6],
-                                    label: {
-                                        enabled: false, // No extra label on the line itself
-                                    }
+                                nowBox: { // Renamed from nowLine to nowBox
+                                    type: 'box',
+                                    xMin: "Ahora", // Start at "Ahora" tick
+                                    xMax: "Ahora", // End at "Ahora" tick (effectively a line, but box allows bg)
+                                    yMin: 0,       // From bottom of chart
+                                    yMax: 220,     // To top of chart (adjust if y-axis max changes)
+                                    backgroundColor: rootSt.getPropertyValue('--chart-annotation-box-bg').trim(),
+                                    borderColor: 'transparent', // No border for the box itself
+                                    borderWidth: 0,
+                                    drawTime: 'beforeDatasetsDraw' // Draw behind dataset lines
                                 }
                             }
                         }
@@ -1608,11 +1672,15 @@
                     options: chartOptions
                 });
                 if(hrChartContainerEl) hrChartContainerEl.classList.remove('hidden');
+                 // Make sure annotation plugin is registered if loaded dynamically or Chart.js version requires it
+                if (window.ChartAnnotation && !Chart.registry.plugins.get('annotation')) {
+                     Chart.register(window.ChartAnnotation);
+                }
             }
 
 
             function onHRDeviceDisconnected(event) {
-                const deviceName = event.target ? event.target.name : "Dispositivo";
+                const deviceName = event.target && event.target.name ? event.target.name : "Dispositivo";
                 console.log(`Dispositivo HR '${deviceName}' desconectado.`);
                 if(hrCharacteristic) { 
                      alert(`Pulsera '${deviceName}' desconectada.`);
@@ -1634,6 +1702,7 @@
                 }
                 fullHrHistory.labels = []; 
                 fullHrHistory.data = [];
+                resetZoneTimes();
 
                 hrDevice = null;
                 hrCharacteristic = null;
@@ -1658,17 +1727,38 @@
                     hrValueEl.textContent = heartRate;
                 }
                 
+                // Update Max HR
+                if (heartRate > currentSessionMaxHr) {
+                    currentSessionMaxHr = heartRate;
+                }
+
+                // Calculate time in zone
+                const currentTimestamp = Date.now();
+                let durationSinceLastSample = 1000; // Default to 1 second if no previous timestamp
+                if (lastHrTimestamp > 0) {
+                    durationSinceLastSample = currentTimestamp - lastHrTimestamp;
+                }
+                lastHrTimestamp = currentTimestamp;
+
+                for (const zoneKey in hrZones) {
+                    const zone = hrZones[zoneKey];
+                    if (heartRate >= zone.min && heartRate <= zone.max) {
+                        zone.time += durationSinceLastSample / 1000; // Add seconds
+                        break; 
+                    }
+                }
+                // console.log("Zone times:", hrZones); // For debugging
+
                 if (hrChartInstance) {
                     const now = new Date();
                     const timeString = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
                     
-                    fullHrHistory.labels.push(timeString); // Store original timestamp for full history
+                    fullHrHistory.labels.push(timeString); 
                     fullHrHistory.data.push(heartRate);
 
-                    // Shift data to the left for the display chart (fixed X-axis labels)
                     const displayData = hrChartInstance.data.datasets[0].data;
-                    displayData.shift(); // Remove the oldest point
-                    displayData.push(heartRate); // Add the newest point at the "Ahora" position
+                    displayData.shift(); 
+                    displayData.push(heartRate); 
 
                     hrChartInstance.update('none'); 
                 }
@@ -1720,6 +1810,7 @@
                     
                     fullHrHistory.labels = []; 
                     fullHrHistory.data = [];
+                    resetZoneTimes(); // Reset zones for new connection
                     initHrChart(); 
 
                     console.log('Obteniendo servicio de Ritmo Cardíaco...');
@@ -1732,6 +1823,7 @@
 
                     console.log('Iniciando notificaciones de Ritmo Cardíaco...');
                     await hrCharacteristic.startNotifications();
+                    lastHrTimestamp = Date.now(); // Set initial timestamp for zone calculation
                     hrCharacteristic.addEventListener('characteristicvaluechanged', handleHeartRateChanged);
                     console.log('Notificaciones iniciadas. Esperando datos...');
 
