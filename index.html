@@ -144,7 +144,8 @@
         .config-item label { font-weight:400; margin-right:15px; flex-basis:60%; text-align:left; color:var(--color-txt-sec); font-size:1em; word-break:break-word; transition:color .3s ease; }
         
         .config-item select,
-        .config-item.user-profile-item input[type="number"],
+        .config-item.user-profile-item input[type="text"], /* MODIFICADO type="number" a type="text" */
+        .config-item.user-profile-item input[type="number"], /* Mantenido por si se usa en otro lado, pero los relevantes son text ahora */
         .config-item.user-profile-item select {
             font-family:var(--font-body);
             padding:8px 10px; 
@@ -156,10 +157,22 @@
             font-size:1em; 
             transition:border-color .2s ease, background-color .3s ease, color .3s ease;
         }
+         .config-item.user-profile-item input[type="text"], /* MODIFICADO */
          .config-item.user-profile-item input[type="number"],
          .config-item.user-profile-item select {
             font-size:0.9em; 
          }
+        
+        /* CSS para ocultar spinners de input[type="number"] si se decide mantener ese type */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
 
         .config-item select,
         .config-item.user-profile-item select { 
@@ -178,6 +191,7 @@
         }
 
         .config-item select:focus,
+        .config-item.user-profile-item input[type="text"]:focus, /* MODIFICADO */
         .config-item.user-profile-item input[type="number"]:focus,
         .config-item.user-profile-item select:focus {
             border-color:var(--color-hl);
@@ -194,6 +208,8 @@
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg-l) 80%, #fff); color:var(--color-txt-prim-l); }
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
 
+        /* Eliminado el <hr class="config-divider"> del HTML, esta regla puede no ser necesaria
+           o necesitar ajuste si se quiere un espaciado diferente.
         hr.config-divider {
             width: 100%;
             border: none;
@@ -201,6 +217,7 @@
             margin-top: 10px;
             margin-bottom: 25px;
         }
+        */
 
         .exercise-names-section {
             display: flex;
@@ -804,6 +821,7 @@
             body:not(.full-screen-mode) .config-item { flex-direction:column; align-items:flex-start; }
             body:not(.full-screen-mode) .config-item label { margin-bottom:8px; flex-basis:auto; width:100%; margin-right:0; }
             body:not(.full-screen-mode) .config-item select,
+            body:not(.full-screen-mode) .config-item.user-profile-item input[type="text"], /* MODIFICADO */
             body:not(.full-screen-mode) .config-item.user-profile-item input[type="number"],
             body:not(.full-screen-mode) .config-item.user-profile-item select { width:100%; flex-basis:auto; }
 
@@ -885,14 +903,14 @@
     <img id="userLogo" src="#" alt="Logo" class="hidden">
     <div class="container">
         <div id="configuracionSection" class="configuracion-section">
-         <div class="config-item user-profile-item">
-    <label for="userAge">Edad (años):</label>
-    <input type="number" id="userAge" min="10" max="99" step="1" placeholder="Ej: 30">
-</div>
-<div class="config-item user-profile-item">
-    <label for="userWeight">Peso (kg, opcional):</label>
-    <input type="number" id="userWeight" min="20" max="300" step="0.1" placeholder="Ej: 70.5">
-</div>
+            <div class="config-item user-profile-item">
+                <label for="userAge">Edad (años):</label>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" id="userAge" min="10" max="120" placeholder="Ej: 30">
+            </div>
+            <div class="config-item user-profile-item">
+                <label for="userWeight">Peso (kg, opcional):</label>
+                <input type="text" inputmode="decimal" pattern="[0-9]+([,\.][0-9]+)?" id="userWeight" min="20" max="300" placeholder="Ej: 70.5">
+            </div>
             <div class="config-item user-profile-item">
                 <label for="userGender">Género (opcional):</label>
                 <select id="userGender">
@@ -902,7 +920,7 @@
                     <option value="other">Otro</option>
                 </select>
             </div>
-            
+            <!-- <hr class="config-divider">  ELIMINADO/COMENTADO -->
 
             <div class="config-item"><label for="numEjercicios">Ejercicios / Serie:</label><select id="numEjercicios"></select></div>
             <div id="exerciseNamesContainer" class="exercise-names-section hidden"></div>
@@ -1370,6 +1388,8 @@
             const USER_SETTINGS_STORE = 'userSettings', 
                   SAVED_ROUTINES_STORE = 'savedRoutines',
                   WORKOUT_SESSIONS_STORE = 'workoutSessions';
+            const EJ_NAMES_K = 'allExerciseNames'; // <--- CORRECCIÓN: Definir constante
+            const LOGO_K = 'userLogo';           // <--- CORRECCIÓN: Definir constante
             let db, allEjNamesSet = new Set();
             let suggestionsDropdown = null, activeSuggestionInput = null, blurTimeout = null;
 
@@ -1378,6 +1398,8 @@
             let hrServer = null;
             let hrChartInstance = null;
             let fullHrHistory = { labels: [], data: [] }; 
+            let currentSessionMaxHr = 0; // <--- CORRECCIÓN: Declarar variable globalmente
+            let lastHrTimestamp = 0;     // <--- CORRECCIÓN: Declarar variable globalmente
             const MAX_CHART_POINTS_DISPLAY = 60; 
             const CHART_X_AXIS_LABELS = ["-60s", "-45s", "-30s", "-15s", "Ahora"]; 
 
@@ -1648,10 +1670,8 @@
                 if (connectHrDeviceBtn) connectHrDeviceBtn.classList.toggle('hidden', isFs || isWorkoutActive);
                 if (heartRateDisplayAreaEl) {
                     const hrConnected = hrDevice && hrDevice.gatt.connected;
-                    // En modo normal, mostrar si está conectado O si no hay workout activo (para permitir conexión)
-                    // En modo FS, mostrar solo si está conectado Y hay workout activo (o a punto de empezar)
                     let shouldShowHrAreaInNormalMode = hrConnected || (!isFs && !isWorkoutActive);
-                    let shouldShowHrAreaInFSMode = isFs && hrConnected && (isWorkoutActive || st === 'initial' || st === 'finished'); // Mostrar en FS si conectado y activo o listo/finalizado
+                    let shouldShowHrAreaInFSMode = isFs && hrConnected && (isWorkoutActive || st === 'initial' || st === 'finished'); 
 
                     if (isFs) {
                         heartRateDisplayAreaEl.classList.toggle('hidden', !shouldShowHrAreaInFSMode);
@@ -1665,7 +1685,6 @@
                     const shouldShowChart = hrConnected && !isFs && !(st === 'finished') && !(st === 'initial' && !isWorkoutActive) ;
                     hrChartContainerEl.classList.toggle('hidden', !shouldShowChart);
                 }
-
 
                 if(typeof feather!=='undefined') feather.replace(); 
                 updUIDisp();
@@ -1712,7 +1731,7 @@
             
             async function saveWorkoutSession() {
                 if (fullHrHistory.data.length === 0 && totalSecs === 0) {
-                    console.log("No hay datos significativos para guardar la sesión.");
+                    // console.log("No hay datos significativos para guardar la sesión."); // DEBUG
                     return;
                 }
                 const sessionData = {
@@ -1726,7 +1745,7 @@
                 };
                 try {
                     await dbAction(WORKOUT_SESSIONS_STORE, 'readwrite', 'put', sessionData); 
-                    console.log("Sesión de entrenamiento guardada:", sessionData);
+                    // console.log("Sesión de entrenamiento guardada:", sessionData); // DEBUG
                 } catch (err) {
                     console.error("Error guardando la sesión de entrenamiento:", err);
                 }
@@ -1741,6 +1760,10 @@
                 }
                 
                 const hasHrData = fullHrHistory.data.length > 0;
+                // console.log('[DEBUG] showWorkoutSummaryModal - hasHrData:', hasHrData, 'fullHrHistory.data.length:', fullHrHistory.data.length); // DEBUG
+                // console.log('[DEBUG] showWorkoutSummaryModal - totalSecs:', totalSecs); // DEBUG
+                // console.log('[DEBUG] showWorkoutSummaryModal - hrZones antes de procesar:', JSON.parse(JSON.stringify(hrZones))); // DEBUG
+
                 noSummaryDataMessageEl.classList.toggle('hidden', !hasHrData);
 
                 summaryTotalTimeEl.textContent = fmtTotalTime(totalSecs);
@@ -1811,9 +1834,11 @@
                     });
                 }
                 
-                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && zoneDataForPie.every(p => p === 0));
-                if (summaryZonePieChartInstance) summaryZonePieChartInstance.destroy();
                 const nonZeroPercentages = zoneDataForPie.some(p => p > 0);
+                // console.log('[DEBUG] showWorkoutSummaryModal - nonZeroPercentages:', nonZeroPercentages, 'zoneDataForPie:', zoneDataForPie); // DEBUG
+
+                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && !nonZeroPercentages); // Modificado para que se oculte si no hay HR Y no hay porcentajes
+                if (summaryZonePieChartInstance) summaryZonePieChartInstance.destroy();
                 if (hasHrData || nonZeroPercentages) {
                      summaryZonePieChartInstance = new Chart(summaryZonePieChartCanvasEl, {
                         type: 'doughnut',
@@ -1919,10 +1944,10 @@
                         }
                     });
                 }
-                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && zoneDataForPie.every(p => p === 0));
+                const nonZeroPercentagesHist = zoneDataForPie.some(p => p > 0);
+                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && !nonZeroPercentagesHist);
                 if (summaryZonePieChartInstance) summaryZonePieChartInstance.destroy();
-                const nonZeroPercentages = zoneDataForPie.some(p => p > 0);
-                if (hasHrData || nonZeroPercentages) {
+                if (hasHrData || nonZeroPercentagesHist) {
                      summaryZonePieChartInstance = new Chart(summaryZonePieChartCanvasEl, {
                         type: 'doughnut',
                         data: {
@@ -2038,6 +2063,7 @@
                     if (cfg.numEjercicios) updProgCircles('exercise', cfg.numEjercicios, true); 
                     if (cfg.numSeries) updProgCircles('series', cfg.numSeries, true); 
                     phaseSecs = 0; 
+                    curPhase = 'finalizado'; // Asegurar que curPhase se actualice
                     setUI('finished'); 
                     if (fullHrHistory.data.length > 0) { 
                         showWorkoutSummaryModal();
@@ -2077,8 +2103,9 @@
                     curPhase = 'finalizado';
                     setUI('finished');
                     showWorkoutSummaryModal(); 
+                } else { // Si no hay datos de HR, simplemente finaliza sin mostrar modal de resumen de HR
+                    finishWorkout(false); 
                 }
-                finishWorkout(false); 
             };
 
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
@@ -2401,6 +2428,8 @@
                     heartRate = value.getUint8(byteOffset);
                     byteOffset += 1;
                 }
+                // console.log('[DEBUG] HR Leído:', heartRate); // DEBUG
+
                 if (hrValueEl) {
                     hrValueEl.textContent = heartRate;
                 }
@@ -2416,13 +2445,19 @@
                 }
                 lastHrTimestamp = currentTimestamp;
 
+                let zoneFound = false;
                 for (const zoneKey in hrZones) {
                     const zone = hrZones[zoneKey];
                     if (heartRate >= zone.min && heartRate <= zone.max) {
                         zone.time += durationSinceLastSample / 1000; 
+                        zoneFound = true;
+                        // console.log(`[DEBUG] HR ${heartRate} en zona ${zoneKey}. Tiempo acumulado en zona: ${zone.time.toFixed(2)}s`); // DEBUG
                         break; 
                     }
                 }
+                // if (!zoneFound) { // DEBUG
+                //     console.warn(`[DEBUG] HR ${heartRate} no cayó en ninguna zona definida. Zonas:`, JSON.stringify(hrZones));
+                // }
 
                 if (hrChartInstance) {
                     const now = new Date();
@@ -2430,6 +2465,8 @@
                     
                     fullHrHistory.labels.push(timeString); 
                     fullHrHistory.data.push(heartRate);
+                    // console.log('[DEBUG] fullHrHistory.data:', JSON.stringify(fullHrHistory.data)); // DEBUG (mucho output)
+
 
                     const displayData = hrChartInstance.data.datasets[0].data;
                     displayData.shift(); 
