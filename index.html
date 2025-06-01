@@ -885,13 +885,13 @@
     <img id="userLogo" src="#" alt="Logo" class="hidden">
     <div class="container">
         <div id="configuracionSection" class="configuracion-section">
-            <div class="config-item user-profile-item">
+         <div class="config-item user-profile-item">
     <label for="userAge">Edad (años):</label>
-    <input type="text" inputmode="numeric" pattern="[0-9]*" id="userAge" min="10" max="120" placeholder="Ej: 30">
+    <input type="number" id="userAge" min="10" max="99" step="1" placeholder="Ej: 30">
 </div>
 <div class="config-item user-profile-item">
     <label for="userWeight">Peso (kg, opcional):</label>
-    <input type="text" inputmode="decimal" pattern="[0-9]+([,\.][0-9]+)?" id="userWeight" min="20" max="300" placeholder="Ej: 70.5">
+    <input type="number" id="userWeight" min="20" max="300" step="0.1" placeholder="Ej: 70.5">
 </div>
             <div class="config-item user-profile-item">
                 <label for="userGender">Género (opcional):</label>
