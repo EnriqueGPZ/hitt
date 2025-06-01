@@ -144,8 +144,7 @@
         .config-item label { font-weight:400; margin-right:15px; flex-basis:60%; text-align:left; color:var(--color-txt-sec); font-size:1em; word-break:break-word; transition:color .3s ease; }
         
         .config-item select,
-        .config-item.user-profile-item input[type="text"], /* MODIFICADO type="number" a type="text" */
-        .config-item.user-profile-item input[type="number"], /* Mantenido por si se usa en otro lado, pero los relevantes son text ahora */
+        .config-item.user-profile-item input[type="text"],
         .config-item.user-profile-item select {
             font-family:var(--font-body);
             padding:8px 10px; 
@@ -157,13 +156,12 @@
             font-size:1em; 
             transition:border-color .2s ease, background-color .3s ease, color .3s ease;
         }
-         .config-item.user-profile-item input[type="text"], /* MODIFICADO */
-         .config-item.user-profile-item input[type="number"],
+         .config-item.user-profile-item input[type="text"],
          .config-item.user-profile-item select {
             font-size:0.9em; 
          }
         
-        /* CSS para ocultar spinners de input[type="number"] si se decide mantener ese type */
+        /* Ocultar flechas en inputs type="number" (si se usan en otro lado) */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -172,7 +170,6 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
-
 
         .config-item select,
         .config-item.user-profile-item select { 
@@ -191,8 +188,7 @@
         }
 
         .config-item select:focus,
-        .config-item.user-profile-item input[type="text"]:focus, /* MODIFICADO */
-        .config-item.user-profile-item input[type="number"]:focus,
+        .config-item.user-profile-item input[type="text"]:focus,
         .config-item.user-profile-item select:focus {
             border-color:var(--color-hl);
             outline:none;
@@ -207,17 +203,6 @@
         .config-item select:disabled { background-color:var(--sel-dis-bg); color:var(--sel-dis-clr); opacity:.7; cursor:not-allowed; border-color:var(--color-prim-acc); background-image: none; }
         .config-item select option { background-color:color-mix(in srgb, var(--color-bg-l) 80%, #fff); color:var(--color-txt-prim-l); }
         body.dark-theme .config-item select option { background-color:color-mix(in srgb, var(--color-surf-d) 80%, #000); color: var(--color-txt-prim); }
-
-        /* Eliminado el <hr class="config-divider"> del HTML, esta regla puede no ser necesaria
-           o necesitar ajuste si se quiere un espaciado diferente.
-        hr.config-divider {
-            width: 100%;
-            border: none;
-            border-top: 1px solid var(--color-prim-acc);
-            margin-top: 10px;
-            margin-bottom: 25px;
-        }
-        */
 
         .exercise-names-section {
             display: flex;
@@ -734,6 +719,29 @@
             min-width: 60px;
             font-weight: normal;
         }
+        .modal-footer-actions { /* Estilos para los botones del pie del modal de resumen */
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--color-prim-acc);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .modal-footer-actions .action-btn { /* Usar la clase action-btn existente y ajustar */
+            flex: 0 1 auto; /* No crecer, encoger si es necesario, base automática */
+            min-width: 140px; /* Ancho mínimo para que quepa el texto */
+        }
+        .modal-footer-actions #summaryRestartBtn {
+            background-color: var(--phase-ex);
+            color: var(--txt-phase-bg); /* O var(--color-txt-prim-l) si es tema claro, var(--color-txt-prim) si es oscuro */
+            border-color: var(--phase-ex);
+        }
+         body.dark-theme .modal-footer-actions #summaryRestartBtn {
+            color: var(--txt-phase-bg);
+        }
+        .modal-footer-actions #summaryRestartBtn:hover {
+            background-color: color-mix(in srgb, var(--phase-ex) 85%, black);
+        }
 
 
         @media (min-width: 769px) {
@@ -778,6 +786,8 @@
             .zone-name { flex-basis: 40%; } 
             .zone-time { min-width: 65px; }
             .zone-percentage { min-width: 55px; }
+            .modal-footer-actions { flex-direction: column; }
+            .modal-footer-actions .action-btn { width: 100%; min-width: unset; }
         }
         @media (max-width:480px) {
             body:not(.full-screen-mode) .controls-section button { padding:10px 12px; font-size:.85em; }
@@ -821,8 +831,7 @@
             body:not(.full-screen-mode) .config-item { flex-direction:column; align-items:flex-start; }
             body:not(.full-screen-mode) .config-item label { margin-bottom:8px; flex-basis:auto; width:100%; margin-right:0; }
             body:not(.full-screen-mode) .config-item select,
-            body:not(.full-screen-mode) .config-item.user-profile-item input[type="text"], /* MODIFICADO */
-            body:not(.full-screen-mode) .config-item.user-profile-item input[type="number"],
+            body:not(.full-screen-mode) .config-item.user-profile-item input[type="text"],
             body:not(.full-screen-mode) .config-item.user-profile-item select { width:100%; flex-basis:auto; }
 
             body:not(.full-screen-mode) .exercise-name-item { flex-direction:column; align-items:flex-start; }
@@ -920,7 +929,7 @@
                     <option value="other">Otro</option>
                 </select>
             </div>
-            <!-- <hr class="config-divider">  ELIMINADO/COMENTADO -->
+            <!-- <hr class="config-divider"> ELIMINADO -->
 
             <div class="config-item"><label for="numEjercicios">Ejercicios / Serie:</label><select id="numEjercicios"></select></div>
             <div id="exerciseNamesContainer" class="exercise-names-section hidden"></div>
@@ -1187,6 +1196,14 @@
                 </div>
                 <p id="noSummaryDataMessage" class="no-items-message hidden">No hay datos de ritmo cardíaco para mostrar en el resumen.</p>
             </div>
+            <div class="modal-footer-actions">
+                <button id="summaryRestartBtn" class="action-btn">
+                    <i data-feather="refresh-cw"></i> Reiniciar Rutina
+                </button>
+                <button id="summaryNewConfigBtn" class="action-btn">
+                    <i data-feather="settings"></i> Nueva Configuración
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1320,6 +1337,9 @@
             const summaryZonePieChartCanvasEl = getEl('summaryZonePieChartCanvas');
             const summaryZonePieChartContainerParentEl = getEl('summaryZonePieChartContainerParent');
             const noSummaryDataMessageEl = getEl('noSummaryDataMessage');
+            const summaryRestartBtn = getEl('summaryRestartBtn'); // Botón Reiniciar Rutina del modal
+            const summaryNewConfigBtn = getEl('summaryNewConfigBtn'); // Botón Nueva Configuración del modal
+
             let summaryHrChartInstance = null;
             let summaryZonePieChartInstance = null;
 
@@ -1388,8 +1408,8 @@
             const USER_SETTINGS_STORE = 'userSettings', 
                   SAVED_ROUTINES_STORE = 'savedRoutines',
                   WORKOUT_SESSIONS_STORE = 'workoutSessions';
-            const EJ_NAMES_K = 'allExerciseNames'; // <--- CORRECCIÓN: Definir constante
-            const LOGO_K = 'userLogo';           // <--- CORRECCIÓN: Definir constante
+            const EJ_NAMES_K = 'allExerciseNamesGlobal'; // Definición de constante
+            const LOGO_K = 'userAppLogo';           // Definición de constante
             let db, allEjNamesSet = new Set();
             let suggestionsDropdown = null, activeSuggestionInput = null, blurTimeout = null;
 
@@ -1398,8 +1418,8 @@
             let hrServer = null;
             let hrChartInstance = null;
             let fullHrHistory = { labels: [], data: [] }; 
-            let currentSessionMaxHr = 0; // <--- CORRECCIÓN: Declarar variable globalmente
-            let lastHrTimestamp = 0;     // <--- CORRECCIÓN: Declarar variable globalmente
+            let currentSessionMaxHr = 0; // Declarada globalmente
+            let lastHrTimestamp = 0;     // Declarada globalmente
             const MAX_CHART_POINTS_DISPLAY = 60; 
             const CHART_X_AXIS_LABELS = ["-60s", "-45s", "-30s", "-15s", "Ahora"]; 
 
@@ -1469,12 +1489,12 @@
                 if (!age || age < 10 || age > 120) {
                     hrZones = JSON.parse(JSON.stringify(defaultHrZones));
                     currentUserFcm = null;
-                    console.log("Edad no válida o no proporcionada, usando zonas HR por defecto.");
+                    // console.log("Edad no válida o no proporcionada, usando zonas HR por defecto.");
                     updateHrZoneLabels();
                     return;
                 }
                 currentUserFcm = 220 - age;
-                console.log(`FC Máxima calculada para edad ${age}: ${currentUserFcm} bpm`);
+                // console.log(`FC Máxima calculada para edad ${age}: ${currentUserFcm} bpm`);
 
                 hrZones.warmup.min = Math.round(currentUserFcm * 0.50);
                 hrZones.warmup.max = Math.round(currentUserFcm * 0.60) - 1;
@@ -1488,7 +1508,7 @@
                 hrZones.limit.max = Infinity;
 
                 updateHrZoneLabels();
-                console.log("Zonas HR actualizadas:", hrZones);
+                // console.log("Zonas HR actualizadas:", JSON.parse(JSON.stringify(hrZones)));
             }
 
             function updateHrZoneLabels() {
@@ -1496,14 +1516,14 @@
                 hrZones.fatBurning.label = `Quema Grasa (${hrZones.fatBurning.min}-${hrZones.fatBurning.max}bpm)`; 
                 hrZones.aerobic.label = `Aeróbico (${hrZones.aerobic.min}-${hrZones.aerobic.max}bpm)`; 
                 hrZones.anaerobic.label = `Anaeróbico (${hrZones.anaerobic.min}-${hrZones.anaerobic.max}bpm)`; 
-                hrZones.limit.label = `Límite (>${hrZones.limit.min -1 < 0 ? 0 : hrZones.limit.min}bpm)`; 
+                hrZones.limit.label = `Límite (>${hrZones.limit.min -1 < 0 ? 0 : hrZones.limit.min -1}bpm)`; // Corregido para mostrar el límite inferior correcto
             }
 
             function saveUserProfile() {
                 if (userAgeInput) localStorage.setItem('userAge', userAgeInput.value);
                 if (userWeightInput) localStorage.setItem('userWeight', userWeightInput.value);
                 if (userGenderSelect) localStorage.setItem('userGender', userGenderSelect.value);
-                console.log("Perfil de usuario guardado.");
+                // console.log("Perfil de usuario guardado.");
                 const age = userAgeInput.value ? parseInt(userAgeInput.value) : null;
                 calculateUserHrZones(age);
             }
@@ -1521,7 +1541,7 @@
                 }
                 if (userWeightInput && savedWeight) userWeightInput.value = savedWeight;
                 if (userGenderSelect && savedGender) userGenderSelect.value = savedGender;
-                console.log("Perfil de usuario cargado.");
+                // console.log("Perfil de usuario cargado.");
             }
 
             if (userAgeInput) userAgeInput.addEventListener('change', saveUserProfile);
@@ -1611,11 +1631,22 @@
                 }
 
                 if (curPhStyle && phaseColors[curPhStyle]) { bodyPhClr = phaseColors[curPhStyle]; bodyEl.classList.add(`phase-${curPhStyle}`); contEl.classList.add(`phase-${curPhStyle}`); if (running || rePrep) { bodyEl.classList.add('active-timer-bg'); contEl.classList.add('active-timer-bg'); } }
-                bodyEl.style.backgroundColor = (isFullScreen && (running || rePrep || curPhase === 'finalizado')) || (!isFullScreen && (running || rePrep || curPhase === 'finalizado')) ? (bodyPhClr || '') : '';
+                
+                if (!running && !paused && curPhase !== 'finalizado' && !rePrep) { // Si estamos en estado inicial
+                    bodyEl.style.backgroundColor = ''; // Limpiar color de fondo
+                    if (timerDispSec) timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c => c.startsWith('bg-')));
+                } else if (curPhase === 'finalizado' && !running && !paused) { // Si estamos en estado finalizado post-resumen
+                     bodyEl.style.backgroundColor = '';
+                     if (timerDispSec) timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c => c.startsWith('bg-')));
+                } else if (bodyPhClr) { // Durante el ejercicio activo
+                    bodyEl.style.backgroundColor = bodyPhClr;
+                }
+
+
                 if (estadoEl) { estadoEl.textContent = txt; if (stTxtCls) estadoEl.classList.add(stTxtCls); }
                 if (curEjNameDispEl) { if (!isFullScreen && curEjNameForOriginalDisplay) { curEjNameDispEl.textContent = curEjNameForOriginalDisplay; curEjNameDispEl.classList.remove('hidden'); } else { curEjNameDispEl.classList.add('hidden'); } }
                 if (timerDispSec && timerBgCls) timerDispSec.classList.add(timerBgCls);
-                else if (timerDispSec) timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c => c.startsWith('bg-')));
+                // else if (timerDispSec) timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c => c.startsWith('bg-'))); // Ya se limpió arriba si es necesario
                 if (paused && running && timerDispSec && !rePrep) timerDispSec.classList.add('paused-overlay');
             }
 
@@ -1636,7 +1667,7 @@
                 if(timerDispSec){ 
                     timerDispSec.classList.toggle('hidden', st==='initial' && !isFs); 
                     if(st==='initial'){ 
-                        timerDispSec.classList.remove(...Array.from(timerDispSec.classList).filter(c=>c.startsWith('bg-')||c==='paused-overlay')); 
+                        // La limpieza de clases de fondo del timerDispSec se hace en updUIDisp o finishWorkout
                         if(estadoEl){estadoEl.className=''; estadoEl.textContent="Listo";} 
                         if(cronoActEl) cronoActEl.textContent="00:00"; 
                         if(cronoTotalEl) cronoTotalEl.textContent="00:00:00"; 
@@ -1656,14 +1687,20 @@
                     if(st==='initial'){ /* default values are correct */ } 
                     else if(st==='running'){ iconName = 'pause'; buttonText = "Pausar"; } 
                     else if(st==='paused'){ iconName = 'play-circle'; buttonText = "Reanudar"; startBtn.classList.add('paused'); } 
-                    else if(st==='finished'){ iconName = 'refresh-cw'; buttonText = "Nuevo"; }
+                    else if(st==='finished'){ iconName = 'refresh-cw'; buttonText = "Nuevo"; } // Este 'Nuevo' ahora tiene más sentido
                     
                     startBtn.innerHTML = `<i data-feather="${iconName}"></i><span class="btn-text">${buttonText}</span>`;
                 }
 
                 if(finishBtn)finishBtn.classList.toggle('hidden',!(st==='running'||st==='paused')||rePrep);
                 if(restartEjBtn){ const show=st==='running'&&curPhase==='ejercicio'&&!rePrep&&!paused; restartEjBtn.classList.toggle('hidden',!show); }
-                if(st==='finished'){curPhase='finalizado';rePrep=false;}
+                if(st==='finished' && !workoutSummaryScreenEl.classList.contains('hidden')){
+                    // Si estamos en 'finished' y el modal de resumen está visible, mantenemos ese estado.
+                } else if (st==='finished') {
+                     // Si 'finished' pero el modal no está (o se acaba de cerrar), debería ser 'initial'
+                     // Esta lógica se maneja mejor en finishWorkout y el cierre del modal
+                }
+
                 if(progIndEl){ const showInd=(cfg&&cfg.numEjercicios>1)||(cfg&&cfg.numSeries>1); let hide= !showInd; if(isFs&&(st==='initial'||st==='finished'))hide=true; progIndEl.classList.toggle('hidden',hide); }
                 if(actionButtonsSection) actionButtonsSection.classList.toggle('hidden', isFs || isWorkoutActive);
                 
@@ -1731,7 +1768,6 @@
             
             async function saveWorkoutSession() {
                 if (fullHrHistory.data.length === 0 && totalSecs === 0) {
-                    // console.log("No hay datos significativos para guardar la sesión."); // DEBUG
                     return;
                 }
                 const sessionData = {
@@ -1745,7 +1781,6 @@
                 };
                 try {
                     await dbAction(WORKOUT_SESSIONS_STORE, 'readwrite', 'put', sessionData); 
-                    // console.log("Sesión de entrenamiento guardada:", sessionData); // DEBUG
                 } catch (err) {
                     console.error("Error guardando la sesión de entrenamiento:", err);
                 }
@@ -1760,12 +1795,6 @@
                 }
                 
                 const hasHrData = fullHrHistory.data.length > 0;
-                // console.log('[DEBUG] showWorkoutSummaryModal - hasHrData:', hasHrData, 'fullHrHistory.data.length:', fullHrHistory.data.length); // DEBUG
-                // console.log('[DEBUG] showWorkoutSummaryModal - totalSecs:', totalSecs); // DEBUG
-                // console.log('[DEBUG] showWorkoutSummaryModal - hrZones antes de procesar:', JSON.parse(JSON.stringify(hrZones))); // DEBUG
-
-                noSummaryDataMessageEl.classList.toggle('hidden', !hasHrData);
-
                 summaryTotalTimeEl.textContent = fmtTotalTime(totalSecs);
                 summaryMaxHrEl.textContent = currentSessionMaxHr > 0 ? currentSessionMaxHr : '-';
 
@@ -1835,11 +1864,13 @@
                 }
                 
                 const nonZeroPercentages = zoneDataForPie.some(p => p > 0);
-                // console.log('[DEBUG] showWorkoutSummaryModal - nonZeroPercentages:', nonZeroPercentages, 'zoneDataForPie:', zoneDataForPie); // DEBUG
+                const showPieChartData = hasHrData && nonZeroPercentages;
 
-                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && !nonZeroPercentages); // Modificado para que se oculte si no hay HR Y no hay porcentajes
+                noSummaryDataMessageEl.classList.toggle('hidden', showPieChartData); 
+                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !showPieChartData);
+
                 if (summaryZonePieChartInstance) summaryZonePieChartInstance.destroy();
-                if (hasHrData || nonZeroPercentages) {
+                if (showPieChartData) {
                      summaryZonePieChartInstance = new Chart(summaryZonePieChartCanvasEl, {
                         type: 'doughnut',
                         data: {
@@ -1870,8 +1901,6 @@
                             }
                         }
                     });
-                } else {
-                     summaryZonePieChartContainerParentEl.classList.add('hidden');
                 }
 
                 workoutSummaryScreenEl.classList.remove('hidden');
@@ -1891,7 +1920,6 @@
                     return;
                 }
                 const hasHrData = sessionData.hrDataPoints && sessionData.hrDataPoints.length > 0;
-                noSummaryDataMessageEl.classList.toggle('hidden', !hasHrData);
                 summaryTotalTimeEl.textContent = fmtTotalTime(sessionData.totalDurationSeconds);
                 summaryMaxHrEl.textContent = sessionData.maxHr > 0 ? sessionData.maxHr : '-';
                 summaryZoneStatsContainerEl.innerHTML = '';
@@ -1945,9 +1973,12 @@
                     });
                 }
                 const nonZeroPercentagesHist = zoneDataForPie.some(p => p > 0);
-                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !hasHrData && !nonZeroPercentagesHist);
+                const showPieChartDataHist = hasHrData && nonZeroPercentagesHist;
+
+                noSummaryDataMessageEl.classList.toggle('hidden', showPieChartDataHist);
+                summaryZonePieChartContainerParentEl.classList.toggle('hidden', !showPieChartDataHist);
                 if (summaryZonePieChartInstance) summaryZonePieChartInstance.destroy();
-                if (hasHrData || nonZeroPercentagesHist) {
+                if (showPieChartDataHist) {
                      summaryZonePieChartInstance = new Chart(summaryZonePieChartCanvasEl, {
                         type: 'doughnut',
                         data: {
@@ -1965,8 +1996,6 @@
                             }
                         }
                     });
-                } else {
-                     summaryZonePieChartContainerParentEl.classList.add('hidden');
                 }
                 workoutSummaryScreenEl.classList.remove('hidden');
                 bodyEl.style.overflow = 'hidden';
@@ -2054,38 +2083,48 @@
                 };
             }
 
+            function finishWorkout(completedAndShowSummary = false) {
+                clearInterval(phaseTimer); clearInterval(totalTimer); phaseTimer = null; totalTimer = null;
+                running = false; paused = false; rePrep = false;
+                if(activeExerciseInfoEl) activeExerciseInfoEl.classList.remove('js-visible-by-state');
 
-            function finishWorkout(completed = true) { 
-                clearInterval(phaseTimer); clearInterval(totalTimer); phaseTimer = null; totalTimer = null; 
-                running = false; paused = false; rePrep = false; 
-                if(activeExerciseInfoEl) activeExerciseInfoEl.classList.remove('js-visible-by-state'); 
-                if (completed) { 
-                    if (cfg.numEjercicios) updProgCircles('exercise', cfg.numEjercicios, true); 
-                    if (cfg.numSeries) updProgCircles('series', cfg.numSeries, true); 
-                    phaseSecs = 0; 
-                    curPhase = 'finalizado'; // Asegurar que curPhase se actualice
-                    setUI('finished'); 
-                    if (fullHrHistory.data.length > 0) { 
-                        showWorkoutSummaryModal();
+                if (completedAndShowSummary && fullHrHistory.data.length > 0) {
+                    if (cfg.numEjercicios) updProgCircles('exercise', cfg.numEjercicios, true);
+                    if (cfg.numSeries) updProgCircles('series', cfg.numSeries, true);
+                    phaseSecs = 0;
+                    curPhase = 'finalizado';
+                    setUI('finished');
+                    showWorkoutSummaryModal();
+                } else {
+                    totalSecs = 0; phaseSecs = 0; curPhase = '';
+                    if (cfg) cfg.exerciseNames = [];
+                    if (curEjNameDispEl) { curEjNameDispEl.textContent = ''; curEjNameDispEl.classList.add('hidden'); }
+                    if (ejProgEl) ejProgEl.innerHTML = '';
+                    if (serProgEl) serProgEl.innerHTML = '';
+
+                    bodyEl.style.backgroundColor = '';
+                    if (timerDispSec) {
+                        const cls = Array.from(timerDispSec.classList);
+                        timerDispSec.classList.remove(...cls.filter(c => c.startsWith('bg-') || c === 'paused-overlay'));
                     }
-                } else { 
-                    totalSecs = 0; phaseSecs = 0; curPhase = ''; 
-                    if (cfg) cfg.exerciseNames = []; 
-                    if (curEjNameDispEl) { curEjNameDispEl.textContent = ''; curEjNameDispEl.classList.add('hidden'); } 
-                    if (ejProgEl) ejProgEl.innerHTML = ''; 
-                    if (serProgEl) serProgEl.innerHTML = ''; 
-                    setUI('initial'); calcEstTime(); popEjNameInputs(); 
-                    
+                    bodyEl.classList.remove(...Array.from(bodyEl.classList).filter(c => c.startsWith('phase-') && c !== 'dark-theme'), 'active-timer-bg');
+                    contEl.classList.remove(...Array.from(contEl.classList).filter(c => c.startsWith('phase-')), 'active-timer-bg');
+
+                    setUI('initial');
+                    calcEstTime();
+                    popEjNameInputs();
+
                     fullHrHistory.labels = [];
                     fullHrHistory.data = [];
-                    resetZoneTimes(); 
-                    if (hrChartInstance) { 
+                    resetZoneTimes();
+                    if (hrChartInstance) {
                         hrChartInstance.data.labels = [...CHART_X_AXIS_LABELS];
                         hrChartInstance.data.datasets[0].data = Array(CHART_X_AXIS_LABELS.length).fill(null);
                         hrChartInstance.update('none');
                     }
-                } 
+                }
             }
+
 
             allSels.forEach(s => { if (s) s.onchange = calcEstTime; });
             if (numEjSel) numEjSel.onchange = () => { calcEstTime(); popEjNameInputs(); };
@@ -2093,19 +2132,7 @@
             
             if (finishBtn) finishBtn.onclick = () => {
                 if (rePrep) return;
-                if (fullHrHistory.data.length > 0) {
-                    clearInterval(phaseTimer); clearInterval(totalTimer); phaseTimer = null; totalTimer = null;
-                    running = false; paused = false; rePrep = false;
-                    if(activeExerciseInfoEl) activeExerciseInfoEl.classList.remove('js-visible-by-state');
-                    if (cfg && cfg.numEjercicios) updProgCircles('exercise', curEj, true);
-                    if (cfg && cfg.numSeries) updProgCircles('series', curSer, true);
-                    phaseSecs = 0;
-                    curPhase = 'finalizado';
-                    setUI('finished');
-                    showWorkoutSummaryModal(); 
-                } else { // Si no hay datos de HR, simplemente finaliza sin mostrar modal de resumen de HR
-                    finishWorkout(false); 
-                }
+                finishWorkout(true); // Intentará mostrar resumen si hay datos de HR
             };
 
             if (restartEjBtn) restartEjBtn.onclick = () => { if (paused && curPhase === 'ejercicio' && !rePrep) { paused = false; restartCurEj(); } else if (!paused && curPhase === 'ejercicio' && !rePrep) restartCurEj(); };
@@ -2120,7 +2147,8 @@
                 }
                 let cs;
                 if (!running && !paused && curPhase === '') cs = 'initial';
-                else if (curPhase === 'finalizado') cs = 'finished';
+                else if (curPhase === 'finalizado' && workoutSummaryScreenEl.classList.contains('hidden')) cs = 'initial'; // Si finalizado pero modal cerrado, ir a initial
+                else if (curPhase === 'finalizado') cs = 'finished'; // Si finalizado y modal visible (o a punto de serlo)
                 else if (paused) cs = 'paused';
                 else cs = 'running';
                 setUI(cs); 
@@ -2428,7 +2456,7 @@
                     heartRate = value.getUint8(byteOffset);
                     byteOffset += 1;
                 }
-                // console.log('[DEBUG] HR Leído:', heartRate); // DEBUG
+                // console.log('[DEBUG] HR Leído:', heartRate); 
 
                 if (hrValueEl) {
                     hrValueEl.textContent = heartRate;
@@ -2451,12 +2479,12 @@
                     if (heartRate >= zone.min && heartRate <= zone.max) {
                         zone.time += durationSinceLastSample / 1000; 
                         zoneFound = true;
-                        // console.log(`[DEBUG] HR ${heartRate} en zona ${zoneKey}. Tiempo acumulado en zona: ${zone.time.toFixed(2)}s`); // DEBUG
+                        // console.log(`[DEBUG] HR ${heartRate} en zona ${zoneKey}. Tiempo acumulado en zona: ${zone.time.toFixed(2)}s`);
                         break; 
                     }
                 }
-                // if (!zoneFound) { // DEBUG
-                //     console.warn(`[DEBUG] HR ${heartRate} no cayó en ninguna zona definida. Zonas:`, JSON.stringify(hrZones));
+                // if (!zoneFound) { 
+                //     console.warn(`[DEBUG] HR ${heartRate} no cayó en ninguna zona definida. Zonas:`, JSON.parse(JSON.stringify(hrZones)));
                 // }
 
                 if (hrChartInstance) {
@@ -2465,7 +2493,7 @@
                     
                     fullHrHistory.labels.push(timeString); 
                     fullHrHistory.data.push(heartRate);
-                    // console.log('[DEBUG] fullHrHistory.data:', JSON.stringify(fullHrHistory.data)); // DEBUG (mucho output)
+                    // console.log('[DEBUG] fullHrHistory.data:', JSON.stringify(fullHrHistory.data));
 
 
                     const displayData = hrChartInstance.data.datasets[0].data;
@@ -2609,25 +2637,49 @@
                 };
             }
             
-            if (closeWorkoutSummaryBtn && workoutSummaryScreenEl) {
-                const closeSummaryModal = () => {
+            // Manejo del modal de resumen y sus nuevos botones
+            if (workoutSummaryScreenEl) {
+                const closeSummaryModalAndResetApp = (resetToInitial = true) => {
                     workoutSummaryScreenEl.classList.add('hidden');
                     bodyEl.style.overflow = '';
                     if (summaryHrChartInstance) { summaryHrChartInstance.destroy(); summaryHrChartInstance = null; }
                     if (summaryZonePieChartInstance) { summaryZonePieChartInstance.destroy(); summaryZonePieChartInstance = null; }
+
+                    if (resetToInitial) {
+                        finishWorkout(false); // Llama a finishWorkout para resetear al estado inicial
+                    }
+                    // Si resetToInitial es false, es porque se va a reiniciar la rutina,
+                    // y startWorkout() se encargará de los reseteos de datos de sesión.
                 };
-                closeWorkoutSummaryBtn.onclick = closeSummaryModal;
+
+                if (closeWorkoutSummaryBtn) {
+                    closeWorkoutSummaryBtn.onclick = () => closeSummaryModalAndResetApp(true);
+                }
                 window.addEventListener('keydown', e => {
                     if (e.key === 'Escape' && !workoutSummaryScreenEl.classList.contains('hidden')) {
-                        closeSummaryModal();
+                        closeSummaryModalAndResetApp(true);
                     }
                 });
-                workoutSummaryScreenEl.onclick = e => {
+                workoutSummaryScreenEl.onclick = e => { // Clic fuera del contenido del modal
                     if (e.target === workoutSummaryScreenEl) {
-                        closeSummaryModal();
+                        closeSummaryModalAndResetApp(true);
                     }
                 };
+
+                if (summaryNewConfigBtn) {
+                    summaryNewConfigBtn.onclick = () => {
+                        closeSummaryModalAndResetApp(true);
+                    };
+                }
+
+                if (summaryRestartBtn) {
+                    summaryRestartBtn.onclick = async () => {
+                        closeSummaryModalAndResetApp(false); // Cierra modal sin resetear a 'initial'
+                        await startWorkout(); // Inicia el workout de nuevo con la misma config.
+                    };
+                }
             }
+
 
             try {
                 await openDB(); 
